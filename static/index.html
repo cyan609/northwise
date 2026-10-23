@@ -1,0 +1,1379 @@
+<!DOCTYPE html>
+<html lang="en" data-page-node-id="cqbL2H3AjMSGvwqZpY5oae">
+<head data-page-node-id="GwvtxEqJN4CiZ85RlPJE40">
+<meta charset="utf-8" data-page-node-id="8ikWAAyMltI24BzBvTvZom">
+<meta name="viewport" content="width=device-width, initial-scale=1" data-page-node-id="lQhIcT1XghWMs3PhMbQjYs">
+<title>NORTHWISE — EIA Report Assistant</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" data-page-node-id="aeMqvjFOYS3iLLLEighc08" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+:root{
+  --bg:#FAF8F3;--surface:#FFFFFF;--text:#12343B;--text-muted:#4F6B70;
+  --primary:#1F7A6B;--accent:#F28C28;--notice:#FFF1C9;--border:#D9D4C7;
+  --radius:12px;--shadow:0 2px 8px rgba(0,0,0,0.12);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;height:100%;font-family:system-ui,-apple-system,sans-serif;color:var(--text);line-height:1.5}
+#map{position:absolute;top:0;left:0;right:0;bottom:0;z-index:0}
+.top-bar{position:absolute;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,0.95);backdrop-filter:blur(4px);padding:10px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.top-bar h1{margin:0;font-size:18px;display:flex;align-items:center;gap:8px}
+.badge{background:var(--notice);color:var(--text-muted);font-size:11px;padding:3px 10px;border-radius:999px}
+.lang-toggle{display:flex;gap:4px}
+.lang-toggle button{border:1px solid var(--border);background:var(--surface);color:var(--text);padding:5px 10px;border-radius:999px;cursor:pointer;font-size:12px}
+.lang-toggle button.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+
+.report-card{position:absolute;top:56px;right:12px;z-index:1001;width:340px;max-width:calc(100vw - 24px);background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px;display:none;max-height:70vh;overflow-y:auto}
+.report-card.visible{display:block}
+.report-card h2{margin:0 0 6px;font-size:16px}
+.report-card .meta{font-size:12px;color:var(--text-muted);margin-bottom:10px}
+.report-card .links{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.report-card .links a{font-size:12px;color:var(--primary);text-decoration:none;border:1px solid var(--primary);padding:4px 10px;border-radius:999px}
+.report-card .links a:hover{background:var(--primary);color:#fff}
+.report-card .actions{display:flex;gap:8px;margin-top:10px}
+.report-card .actions button{flex:1;background:var(--primary);color:#fff;border:none;padding:8px 0;border-radius:999px;cursor:pointer;font-size:13px}
+.report-card .actions button.secondary{background:var(--surface);color:var(--primary);border:1px solid var(--primary)}
+.report-card .close{position:absolute;top:8px;right:10px;background:none;border:none;font-size:18px;color:var(--text-muted);cursor:pointer}
+
+.chat-btn{position:absolute;bottom:20px;right:20px;z-index:1002;width:56px;height:56px;border-radius:50%;background:var(--primary);color:#fff;border:none;box-shadow:var(--shadow);cursor:pointer;font-size:24px;display:flex;align-items:center;justify-content:center}
+.chat-btn:hover{background:#175c50}
+
+/* Floating chat window: geometry is driven by JS (left/top/width/height). */
+.chat-panel{position:fixed;bottom:88px;right:12px;z-index:1003;width:380px;height:min(60vh,560px);max-width:calc(100vw - 16px);background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);display:none;flex-direction:column;overflow:hidden}
+.chat-panel.visible{display:flex}
+.chat-panel.dragging,.chat-panel.resizing{box-shadow:0 10px 30px rgba(0,0,0,0.22);z-index:1004}
+.chat-panel.minimized{height:auto !important;width:min(380px,calc(100vw - 16px)) !important}
+.chat-panel.minimized .chat-body,.chat-panel.minimized .chat-input,.chat-panel.minimized .resize-handle{display:none !important}
+.chat-panel.minimized .chat-header{border-bottom:none;cursor:pointer}
+.chat-panel.maximized .resize-handle{display:none}
+body.chat-window-active{user-select:none;-webkit-user-select:none}
+.chat-header{padding:10px 12px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:8px;cursor:move;touch-action:none;flex-shrink:0}
+.chat-header:focus-visible{outline:2px solid var(--primary);outline-offset:-2px}
+.chat-header .title{font-weight:700;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.chat-header .scope-chip{background:#e8f4f2;color:var(--primary);font-size:11px;padding:3px 10px;border-radius:999px;cursor:pointer;white-space:nowrap}
+.chat-header .scope-chip:hover{background:#d0eae6}
+.chat-header .close,.chat-header .win-btn{background:none;border:1px solid transparent;color:var(--text-muted);cursor:pointer;font-size:16px;line-height:1;width:26px;height:26px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;padding:0;flex-shrink:0}
+/* The UA [hidden] rule loses to display:inline-flex — restore it explicitly. */
+.chat-header .win-btn[hidden]{display:none !important}
+.chat-header .close{font-size:18px}
+.chat-header .close:hover,.chat-header .win-btn:hover{background:#f4f4f0;color:var(--text);border-color:var(--border)}
+.chat-header .close:focus-visible,.chat-header .win-btn:focus-visible{outline:2px solid var(--primary);outline-offset:1px}
+/* Resize handles sit inside the panel so overflow:hidden cannot clip them. */
+.resize-handle{position:absolute;z-index:5;touch-action:none}
+.rh-n{top:0;left:12px;right:12px;height:6px;cursor:ns-resize}
+.rh-s{bottom:0;left:12px;right:12px;height:6px;cursor:ns-resize}
+.rh-e{right:0;top:12px;bottom:12px;width:6px;cursor:ew-resize}
+.rh-w{left:0;top:12px;bottom:12px;width:6px;cursor:ew-resize}
+.rh-ne,.rh-nw,.rh-se,.rh-sw{width:18px;height:18px;z-index:6}
+.rh-ne{top:0;right:0;cursor:nesw-resize}
+.rh-nw{top:0;left:0;cursor:nwse-resize}
+.rh-se{bottom:0;right:0;cursor:nwse-resize}
+.rh-sw{bottom:0;left:0;cursor:nesw-resize}
+.chat-body{padding:12px 14px;overflow-y:auto;flex:1;min-height:0;display:flex;flex-direction:column;gap:10px}
+.chat-body .intro{color:var(--text-muted);font-size:13px;margin-bottom:10px}
+.topic-pills{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.topic-pills button{background:#f4f4f0;border:1px solid var(--border);color:var(--text);padding:5px 10px;border-radius:999px;cursor:pointer;font-size:12px}
+.topic-pills button:hover{background:#e8e8e0}
+.chat-msg{max-width:90%;padding:10px 14px;border-radius:14px;font-size:14px;line-height:1.5;word-break:break-word}
+.chat-msg.user{align-self:flex-end;background:var(--primary);color:#fff;border-bottom-right-radius:4px}
+.chat-msg.assistant{align-self:flex-start;background:#f0f4f4;color:var(--text);border-bottom-left-radius:4px}
+.chat-msg .msg-time{font-size:11px;opacity:0.7;margin-top:4px}
+.chat-msg .msg-content{white-space:pre-wrap}
+.chat-msg.user .msg-time{text-align:right}
+.chat-loading{align-self:flex-start;background:#f0f4f4;color:var(--text-muted);padding:10px 14px;border-radius:14px;border-bottom-left-radius:4px;font-size:13px;font-style:italic}
+.chat-error{align-self:flex-start;background:#fff0f0;color:#a04040;padding:10px 14px;border-radius:14px;border-bottom-left-radius:4px;font-size:13px}
+.chat-space{flex:0 0 auto;pointer-events:none}
+.clear-chat-btn{background:none;border:none;color:var(--text-muted);font-size:12px;cursor:pointer;padding:4px 10px;border-radius:6px}
+.clear-chat-btn:hover{background:#f4f4f0;color:var(--text)}
+.ai-summary-label{font-size:11px;color:var(--primary);font-weight:600;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px}
+.ai-summary-card{background:#e8f4f2;border-left:4px solid var(--primary);border-radius:var(--radius);padding:12px;margin-bottom:6px}
+.ai-summary-body{font-size:14px;line-height:1.6;white-space:pre-wrap}
+.summary-section-label{font-size:11px;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin:8px 0 4px}
+.summary-section-label:first-child{margin-top:0}
+.summary-text{margin:0;font-size:14px;line-height:1.6;white-space:normal}
+.summary-meaning{background:#f4f7f5;border-left:3px solid #4a8a7a;padding:8px 10px;border-radius:4px;color:var(--text)}
+.lang-refreshing{font-size:12px;color:var(--text-muted);padding:8px 2px;font-style:italic}
+.summary-points{margin:0;padding-left:18px;font-size:14px;line-height:1.55;white-space:normal}
+.summary-points li{margin-bottom:4px}
+.evidence-divider{display:flex;align-items:center;gap:10px;margin:16px 0 10px;color:var(--text-muted);font-size:12px;font-weight:600}
+.evidence-divider::before,.evidence-divider::after{content:'';flex:1;height:1px;background:var(--border)}
+.insufficient-banner{background:#fff8e6;border-left:4px solid #f0c040;padding:10px 12px;border-radius:var(--radius);margin-bottom:10px;font-size:13px;color:#7a5c00}
+.chat-input{padding:10px 14px;border-top:1px solid var(--border);display:flex;gap:8px;flex-shrink:0}
+.chat-input textarea{flex:1;min-height:36px;max-height:80px;border:1px solid var(--border);border-radius:8px;padding:8px;font-size:14px;resize:vertical;font-family:inherit}
+.chat-input button{background:var(--primary);color:#fff;border:none;padding:8px 14px;border-radius:999px;cursor:pointer;font-size:13px}
+.chat-input button:disabled{opacity:0.5;cursor:not-allowed}
+
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:12px;margin-bottom:10px;box-shadow:var(--shadow)}
+.card-header{display:flex;justify-content:space-between;align-items:flex-start;gap:6px;flex-wrap:wrap;margin-bottom:6px}
+.card-title{font-weight:700;font-size:14px}
+.card-meta{font-size:11px;color:var(--text-muted)}
+.card-chapter{font-size:12px;color:var(--primary);font-weight:600;margin-bottom:4px}
+.card-cite{font-size:11px;color:var(--text-muted);background:#f4f4f0;padding:5px 8px;border-radius:6px;margin-bottom:8px;word-break:break-word}
+.card-excerpt{font-size:13px;white-space:pre-wrap}
+.lang-badge{display:inline-block;font-size:10px;font-weight:700;line-height:1.6;padding:1px 7px;border-radius:999px;margin-bottom:6px;border:1px solid var(--border);color:var(--text-muted);background:var(--bg)}
+.lang-badge.lang-zh{color:#1F7A6B;border-color:#9CCDC2;background:#EAF5F2}
+.card-source{display:inline-block;margin-top:8px;font-size:12px;color:var(--primary);text-decoration:none;border:1px solid var(--primary);padding:4px 10px;border-radius:999px}
+.card-source:hover{background:var(--primary);color:#fff}
+.refusal{background:var(--notice);border:1px solid #f0e0a0;padding:12px;border-radius:var(--radius);margin-bottom:10px;font-size:13px}
+.disclaimer{font-size:11px;color:var(--text-muted);margin-top:6px}
+.gate-info{font-size:11px;color:var(--text-muted);margin-top:4px}
+.loading{color:var(--text-muted);font-style:italic;font-size:13px}
+.error{color:#c0392b;font-size:13px}
+
+.legend{position:absolute;bottom:20px;left:12px;z-index:1001;background:rgba(255,255,255,0.9);padding:8px 12px;border-radius:8px;font-size:11px;color:var(--text-muted);border:1px solid var(--border);max-width:220px}
+
+.report-list{position:absolute;top:56px;left:12px;z-index:1001;width:320px;max-width:calc(100vw - 24px);background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);max-height:70vh;overflow:hidden;display:flex;flex-direction:column}
+.report-list.collapsed{width:auto;min-width:0;background:transparent;border:none;box-shadow:none;overflow:visible}
+.report-list.collapsed .rl-body{display:none}
+.report-list.collapsed .rl-header{border:none;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+.rl-header{padding:10px 12px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:8px;flex-shrink:0}
+.rl-header h3{margin:0;font-size:14px;color:var(--text);white-space:nowrap}
+.rl-toggle{background:none;border:none;font-size:16px;color:var(--text-muted);cursor:pointer;padding:2px 6px;border-radius:6px}
+.rl-toggle:hover{background:#f4f4f0}
+.rl-count{font-size:11px;color:var(--text-muted);background:#f4f4f0;padding:2px 8px;border-radius:999px}
+.rl-search{padding:8px 12px;border-bottom:1px solid var(--border);flex-shrink:0}
+.rl-search input{width:100%;border:1px solid var(--border);border-radius:8px;padding:6px 10px;font-size:13px;font-family:inherit}
+.rl-search input:focus{outline:none;border-color:var(--primary)}
+.rl-clear{position:absolute;right:18px;top:50px;background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:14px;display:none}
+.rl-clear.visible{display:block}
+.rl-body{overflow-y:auto;padding:8px;flex:1}
+.report-item{padding:8px 10px;border-radius:8px;cursor:pointer;margin-bottom:6px;border:1px solid var(--border);font-size:12px}
+.report-item:hover{background:#f4f4f0}
+.report-item.hidden{display:none}
+.report-item .title{font-weight:600;font-size:13px;margin-bottom:2px}
+.report-item .meta{font-size:11px;color:var(--text-muted)}
+.marker-cluster{background:rgba(242,140,40,0.25);border:2px solid #F28C28;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#b35400}
+.no-results{font-size:12px;color:var(--text-muted);text-align:center;padding:12px}
+
+/* Narrow screens: no free positioning — the window becomes a docked sheet.
+   !important overrides the inline geometry written by the drag/resize code. */
+@media (max-width:720px){
+  .chat-panel{left:8px !important;right:8px !important;top:auto !important;bottom:8px !important;width:auto !important;height:min(72vh,640px) !important;max-width:none !important;min-width:0 !important}
+  .chat-panel.minimized{left:8px !important;right:8px !important;bottom:8px !important;height:auto !important}
+  .resize-handle{display:none !important}
+  .chat-header{cursor:default}
+}
+
+</style>
+</head>
+<body data-page-node-id="Fr7vnONW06Ie9hx8v9S4dx">
+
+<div id="map" data-page-node-id="VRiSUcs8WlUyWPReOqEDRT"></div>
+
+<div class="top-bar" data-page-node-id="4ynAAdUvMXnJ4gFJLny5Lg">
+  <h1 data-page-node-id="qXjr1V4T4VAF5KFijt7Gds"><span id="app-title" data-page-node-id="rFOdziO88BPXChokyiRctF">NORTHWISE</span></h1>
+  <div class="lang-toggle" data-page-node-id="bIiVR7riYOfMUKBvz0ctwv">
+    <button class="active" data-lang="en" onclick="setLang('en')" data-page-node-id="3ujZL8YvKU99JGraoqhrUz">EN</button>
+    <button data-lang="zh-Hant" onclick="setLang('zh-Hant')" data-page-node-id="ZSBQdGsf7m7LvYt2ewPgYH">繁</button>
+  </div>
+</div>
+
+<div class="report-card" id="reportCard" data-page-node-id="isNFjsgHvRoKYnMVFA4Xn6">
+  <button class="close" onclick="closeReportCard()" data-page-node-id="LcQKvgDxeOBEUT86p3eiSL">&times;</button>
+  <h2 id="rcTitle" data-page-node-id="kY3lOX34oFTStAlxMP1Q3O">Report Title</h2>
+  <div class="meta" id="rcMeta" data-page-node-id="QmJoL0slyLLptXaAxsWg4A"></div>
+  <div class="links" id="rcLinks" data-page-node-id="rXfBgsf3lb8TIwjGlTrNNU"></div>
+  <div class="actions" data-page-node-id="26aodIcF1d3pDip21pgc8v">
+    <button id="rcAskBtn" onclick="openChatWithScope()" data-page-node-id="Km3qMUaOfWUTwFsjOM6ix3">Ask about this report</button>
+    <button class="secondary" onclick="closeReportCard()" data-page-node-id="rGN8RCevVOw7HXbzWxQUot">Close</button>
+  </div>
+</div>
+
+<button class="chat-btn" id="chatBtn" onclick="toggleChat()" aria-controls="chatPanel" aria-expanded="false" aria-label="Open chat" data-page-node-id="Fg6KQYYuyyqcoCE1mnz6Y0">💬</button>
+
+<div class="chat-panel" id="chatPanel" role="dialog" aria-label="NORTHWISE chat" data-page-node-id="KAjkNoFvOa97SXob2y7T2F">
+  <div class="chat-header" id="chatHeader" tabindex="0" role="group" data-page-node-id="cWWLoSzGN8mLMotMECBs5J">
+    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;min-width:0" data-page-node-id="dCOFIgwd3AdA7HleCGMd0H">
+      <span class="title" id="chatTitle" data-page-node-id="5v1ubBWsPurjWxd4vMZzId">Ask the reports</span>
+      <span class="scope-chip" id="scopeChip" onclick="clearScope()" style="display:none" data-page-node-id="f01Z3ag5HEb3fpFC07zYeN"></span>
+    </div>
+    <div style="display:flex;align-items:center;gap:2px;flex-shrink:0">
+      <button class="clear-chat-btn" id="clearChatBtn" type="button" onclick="clearConversation()" style="display:none">Clear chat</button>
+      <button class="win-btn" id="chatMinBtn" type="button" onclick="minimizeChatWindow()" aria-label="Minimize chat window" title="Minimize">&#8211;</button>
+      <button class="win-btn" id="chatMaxBtn" type="button" onclick="maximizeChatWindow()" aria-label="Maximize chat window" title="Maximize">&#9744;</button>
+      <button class="win-btn" id="chatRestoreBtn" type="button" onclick="restoreChatWindow()" aria-label="Restore chat window" title="Restore" hidden>&#10064;</button>
+      <button class="close" id="chatCloseBtn" type="button" onclick="toggleChat()" aria-label="Close chat window" title="Close" data-page-node-id="Y6l6SPouQU76TY5Xm6yHks">&times;</button>
+    </div>
+  </div>
+  <div class="chat-body" id="chatBody" data-page-node-id="j9Jbsria9JhJCU067RDBEa">
+    <div class="intro" id="chatIntro" data-page-node-id="8fHrACQ1jDjRtmNKgvdqSF">Type a question or tap a topic below.</div>
+    <div class="topic-pills" id="topicPills" data-page-node-id="ispqRE9YYqxLNaS1cnJGDJ"></div>
+    <div id="chatResults" data-page-node-id="oet7ZutNCbv7DVlGvkEdwI"></div>
+  </div>
+  <div class="chat-input" data-page-node-id="RGkosA0y0q7nCtjZbCjzNL">
+    <textarea id="chatQuestion" placeholder="e.g. Will construction noise affect homes nearby?"></textarea>
+    <button id="chatAskBtn" onclick="submitChat()" data-page-node-id="u1mE5fdF5r9dge04OktOvK">Ask</button>
+  </div>
+  <div class="resize-handle rh-n" data-dir="n" aria-hidden="true"></div>
+  <div class="resize-handle rh-s" data-dir="s" aria-hidden="true"></div>
+  <div class="resize-handle rh-e" data-dir="e" aria-hidden="true"></div>
+  <div class="resize-handle rh-w" data-dir="w" aria-hidden="true"></div>
+  <div class="resize-handle rh-ne" data-dir="ne" aria-hidden="true"></div>
+  <div class="resize-handle rh-nw" data-dir="nw" aria-hidden="true"></div>
+  <div class="resize-handle rh-se" data-dir="se" aria-hidden="true"></div>
+  <div class="resize-handle rh-sw" data-dir="sw" aria-hidden="true"></div>
+</div>
+
+<div class="report-list" id="reportList" data-page-node-id="reportListPanel">
+  <div class="rl-header">
+    <h3 id="rlTitle">Reports</h3>
+    <span class="rl-count" id="rlCount">8</span>
+    <button class="rl-toggle" id="rlToggle" onclick="toggleReportList()" title="Collapse/expand">−</button>
+  </div>
+  <div class="rl-search">
+    <input type="text" id="rlSearch" placeholder="Search reports…" oninput="filterReports()" autocomplete="off">
+  </div>
+  <div class="rl-body" id="rlBody"></div>
+</div>
+
+<div class="legend" id="legend" data-page-node-id="apV1O2zxLLbEmW6dwExBGu">Boundaries and report areas are indicative, not official.</div>
+
+<script>
+// ------------------------------------------------------------------ i18n
+const UI = {
+  en: {
+    title: "NORTHWISE",
+    intro: "Type a question or tap a topic below.",
+    placeholder: "e.g. Will construction noise affect homes nearby?",
+    askBtn: "Ask", chatTitle: "Ask the reports", clearChat: "Clear chat",
+    minimizeChat: "Minimize chat window", maximizeChat: "Maximize chat window",
+    restoreChat: "Restore chat window", closeChat: "Close chat window",
+    openChat: "Open chat",
+    windowLabel: "Chat window. Drag the title bar to move it. Arrow keys move, Shift with arrow keys resizes.",
+    scopeAll: "All reports", scopeReport: "Asking about: {title} ✕",
+    loading: "Searching the reports…", thinking: "NORTHWISE is thinking…", noEvidence: "No evidence found.",
+    noResults: "No matching reports",
+    reportLabel: "Report", chapterLabel: "Chapter", sectionLabel: "Section",
+    pageLabel: "Page", sourceLabel: "Open source PDF",
+    execSummaryLabel: "Executive Summary (Chinese original)",
+    originalChinese: "Chinese original",
+    englishOriginal: "English original — no Chinese excerpt in the current index",
+    footer: "Answers are AI-generated excerpts. The official report prevails. No personal data is collected.",
+    evidenceIntro: "Evidence",
+    disclaimer: "AI-generated excerpt. The official report prevails.",
+    synthesisLabel: "AI Summary",
+    summarySectionLabel: "Summary",
+    keyPointsLabel: "Key findings",
+    meaningLabel: "What this means",
+    synthesisWarning: "⚠ Some claims in this summary could not be fully verified against the retrieved evidence. Please check the source passages below.",
+    evidenceSectionLabel: "Sources",
+    insufficientEvidence: "No language model is available right now, so this shows the report's own sentences instead of a written summary.",
+    updatingLanguage: "Updating the summary into English…",
+    pageStatus: {verified:"verified", absent:"no printed folio", unverified:"unverified"},
+    legend: "Boundaries and report areas are indicative, not official.",
+    askAbout: "Ask about this report",
+    close: "Close",
+    reportList: "Reports",
+    noSearchableText: "Catalogue only — full text not yet searchable",
+    glossaryIntro: "General definition (not from any specific report)",
+    glossarySource: "Source",
+    glossaryWhyMatters: "Why it matters",
+    glossaryExample: "Example",
+    glossaryNumbers: "How to read the numbers",
+    glossaryMisunderstanding: "Common misunderstanding",
+    glossaryCategory: "Category",
+    topics: [
+      {icon:"🔇", q:"What noise mitigation measures are proposed?"},
+      {icon:"🌿", q:"What ecological impacts are expected?"},
+      {icon:"💧", q:"How will water quality be protected?"},
+      {icon:"🗑️", q:"How will construction waste be managed?"},
+      {icon:"🏛️", q:"What cultural heritage is affected?"},
+      {icon:"🌄", q:"What landscape and visual impacts are expected?"},
+    ]
+  },
+  "zh-Hant": {
+    title: "NORTHWISE",
+    intro: "輸入問題或點選下方主題。",
+    placeholder: "例如：施工噪音會影響附近住宅嗎？",
+    askBtn: "提問", chatTitle: "向報告提問", clearChat: "清除對話",
+    minimizeChat: "最小化對話視窗", maximizeChat: "最大化對話視窗",
+    restoreChat: "還原對話視窗", closeChat: "關閉對話視窗",
+    openChat: "開啟對話",
+    windowLabel: "對話視窗。拖曳標題列可移動；方向鍵移動，Shift 加方向鍵可調整大小。",
+    scopeAll: "所有報告", scopeReport: "正在查詢：{title} ✕",
+    loading: "正在搜尋報告…", thinking: "NORTHWISE 正在思考…", noEvidence: "找不到相關證據。",
+    noResults: "沒有符合的報告。",
+    reportLabel: "報告", chapterLabel: "章節", sectionLabel: "段落",
+    pageLabel: "頁碼", sourceLabel: "開啟來源 PDF",
+    execSummaryLabel: "行政摘要（中文原文）",
+    originalChinese: "中文原文",
+    englishOriginal: "英文原文（目前索引沒有中文段落）",
+    footer: "答案為 AI 整理的摘要，請以官方報告為準。不收集個人資料。",
+    evidenceIntro: "證據",
+    disclaimer: "AI 整理的摘要，請以官方報告為準。",
+    synthesisLabel: "AI 摘要",
+    summarySectionLabel: "摘要",
+    keyPointsLabel: "主要發現",
+    meaningLabel: "這代表甚麼",
+    synthesisWarning: "⚠ 此摘要中的部分聲稱未能完全對應檢索到的證據。請參閱下方的原文段落。",
+    evidenceSectionLabel: "資料來源",
+    insufficientEvidence: "目前未能連接語言模型，以下顯示報告原文句子，而非改寫摘要。",
+    updatingLanguage: "正在更新為中文摘要…",
+    pageStatus: {verified:"已核實", absent:"無印刷頁碼", unverified:"未核實"},
+    legend: "邊界和報告區域僅供參考，非官方資料。",
+    askAbout: "查詢此報告",
+    close: "關閉",
+    reportList: "報告",
+    noSearchableText: "僅目錄 — 全文尚未可搜尋",
+    glossaryIntro: "一般解釋（並非來自任何特定報告）",
+    glossarySource: "資料來源",
+    glossaryWhyMatters: "為何重要",
+    glossaryExample: "例子",
+    glossaryNumbers: "如何閱讀數字",
+    glossaryMisunderstanding: "常見誤解",
+    glossaryCategory: "類別",
+    topics: [
+      {icon:"🔇", q:"提出了哪些噪音緩解措施？"},
+      {icon:"🌿", q:"預計會有哪些生態影響？"},
+      {icon:"💧", q:"如何保護水質？"},
+      {icon:"🗑️", q:"如何管理建築廢物？"},
+      {icon:"🏛️", q:"哪些文化遺產會受影響？"},
+      {icon:"🌄", q:"預計會有哪些景觀和視覺影響？"},
+    ]
+  }
+};
+
+let lang = 'en';
+let selectedReport = null;
+let reports = [];
+let filteredReports = [];
+let map, districtLayer;
+let reportListCollapsed = false;
+let conversation = [];
+let isLoading = false;
+
+// ------------------------------------------------------------------ init
+async function init() {
+  // Load reports
+  const res = await fetch('/reports');
+  const data = await res.json();
+  reports = data.reports || [];
+
+  // Map
+  map = L.map('map').setView([22.50, 114.10], 11);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap',
+    maxZoom: 18
+  }).addTo(map);
+
+  // District boundaries
+  try {
+    const geoRes = await fetch('stage0/source-data/boundaries/hksar_18_district_boundary.json');
+    const geo = await geoRes.json();
+    const relevant = geo.features.filter(f => {
+      const n = (f.properties.District || f.properties['地區'] || '');
+      return /YUEN LONG|NORTH/i.test(n);
+    });
+    districtLayer = L.geoJSON(relevant, {
+      style: { color: '#4F6B70', weight: 1.5, fillOpacity: 0.03, fillColor: '#4F6B70' }
+    }).addTo(map);
+  } catch(e) { console.warn('districts failed', e); }
+
+  // Report markers — group by coordinate to handle overlaps
+  const coordGroups = new Map();
+  reports.forEach(r => {
+    if (r.label_lat == null || r.label_lng == null) return;
+    const key = `${r.label_lat.toFixed(4)},${r.label_lng.toFixed(4)}`;
+    if (!coordGroups.has(key)) coordGroups.set(key, []);
+    coordGroups.get(key).push(r);
+  });
+  coordGroups.forEach((group, key) => {
+    const [lat, lng] = key.split(',').map(Number);
+    if (group.length === 1) {
+      // Single marker
+      const r = group[0];
+      const label = lang==='en'? r.title_en : r.title_zh;
+      const marker = L.circleMarker([lat, lng], {
+        radius: 10, color: '#F28C28', fillColor: '#F28C28', fillOpacity: 0.7, weight: 2
+      }).addTo(map);
+      marker.bindPopup(`<b>${escapeHtml(label)}</b><br><small>${escapeHtml(r.register_no)}</small>`);
+      marker.on('click', () => openReportCard(r.report_id));
+    } else {
+      // Overlapping markers — use a cluster-style circle with count
+      const labels = group.map(r => {
+        const title = lang==='en'? r.title_en : r.title_zh;
+        return `<div style="cursor:pointer;margin:4px 0;padding:4px;border-radius:4px;" onmouseover="this.style.background='#f4f4f0'" onmouseout="this.style.background='transparent'" onclick="openReportCard('${escapeHtml(r.report_id)}')">• <b>${escapeHtml(title)}</b><br><small>${escapeHtml(r.register_no)}</small></div>`;
+      }).join('');
+      const popupContent = `<div style="max-width:260px;font-size:13px"><b>${group.length} reports at this location</b><hr style="margin:6px 0;border:none;border-top:1px solid #ddd">${labels}</div>`;
+      const marker = L.circleMarker([lat, lng], {
+        radius: 14, color: '#F28C28', fillColor: '#F28C28', fillOpacity: 0.85, weight: 3
+      }).addTo(map);
+      // Add a small count label using a divIcon
+      const countIcon = L.divIcon({
+        className: 'marker-cluster',
+        html: `<span>${group.length}</span>`,
+        iconSize: [28, 28],
+        iconAnchor: [14, 14]
+      });
+      const countMarker = L.marker([lat, lng], {icon: countIcon, zIndexOffset: 1000}).addTo(map);
+      marker.bindPopup(popupContent);
+      countMarker.bindPopup(popupContent);
+      marker.on('click', () => {}); // popup handles it
+      countMarker.on('click', () => {});
+    }
+  });
+
+  filteredReports = reports.slice();
+  renderReportList();
+  renderTopics();
+  setLang('en');
+}
+
+// ------------------------------------------------------------------ language
+function setLang(l) {
+  lang = l;
+  document.querySelectorAll('.lang-toggle button').forEach(b => b.classList.toggle('active', b.dataset.lang === l));
+  const t = UI[l];
+  document.getElementById('app-title').textContent = t.title;
+  document.getElementById('chatIntro').textContent = t.intro;
+  document.getElementById('chatQuestion').placeholder = t.placeholder;
+  document.getElementById('chatTitle').textContent = t.chatTitle;
+  document.getElementById('legend').textContent = t.legend;
+  document.getElementById('rcAskBtn').textContent = t.askAbout;
+  document.getElementById('chatAskBtn').textContent = t.askBtn;
+  document.getElementById('rlSearch').placeholder = l === 'en' ? 'Search reports…' : '搜尋報告…';
+  document.getElementById('clearChatBtn').textContent = t.clearChat;
+  updateWindowControls();
+  updateScopeChip();
+  renderTopics();
+  renderReportList();
+  renderConversation();
+  // The stored answers were written in the previous language. Ask again for each
+  // one so the summary follows the interface language, not the language it was
+  // first generated in.
+  refreshAnswersForLanguage();
+}
+
+// One token per switch: a fast double-switch must not let the slower response
+// for the first language overwrite the second.
+let langRefreshToken = 0;
+let langRefreshing = false;
+
+async function refreshAnswersForLanguage() {
+  const token = ++langRefreshToken;
+  const items = conversation.filter(c => c.role === 'assistant' && c.data && c.data.question && !c.data.refused);
+  if (!items.length) return;
+
+  langRefreshing = true;
+  renderConversation();
+  await Promise.all(items.map(async (item) => {
+    const payload = {question: item.data.question, lang: lang};
+    if (item.data.report_id) payload.report_id = item.data.report_id;
+    try {
+      const res = await fetch('/ask', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      if (token === langRefreshToken) item.data = data;
+    } catch (e) {
+      // Keep the previous answer rather than blanking it; its section labels
+      // are re-rendered from UI[lang], so only the prose stays as it was.
+    }
+  }));
+
+  langRefreshing = false;
+  if (token === langRefreshToken) renderConversation();
+}
+
+// ------------------------------------------------------------------ report card
+// ------------------------------------------------------------------ report list
+function toggleReportList() {
+  reportListCollapsed = !reportListCollapsed;
+  const list = document.getElementById('reportList');
+  const btn = document.getElementById('rlToggle');
+  list.classList.toggle('collapsed', reportListCollapsed);
+  btn.textContent = reportListCollapsed ? '+' : '−';
+  btn.title = reportListCollapsed ? 'Expand' : 'Collapse';
+}
+
+function filterReports() {
+  const q = (document.getElementById('rlSearch').value || '').trim().toLowerCase();
+  if (!q) {
+    filteredReports = reports.slice();
+  } else {
+    filteredReports = reports.filter(r => {
+      const hay = [
+        r.report_id || '',
+        r.register_no || '',
+        r.title_en || '',
+        r.title_zh || '',
+        r.project_area_en || '',
+        r.project_area_zh || '',
+      ].join(' ').toLowerCase();
+      return hay.includes(q);
+    });
+  }
+  renderReportListItems();
+  updateReportCount();
+}
+
+function updateReportCount() {
+  const countEl = document.getElementById('rlCount');
+  const total = reports.length;
+  const showing = filteredReports.length;
+  if (showing === total) {
+    countEl.textContent = String(total);
+  } else {
+    countEl.textContent = `${showing}/${total}`;
+  }
+}
+
+function renderReportList() {
+  const t = UI[lang];
+  document.getElementById('rlTitle').textContent = t.reportList;
+  // Read `lang`, not a literal: this runs after setLang() set the same
+  // placeholder, and the hard-coded English string used to overwrite it, so the
+  // search box stayed English in Chinese mode.
+  document.getElementById('rlSearch').placeholder = lang === 'en' ? 'Search reports…' : '搜尋報告…';
+  renderReportListItems();
+  updateReportCount();
+}
+
+function renderReportListItems() {
+  const container = document.getElementById('rlBody');
+  const t = UI[lang];
+  if (!filteredReports.length) {
+    container.innerHTML = `<div class="no-results">${escapeHtml(t.noResults || 'No matching reports')}</div>`;
+    return;
+  }
+  container.innerHTML = filteredReports.map(r => {
+    const title = lang==='en'? r.title_en : r.title_zh;
+    const area = lang==='en'? r.project_area_en : r.project_area_zh;
+    const date = r.approval_date || '';
+    return `<div class="report-item" onclick="openReportCard('${escapeHtml(r.report_id)}')">
+      <div class="title">${escapeHtml(title)}</div>
+      <div class="meta">${escapeHtml(r.register_no)} · ${escapeHtml(area)} · ${escapeHtml(date)}</div>
+    </div>`;
+  }).join('');
+}
+
+function openReportCard(rid) {
+  const r = reports.find(x => x.report_id === rid);
+  if (!r) return;
+  selectedReport = r;
+  document.getElementById('rcTitle').textContent = lang==='en'? r.title_en : r.title_zh;
+  const area = lang==='en'? r.project_area_en : r.project_area_zh;
+  const date = r.approval_date || '';
+  document.getElementById('rcMeta').textContent = `${r.register_no} · ${area} · ${date}`;
+
+  let links = '';
+  if (r.original_url) links += `<a href="${escapeHtml(r.original_url)}" target="_blank" rel="noopener">EPD project page</a>`;
+  if (r.exec_summary_en_url) links += `<a href="${escapeHtml(r.exec_summary_en_url)}" target="_blank" rel="noopener">EN summary</a>`;
+  if (r.exec_summary_zh_url) links += `<a href="${escapeHtml(r.exec_summary_zh_url)}" target="_blank" rel="noopener">中文摘要</a>`;
+  document.getElementById('rcLinks').innerHTML = links;
+  document.getElementById('reportCard').classList.add('visible');
+  updateScopeChip();
+}
+
+function closeReportCard() {
+  document.getElementById('reportCard').classList.remove('visible');
+}
+
+// ------------------------------------------------------------------ chat
+function toggleChat() {
+  const panel = document.getElementById('chatPanel');
+  const btn = document.getElementById('chatBtn');
+  if (!panel.classList.contains('visible')) {
+    panel.classList.add('visible');
+    initChatWindow();
+    // Reopening a previously minimized (then closed) window shows it in full.
+    if (CHAT_STATE.mode === 'minimized') restoreChatWindow();
+  } else if (CHAT_STATE.mode === 'minimized') {
+    // Minimized windows reopen instead of closing — the bar is the reopen affordance.
+    restoreChatWindow();
+  } else {
+    panel.classList.remove('visible');
+  }
+  if (btn) btn.setAttribute('aria-expanded', panel.classList.contains('visible') ? 'true' : 'false');
+}
+
+function openChatWithScope() {
+  document.getElementById('chatPanel').classList.add('visible');
+  initChatWindow();
+  if (CHAT_STATE.mode === 'minimized') restoreChatWindow();
+  const btn = document.getElementById('chatBtn');
+  if (btn) btn.setAttribute('aria-expanded', 'true');
+}
+
+function clearScope() {
+  selectedReport = null;
+  updateScopeChip();
+}
+
+function updateScopeChip() {
+  const chip = document.getElementById('scopeChip');
+  const t = UI[lang];
+  if (selectedReport) {
+    chip.textContent = t.scopeReport.replace('{title}', lang==='en'? selectedReport.title_en : selectedReport.title_zh);
+    chip.style.display = 'inline-block';
+  } else {
+    chip.style.display = 'none';
+  }
+}
+
+function renderTopics() {
+  const container = document.getElementById('topicPills');
+  const t = UI[lang];
+  container.innerHTML = t.topics.map(tp =>
+    `<button onclick="askTopic('${escapeHtml(tp.q)}')">${tp.icon} ${escapeHtml(tp.q)}</button>`
+  ).join('');
+}
+
+function askTopic(q) {
+  document.getElementById('chatQuestion').value = q;
+  submitChat();
+}
+
+function formatTime() {
+  const now = new Date();
+  return now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+}
+
+async function submitChat() {
+  const q = document.getElementById('chatQuestion').value.trim();
+  const btn = document.getElementById('chatAskBtn');
+  const t = UI[lang];
+  if (!q || isLoading) return;
+
+  // Append user message immediately
+  conversation.push({role: 'user', text: q, time: formatTime()});
+  document.getElementById('chatQuestion').value = '';
+  btn.disabled = true;
+  // The question goes near the top, so the answer has room below it.
+  renderConversation('user');
+
+  // Show loading indicator
+  isLoading = true;
+  renderConversation('loading');
+
+  try {
+    const payload = {question: q, lang: lang};
+    if (selectedReport) payload.report_id = selectedReport.report_id;
+    const res = await fetch('/ask', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(payload)
+    });
+    const data = await res.json();
+    conversation.push({role: 'assistant', data: data, time: formatTime()});
+  } catch (e) {
+    conversation.push({role: 'error', text: e.message, time: formatTime()});
+  } finally {
+    isLoading = false;
+    btn.disabled = false;
+    // Show the answer from its beginning, not its end.
+    renderConversation('answer');
+  }
+}
+
+// The model answers in two fixed sections — Summary, then Key points — so the
+// card can render them as a paragraph and a list instead of one block of text.
+// Anything else falls back to the raw text, unchanged.
+function formatInline(text) {
+  return escapeHtml(text).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+}
+
+function parseSummarySections(text) {
+  const out = { summary: [], points: [], meaning: [] };
+  let mode = null;
+  for (const raw of String(text || '').split(/\r?\n/)) {
+    const line = raw.trim();
+    if (!line) continue;
+    const heading = line.match(/^(?:\*\*|__)?\s*(summary|摘要|總結|key points?|key findings?|main points?|主要發現|重點|要點|what (?:this|it) means|這代表甚麼|這代表什麼|這意味著甚麼|意義)\s*(?:\*\*|__)?\s*[:：]?\s*(.*)$/i);
+    if (heading) {
+      if (/what (?:this|it) means|代表甚麼|代表什麼|意味|意義/i.test(heading[1])) mode = 'meaning';
+      else if (/key|重點|要點|發現/i.test(heading[1])) mode = 'points';
+      else mode = 'summary';
+      if (heading[2]) out[mode].push(heading[2].trim());
+      continue;
+    }
+    if (/^[-•*]\s+/.test(line)) {
+      out.points.push(line.replace(/^[-•*]\s+/, ''));
+      mode = 'points';
+      continue;
+    }
+    if (mode === 'points') out.points.push(line);
+    else if (mode === 'meaning') out.meaning.push(line);
+    else out.summary.push(line);
+  }
+  return out;
+}
+
+function renderSummaryBody(text, t) {
+  const { summary, points, meaning } = parseSummarySections(text);
+  if (!summary.length && !points.length && !meaning.length) {
+    return `<div class="ai-summary-body">${formatInline(text)}</div>`;
+  }
+  let html = '<div class="ai-summary-body">';
+  if (summary.length) {
+    html += `<div class="summary-section-label">${escapeHtml(t.summarySectionLabel)}</div>`;
+    html += `<p class="summary-text">${formatInline(summary.join(' '))}</p>`;
+  }
+  if (points.length) {
+    html += `<div class="summary-section-label">${escapeHtml(t.keyPointsLabel)}</div>`;
+    html += '<ul class="summary-points">' +
+      points.map(p => `<li>${formatInline(p)}</li>`).join('') + '</ul>';
+  }
+  if (meaning.length) {
+    // The section is specified as ONE sentence. The model reliably writes two or
+    // three, so the display is capped rather than the instruction repeated.
+    const one = ((meaning.join(' ').match(/^[^.!?。！？]*[.!?。！？]?/) || [''])[0]).trim();
+    html += `<div class="summary-section-label">${escapeHtml(t.meaningLabel)}</div>`;
+    html += `<p class="summary-text summary-meaning">${formatInline(one)}</p>`;
+  }
+  return html + '</div>';
+}
+
+function buildAnswerHtml(data) {
+  const t = UI[lang];
+  let html = '';
+
+  if (data.refused) {
+    html += `<div class="refusal">${escapeHtml(data.message)}</div>`;
+  } else {
+    // The glossary is built first but appended after the summary: a definition
+    // is background, the summary is the answer, and the reader should meet the
+    // findings before anything else.
+    let glossaryHtml = '';
+    // Glossary card
+    if (data.glossary && data.glossary.definition) {
+      const g = data.glossary;
+      const displayTerm = escapeHtml(g.display_term || g.term || '');
+      const termLabel = g.display_term && g.display_term !== g.term
+        ? `${displayTerm} <span style="color:var(--text-muted);font-weight:400">(${escapeHtml(g.term)})</span>`
+        : displayTerm;
+      const langKey = g.lang === 'zh-Hant' ? '_zh' : '_en';
+      const whyText = g['why_it_matters' + langKey];
+      const exampleText = g['example' + langKey];
+      const numbersText = g['interpreting_numbers' + langKey];
+      const misText = g['common_misunderstanding' + langKey];
+      const sourceUrl = g.source_url ? `<a class="card-source" href="${escapeHtml(g.source_url)}" target="_blank" rel="noopener">${escapeHtml(g.source_name || t.glossarySource)}</a>` : '';
+      const categoryBadge = g.category
+        ? `<span style="display:inline-block;background:var(--notice);color:var(--text-muted);font-size:10px;padding:2px 8px;border-radius:999px;margin-left:6px">${escapeHtml(t.glossaryCategory)}: ${escapeHtml(g.category)}</span>`
+        : '';
+      glossaryHtml += `
+      <div class="card" style="background:#f0f7f5;border-left:4px solid #4a8a7a">
+        <div style="font-size:11px;color:#4a8a7a;font-weight:600;margin-bottom:6px">${escapeHtml(t.glossaryIntro)}</div>
+        <div style="font-size:16px;font-weight:600;margin-bottom:6px">${termLabel}${categoryBadge}</div>
+        <div style="font-size:14px;line-height:1.55;white-space:pre-wrap">${escapeHtml(g.definition)}</div>
+        ${whyText ? `<div style="margin-top:10px;padding-top:8px;border-top:1px solid #e0e8e4"><div style="font-size:11px;color:var(--text-muted);font-weight:600;margin-bottom:4px">${escapeHtml(t.glossaryWhyMatters)}</div><div style="font-size:13px;line-height:1.5">${escapeHtml(whyText)}</div></div>` : ''}
+        ${exampleText ? `<div style="margin-top:8px"><div style="font-size:11px;color:var(--text-muted);font-weight:600;margin-bottom:4px">${escapeHtml(t.glossaryExample)}</div><div style="font-size:13px;line-height:1.5">${escapeHtml(exampleText)}</div></div>` : ''}
+        ${numbersText ? `<div style="margin-top:8px"><div style="font-size:11px;color:var(--text-muted);font-weight:600;margin-bottom:4px">${escapeHtml(t.glossaryNumbers)}</div><div style="font-size:13px;line-height:1.5">${escapeHtml(numbersText)}</div></div>` : ''}
+        ${misText ? `<div style="margin-top:8px"><div style="font-size:11px;color:#a04040;font-weight:600;margin-bottom:4px">${escapeHtml(t.glossaryMisunderstanding)}</div><div style="font-size:13px;line-height:1.5">${escapeHtml(misText)}</div></div>` : ''}
+        ${sourceUrl ? `<div style="margin-top:10px;font-size:11px;color:var(--text-muted)">${escapeHtml(t.glossarySource)}: ${sourceUrl}${g.source_section ? ` · ${escapeHtml(g.source_section)}` : ''}</div>` : ''}
+      </div>`;
+    }
+    // AI Summary section
+    if (data.synthesis && data.synthesis.answer) {
+      const evalStatus = data.synthesis.evaluation ? data.synthesis.evaluation.status : null;
+      const isFallback = data.synthesis.model === 'evidence-summary';
+      const warningBanner = (evalStatus === 'rejected' || evalStatus === 'flagged')
+        ? `<div style="font-size:12px;color:#a04040;background:#fff0f0;padding:6px 10px;border-radius:4px;margin-bottom:8px;border-left:3px solid #a04040">${escapeHtml(t.synthesisWarning)}</div>`
+        : '';
+      const fallbackBanner = isFallback
+        ? `<div class="insufficient-banner">${escapeHtml(t.insufficientEvidence)}</div>`
+        : '';
+      html += `
+      <div class="ai-summary-card">
+        <div class="ai-summary-label">${escapeHtml(t.synthesisLabel)}</div>
+        ${warningBanner}
+        ${fallbackBanner}
+        ${renderSummaryBody(data.synthesis.answer, t)}
+        ${data.synthesis.model ? `<div style="font-size:11px;color:var(--text-muted);margin-top:8px">Model: ${escapeHtml(data.synthesis.model)}${data.synthesis.tokens_used != null ? ' · Tokens: ' + escapeHtml(String(data.synthesis.tokens_used)) : ''}${evalStatus ? ' · Status: ' + escapeHtml(evalStatus) : ''}</div>` : ''}
+      </div>`;
+    }
+
+    // Background definition sits between the answer and its sources.
+    html += glossaryHtml;
+
+    if (!(data.synthesis && data.synthesis.answer) && data.message) {
+      html += `<div class="card" style="background:var(--notice)"><strong>${escapeHtml(data.message)}</strong></div>`;
+    }
+
+    // Evidence section with divider
+    if (data.evidence && data.evidence.length) {
+      html += `<div class="evidence-divider"><span>${escapeHtml(t.evidenceSectionLabel)}</span></div>`;
+      for (const card of data.evidence) {
+        const pageNote = card.page_label_status === 'verified'
+          ? `${card.page_label} (${t.pageStatus.verified})`
+          : card.page_label_status === 'absent'
+            ? `${t.pageStatus.absent} · PDF idx ${card.pdf_page_index}`
+            : `${t.pageStatus.unverified} · PDF idx ${card.pdf_page_index}`;
+        const section = card.section_ref ? `§${card.section_ref}${card.section_ref_status === 'ambiguous_multiple_refs' ? ' (ambiguous)' : ''}` : `${t.sectionLabel}: —`;
+        const flags = (card.quality_flags || []).join(', ');
+        // An executive summary is not a chapter; naming it "Chapter 0" would
+        // be a fiction the citation does not need.
+        const chapterText = card.doc_kind === 'executive_summary'
+          ? t.execSummaryLabel
+          : `${t.chapterLabel} ${card.chapter != null ? card.chapter : '—'} · ${card.chapter_title || ''}`;
+        // Say which language the excerpt is in. A Chinese question that fell
+        // back to English says so, rather than passing English off as Chinese.
+        const langBadge = card.excerpt_lang === 'zh-Hant'
+          ? `<span class="lang-badge lang-zh">${escapeHtml(t.originalChinese)}</span>`
+          : (data.query_lang === 'zh-Hant'
+              ? `<span class="lang-badge">${escapeHtml(t.englishOriginal)}</span>`
+              : '');
+        html += `
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">${escapeHtml(card.report_title || card.report_id)}</div>
+            <div class="card-meta">${escapeHtml(t.reportLabel)} ${escapeHtml(card.report_id)}</div>
+          </div>
+          <div class="card-chapter">${escapeHtml(chapterText)}</div>
+          <div class="card-cite">${escapeHtml(card.citation)}<br>${escapeHtml(section)} · ${escapeHtml(t.pageLabel)} ${escapeHtml(pageNote)}${flags ? ' · flags: ' + escapeHtml(flags) : ''}</div>
+          ${langBadge}
+          <div class="card-excerpt">${escapeHtml(card.excerpt)}</div>
+          ${card.source_url ? `<a class="card-source" href="${escapeHtml(card.source_url)}" target="_blank" rel="noopener">${escapeHtml(t.sourceLabel)}</a>` : ''}
+          <div class="disclaimer">${escapeHtml(data.disclaimer || t.disclaimer)}</div>
+        </div>`;
+      }
+    } else {
+      html += `<div class="refusal">${t.noEvidence}</div>`;
+    }
+  }
+
+  if (data.gate) {
+    html += `<div class="gate-info">Gate: ${escapeHtml(data.gate.status)} · matched ${data.gate.present_terms ? data.gate.present_terms.join(', ') : '—'}</div>`;
+  }
+  return html;
+}
+
+// ------------------------------------------------------------------ chat scroll
+// `#chatBody` is the only scroll container — the page itself must not move.
+// A finished answer is positioned by its *start*, not its end: scrolling to the
+// bottom left the reader on the last line of a long reply and they had to
+// scroll back up to read it.
+
+const CHAT_SCROLL = {
+  target: null,      // element whose top should stay in view
+  raf: 0,
+  observer: null,
+  timer: 0,          // quiet-period timer
+  cap: 0,            // absolute stop
+  userMoved: false,  // the reader has taken over; stop correcting
+};
+
+const CHAT_SCROLL_PAD = 12;   // matches .chat-body padding
+
+function chatBodyEl() {
+  return document.getElementById('chatBody');
+}
+
+function cancelChatScroll() {
+  if (CHAT_SCROLL.raf) { cancelAnimationFrame(CHAT_SCROLL.raf); CHAT_SCROLL.raf = 0; }
+  if (CHAT_SCROLL.observer) { CHAT_SCROLL.observer.disconnect(); CHAT_SCROLL.observer = null; }
+  if (CHAT_SCROLL.timer) { clearTimeout(CHAT_SCROLL.timer); CHAT_SCROLL.timer = 0; }
+  if (CHAT_SCROLL.cap) { clearTimeout(CHAT_SCROLL.cap); CHAT_SCROLL.cap = 0; }
+  CHAT_SCROLL.target = null;
+}
+
+// Any deliberate reader action outranks our positioning.
+function noteReaderTakeover() {
+  CHAT_SCROLL.userMoved = true;
+  cancelChatScroll();
+}
+
+function attachScrollGuard() {
+  const body = chatBodyEl();
+  if (!body || body.dataset.scrollGuard) return;
+  body.dataset.scrollGuard = '1';
+  ['wheel', 'touchmove', 'pointerdown', 'keydown'].forEach(ev => {
+    body.addEventListener(ev, noteReaderTakeover, {passive: true});
+  });
+}
+
+// Put `el`'s top at the top of the chat viewport, clamped to the scrollable
+// range. Uses viewport rects rather than offsetTop so it works wherever the
+// panel has been dragged to.
+function alignToTop(el) {
+  const body = chatBodyEl();
+  if (!body || !el) return;
+  const delta = el.getBoundingClientRect().top - body.getBoundingClientRect().top;
+  const max = Math.max(0, body.scrollHeight - body.clientHeight);
+  const next = Math.max(0, Math.min(body.scrollTop + delta - CHAT_SCROLL_PAD, max));
+  body.scrollTop = next;
+}
+
+function lastMessage(role) {
+  const out = document.getElementById('chatResults');
+  if (!out) return null;
+  const list = out.querySelectorAll('.chat-msg.' + role);
+  return list.length ? list[list.length - 1] : null;
+}
+
+// Show the start of `el`, then hold that position while the layout settles
+// (late web fonts, images, glossary cards). Corrections run for a short window
+// only, and stop the instant the reader scrolls.
+function revealStart(el) {
+  if (!el) return;
+  cancelChatScroll();
+  CHAT_SCROLL.userMoved = false;
+  CHAT_SCROLL.target = el;
+  const apply = () => {
+    if (CHAT_SCROLL.userMoved || !CHAT_SCROLL.target) return;
+    alignToTop(CHAT_SCROLL.target);
+  };
+  apply();
+  // Two frames: the first after style/layout, the second after late layout.
+  CHAT_SCROLL.raf = requestAnimationFrame(() => {
+    apply();
+    CHAT_SCROLL.raf = requestAnimationFrame(apply);
+  });
+  // Answer height can change while it renders (web fonts, cards, wrapped
+  // text). Keep re-aligning while it is still moving, then stop: 250ms of
+  // quiet, and never longer than 3s, so the reader is never held hostage.
+  const stopWhenQuiet = () => {
+    clearTimeout(CHAT_SCROLL.timer);
+    CHAT_SCROLL.timer = setTimeout(cancelChatScroll, 250);
+  };
+  if (typeof ResizeObserver !== 'undefined') {
+    const out = document.getElementById('chatResults');
+    if (out) {
+      CHAT_SCROLL.observer = new ResizeObserver(() => { apply(); stopWhenQuiet(); });
+      CHAT_SCROLL.observer.observe(out);
+    }
+  }
+  stopWhenQuiet();
+  CHAT_SCROLL.cap = setTimeout(cancelChatScroll, 3000);
+}
+
+// scrollMode:
+//   'user'    — the question just asked sits near the top, room below for the answer
+//   'loading' — the answer's placeholder sits at the top, where the answer will start
+//   'answer'  — the start of the latest assistant answer is visible
+//   'top'     — new/empty conversation
+//   omitted   — keep whatever the reader is currently looking at (e.g. language switch)
+function renderConversation(scrollMode) {
+  const out = document.getElementById('chatResults');
+  const body = chatBodyEl();
+  const prevTop = body ? body.scrollTop : 0;
+  const t = UI[lang];
+
+  // Show/hide intro and topic pills based on conversation state
+  const hasMessages = conversation.length > 0;
+  document.getElementById('chatIntro').style.display = hasMessages ? 'none' : '';
+  document.getElementById('topicPills').style.display = hasMessages ? 'none' : '';
+  document.getElementById('clearChatBtn').style.display = hasMessages ? '' : 'none';
+
+  let html = '';
+  for (const msg of conversation) {
+    if (msg.role === 'user') {
+      html += `<div class="chat-msg user"><div class="msg-content">${escapeHtml(msg.text)}</div><div class="msg-time">${escapeHtml(msg.time)}</div></div>`;
+    } else if (msg.role === 'assistant') {
+      html += `<div class="chat-msg assistant"><div class="msg-content">${buildAnswerHtml(msg.data)}</div><div class="msg-time">${escapeHtml(msg.time)}</div></div>`;
+    } else if (msg.role === 'error') {
+      html += `<div class="chat-error">${escapeHtml(msg.text)}</div>`;
+    }
+  }
+  if (isLoading) {
+    html += `<div class="chat-loading">${escapeHtml(t.thinking)}</div><div class="chat-space" aria-hidden="true"></div>`;
+  }
+  // Regenerating every answer in the new language takes a few model calls; say
+  // so, or the switch looks broken while the old text is still on screen.
+  if (langRefreshing) {
+    html += `<div class="lang-refreshing">${escapeHtml(t.updatingLanguage)}</div>`;
+  }
+  out.innerHTML = html;
+
+  // While waiting, reserve the space the answer will occupy. Without it the
+  // question cannot be scrolled to the top — there is nothing below it yet —
+  // and it lands against the bottom edge instead.
+  if (isLoading) {
+    const spacer = out.querySelector('.chat-space');
+    const user = lastMessage('user');
+    if (spacer && user && body) {
+      const b = body.getBoundingClientRect();
+      const padBottom = parseFloat(getComputedStyle(body).paddingBottom) || 0;
+      // scrollHeight is clamped to clientHeight when content is short, so the
+      // content height has to come from the element's own box.
+      const topContent = body.scrollTop + (user.getBoundingClientRect().top - b.top);
+      const contentH = (out.getBoundingClientRect().bottom - b.top) + body.scrollTop + padBottom;
+      const extra = Math.max(0, topContent + body.clientHeight - contentH);
+      spacer.style.height = Math.round(extra) + 'px';
+    }
+  }
+
+  if (scrollMode === 'answer') {
+    revealStart(lastMessage('assistant'));
+  } else if (scrollMode === 'user' || scrollMode === 'loading') {
+    // The question sits at the top with the answer's space below it, so the
+    // answer begins on screen rather than pushing the question away.
+    revealStart(lastMessage('user'));
+  } else if (scrollMode === 'top') {
+    cancelChatScroll();
+    if (body) body.scrollTop = 0;
+  } else if (body) {
+    body.scrollTop = prevTop;   // keep the reader's place
+  }
+}
+
+function clearConversation() {
+  conversation = [];
+  isLoading = false;
+  renderConversation('top');
+}
+
+// ------------------------------------------------------------------ chat window (drag / resize / min / max)
+const CHAT_MIN_W = 320;
+const CHAT_MIN_H = 300;
+const CHAT_MARGIN = 8;
+
+const CHAT_STATE = {
+  mode: 'normal',      // 'normal' | 'minimized' | 'maximized'
+  geom: null,          // authoritative normal-mode geometry
+  prevGeom: null,      // geometry to restore to after maximize
+  mobile: false,
+  initialized: false,
+};
+
+let chatDrag = null;
+let chatResize = null;
+
+function isNarrowViewport() {
+  return window.matchMedia('(max-width: 720px)').matches;
+}
+
+function getViewport() {
+  return { vw: window.innerWidth, vh: window.innerHeight };
+}
+
+// Keep the window below the top bar so its header stays reachable.
+function getTopLimit() {
+  const bar = document.querySelector('.top-bar');
+  const barH = bar ? bar.getBoundingClientRect().height : 56;
+  return Math.max(CHAT_MARGIN, Math.round(barH) + CHAT_MARGIN);
+}
+
+function defaultChatGeom() {
+  const { vw, vh } = getViewport();
+  const width = Math.min(380, Math.max(CHAT_MIN_W, vw - 2 * CHAT_MARGIN));
+  const height = Math.min(560, Math.max(CHAT_MIN_H, Math.round(vh * 0.6)));
+  return { left: vw - width - 12, top: vh - height - 88, width, height };
+}
+
+function maxChatGeom() {
+  const { vw, vh } = getViewport();
+  const top = getTopLimit();
+  return { left: CHAT_MARGIN, top, width: vw - 2 * CHAT_MARGIN, height: vh - top - CHAT_MARGIN };
+}
+
+function clampChatGeom(g) {
+  const { vw, vh } = getViewport();
+  const topLimit = getTopLimit();
+  const maxW = Math.max(200, vw - 2 * CHAT_MARGIN);
+  const maxH = Math.max(200, vh - topLimit - CHAT_MARGIN);
+  const width = Math.min(Math.max(g.width, Math.min(CHAT_MIN_W, maxW)), maxW);
+  const height = Math.min(Math.max(g.height, Math.min(CHAT_MIN_H, maxH)), maxH);
+  const left = Math.min(Math.max(CHAT_MARGIN, g.left), Math.max(CHAT_MARGIN, vw - width - CHAT_MARGIN));
+  const top = Math.min(Math.max(topLimit, g.top), Math.max(topLimit, vh - height - CHAT_MARGIN));
+  return { left: Math.round(left), top: Math.round(top), width: Math.round(width), height: Math.round(height) };
+}
+
+function readChatGeom() {
+  const r = document.getElementById('chatPanel').getBoundingClientRect();
+  return { left: r.left, top: r.top, width: r.width, height: r.height };
+}
+
+function applyChatGeom(g) {
+  const panel = document.getElementById('chatPanel');
+  const c = clampChatGeom(g);
+  panel.style.left = c.left + 'px';
+  panel.style.top = c.top + 'px';
+  panel.style.width = c.width + 'px';
+  panel.style.height = c.height + 'px';
+  panel.style.right = 'auto';
+  panel.style.bottom = 'auto';
+  CHAT_STATE.geom = c;
+}
+
+function clearChatGeom() {
+  const panel = document.getElementById('chatPanel');
+  ['left', 'top', 'width', 'height', 'right', 'bottom'].forEach(p => { panel.style[p] = ''; });
+}
+
+function updateWindowControls() {
+  const t = UI[lang];
+  const minBtn = document.getElementById('chatMinBtn');
+  const maxBtn = document.getElementById('chatMaxBtn');
+  const resBtn = document.getElementById('chatRestoreBtn');
+  const closeBtn = document.getElementById('chatCloseBtn');
+  const header = document.getElementById('chatHeader');
+  const chatBtn = document.getElementById('chatBtn');
+  if (!minBtn || !maxBtn || !resBtn) return;
+
+  const mode = CHAT_STATE.mode;
+  minBtn.hidden = mode === 'minimized';
+  maxBtn.hidden = mode !== 'normal' || CHAT_STATE.mobile;
+  resBtn.hidden = mode === 'normal';
+
+  minBtn.setAttribute('aria-label', t.minimizeChat);
+  minBtn.title = t.minimizeChat;
+  maxBtn.setAttribute('aria-label', t.maximizeChat);
+  maxBtn.title = t.maximizeChat;
+  resBtn.setAttribute('aria-label', t.restoreChat);
+  resBtn.title = t.restoreChat;
+  closeBtn.setAttribute('aria-label', t.closeChat);
+  closeBtn.title = t.closeChat;
+  header.setAttribute('aria-label', t.windowLabel);
+  chatBtn.setAttribute('aria-label', t.openChat);
+}
+
+function initChatWindow() {
+  CHAT_STATE.mobile = isNarrowViewport();
+  const panel = document.getElementById('chatPanel');
+  if (CHAT_STATE.mobile) {
+    clearChatGeom();
+    updateWindowControls();
+    return;
+  }
+  if (!CHAT_STATE.initialized) {
+    CHAT_STATE.initialized = true;
+    applyChatGeom(defaultChatGeom());
+  } else if (CHAT_STATE.mode === 'normal') {
+    applyChatGeom(CHAT_STATE.geom || defaultChatGeom());
+  }
+  updateWindowControls();
+}
+
+function minimizeChatWindow() {
+  const panel = document.getElementById('chatPanel');
+  const fromMaximized = CHAT_STATE.mode === 'maximized';
+  if (CHAT_STATE.mode === 'normal') CHAT_STATE.geom = readChatGeom();
+  CHAT_STATE.mode = 'minimized';
+  panel.classList.remove('maximized');
+  panel.classList.add('minimized');
+
+  // Keep the minimized bar fully on screen.
+  const g = (fromMaximized && CHAT_STATE.prevGeom) ? CHAT_STATE.prevGeom : (CHAT_STATE.geom || defaultChatGeom());
+  const { vw, vh } = getViewport();
+  const barW = Math.min(380, vw - 2 * CHAT_MARGIN);
+  panel.style.left = Math.round(Math.min(Math.max(CHAT_MARGIN, g.left), Math.max(CHAT_MARGIN, vw - barW - CHAT_MARGIN))) + 'px';
+  panel.style.top = Math.round(Math.min(Math.max(getTopLimit(), g.top), Math.max(getTopLimit(), vh - 64))) + 'px';
+  panel.style.right = 'auto';
+  panel.style.bottom = 'auto';
+  updateWindowControls();
+  document.getElementById('chatRestoreBtn').focus();
+}
+
+function maximizeChatWindow() {
+  if (CHAT_STATE.mobile) return;
+  const panel = document.getElementById('chatPanel');
+  if (CHAT_STATE.mode === 'normal') CHAT_STATE.prevGeom = readChatGeom();
+  CHAT_STATE.mode = 'maximized';
+  panel.classList.remove('minimized');
+  panel.classList.add('maximized');
+  applyChatGeom(maxChatGeom());
+  updateWindowControls();
+}
+
+function restoreChatWindow() {
+  const panel = document.getElementById('chatPanel');
+  const wasMinimized = CHAT_STATE.mode === 'minimized';
+  panel.classList.remove('minimized', 'maximized');
+  CHAT_STATE.mode = 'normal';
+  if (CHAT_STATE.mobile) {
+    CHAT_STATE.prevGeom = null;
+    clearChatGeom();
+  } else {
+    const g = CHAT_STATE.prevGeom || CHAT_STATE.geom || defaultChatGeom();
+    CHAT_STATE.prevGeom = null;
+    applyChatGeom(g);
+  }
+  updateWindowControls();
+  if (wasMinimized) document.getElementById('chatHeader').focus();
+}
+
+// ---- dragging ----
+function onHeaderPointerDown(e) {
+  if (e.button !== undefined && e.button !== 0) return;
+  // Never drag from interactive controls or resize handles.
+  if (e.target.closest('button, a, input, textarea, select, .scope-chip, .resize-handle')) return;
+
+  if (CHAT_STATE.mode === 'minimized') { restoreChatWindow(); return; }
+  if (CHAT_STATE.mobile || CHAT_STATE.mode === 'maximized') return;
+
+  const rect = readChatGeom();
+  chatDrag = { id: e.pointerId, dx: e.clientX - rect.left, dy: e.clientY - rect.top, w: rect.width, h: rect.height };
+  e.currentTarget.setPointerCapture(e.pointerId);
+  document.getElementById('chatPanel').classList.add('dragging');
+  document.body.classList.add('chat-window-active');
+  e.preventDefault();
+}
+
+function onHeaderPointerMove(e) {
+  if (!chatDrag || e.pointerId !== chatDrag.id) return;
+  const { vw, vh } = getViewport();
+  const topLimit = getTopLimit();
+  const left = Math.min(Math.max(CHAT_MARGIN, e.clientX - chatDrag.dx), Math.max(CHAT_MARGIN, vw - chatDrag.w - CHAT_MARGIN));
+  const top = Math.min(Math.max(topLimit, e.clientY - chatDrag.dy), Math.max(topLimit, vh - chatDrag.h - CHAT_MARGIN));
+  applyChatGeom({ left, top, width: chatDrag.w, height: chatDrag.h });
+  e.preventDefault();
+}
+
+function onHeaderPointerUp(e) {
+  if (!chatDrag) return;
+  try { e.currentTarget.releasePointerCapture(chatDrag.id); } catch (_) {}
+  chatDrag = null;
+  document.getElementById('chatPanel').classList.remove('dragging');
+  document.body.classList.remove('chat-window-active');
+}
+
+// ---- resizing ----
+function onResizePointerDown(e) {
+  if (e.button !== undefined && e.button !== 0) return;
+  if (CHAT_STATE.mobile || CHAT_STATE.mode !== 'normal') return;
+  const rect = readChatGeom();
+  chatResize = {
+    id: e.pointerId,
+    dir: e.currentTarget.dataset.dir,
+    startX: e.clientX,
+    startY: e.clientY,
+    left: rect.left,
+    top: rect.top,
+    width: rect.width,
+    height: rect.height,
+  };
+  e.currentTarget.setPointerCapture(e.pointerId);
+  document.getElementById('chatPanel').classList.add('resizing');
+  document.body.classList.add('chat-window-active');
+  e.preventDefault();
+  e.stopPropagation();
+}
+
+function onResizePointerMove(e) {
+  if (!chatResize || e.pointerId !== chatResize.id) return;
+  const r = chatResize;
+  const dx = e.clientX - r.startX;
+  const dy = e.clientY - r.startY;
+  let { left, top, width, height } = r;
+
+  if (r.dir.indexOf('e') !== -1) width = r.width + dx;
+  if (r.dir.indexOf('s') !== -1) height = r.height + dy;
+  if (r.dir.indexOf('w') !== -1) { width = r.width - dx; left = r.left + dx; }
+  if (r.dir.indexOf('n') !== -1) { height = r.height - dy; top = r.top + dy; }
+
+  const { vw, vh } = getViewport();
+  const topLimit = getTopLimit();
+  const maxW = Math.max(200, vw - 2 * CHAT_MARGIN);
+  const maxH = Math.max(200, vh - topLimit - CHAT_MARGIN);
+  width = Math.min(Math.max(width, Math.min(CHAT_MIN_W, maxW)), maxW);
+  height = Math.min(Math.max(height, Math.min(CHAT_MIN_H, maxH)), maxH);
+
+  // Anchor the edge that the user is NOT dragging.
+  if (r.dir.indexOf('w') !== -1) left = r.left + r.width - width;
+  if (r.dir.indexOf('n') !== -1) top = r.top + r.height - height;
+
+  left = Math.min(Math.max(CHAT_MARGIN, left), Math.max(CHAT_MARGIN, vw - width - CHAT_MARGIN));
+  top = Math.min(Math.max(topLimit, top), Math.max(topLimit, vh - height - CHAT_MARGIN));
+
+  applyChatGeom({ left, top, width, height });
+  e.preventDefault();
+}
+
+function onResizePointerUp(e) {
+  if (!chatResize) return;
+  try { e.currentTarget.releasePointerCapture(chatResize.id); } catch (_) {}
+  chatResize = null;
+  document.getElementById('chatPanel').classList.remove('resizing');
+  document.body.classList.remove('chat-window-active');
+}
+
+// ---- keyboard ----
+function onHeaderKeyDown(e) {
+  if (CHAT_STATE.mode === 'minimized') {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); restoreChatWindow(); }
+    return;
+  }
+  if (CHAT_STATE.mobile || CHAT_STATE.mode === 'maximized') return;
+
+  const step = e.altKey ? 4 : 16;
+  const g = readChatGeom();
+  let { left, top, width, height } = g;
+  let handled = true;
+
+  if (e.shiftKey) {
+    if (e.key === 'ArrowRight') width += step;
+    else if (e.key === 'ArrowLeft') width -= step;
+    else if (e.key === 'ArrowDown') height += step;
+    else if (e.key === 'ArrowUp') height -= step;
+    else handled = false;
+  } else {
+    if (e.key === 'ArrowRight') left += step;
+    else if (e.key === 'ArrowLeft') left -= step;
+    else if (e.key === 'ArrowDown') top += step;
+    else if (e.key === 'ArrowUp') top -= step;
+    else handled = false;
+  }
+  if (!handled) return;
+  e.preventDefault();
+  applyChatGeom({ left, top, width, height });
+}
+
+function onViewportResize() {
+  const mobile = isNarrowViewport();
+  const wasMobile = CHAT_STATE.mobile;
+  CHAT_STATE.mobile = mobile;
+  const panel = document.getElementById('chatPanel');
+
+  if (mobile) {
+    // The docked mobile layout replaces free positioning entirely.
+    panel.classList.remove('maximized');
+    if (CHAT_STATE.mode === 'maximized') CHAT_STATE.mode = 'normal';
+    CHAT_STATE.prevGeom = null;
+    clearChatGeom();
+    updateWindowControls();
+    return;
+  }
+  if (wasMobile) CHAT_STATE.initialized = false;
+  if (!panel.classList.contains('visible')) { updateWindowControls(); return; }
+  if (CHAT_STATE.mode === 'maximized') applyChatGeom(maxChatGeom());
+  else if (CHAT_STATE.mode === 'normal') applyChatGeom(CHAT_STATE.geom || defaultChatGeom());
+  updateWindowControls();
+}
+
+function setupChatWindow() {
+  const header = document.getElementById('chatHeader');
+  const panel = document.getElementById('chatPanel');
+
+  attachScrollGuard();
+
+  header.addEventListener('pointerdown', onHeaderPointerDown);
+  header.addEventListener('pointermove', onHeaderPointerMove);
+  header.addEventListener('pointerup', onHeaderPointerUp);
+  header.addEventListener('pointercancel', onHeaderPointerUp);
+  header.addEventListener('keydown', onHeaderKeyDown);
+
+  panel.querySelectorAll('.resize-handle').forEach(h => {
+    h.addEventListener('pointerdown', onResizePointerDown);
+    h.addEventListener('pointermove', onResizePointerMove);
+    h.addEventListener('pointerup', onResizePointerUp);
+    h.addEventListener('pointercancel', onResizePointerUp);
+  });
+
+  window.addEventListener('resize', onViewportResize);
+  CHAT_STATE.mobile = isNarrowViewport();
+  updateWindowControls();
+}
+
+function renderResults(data) {
+  // Legacy single-response renderer — kept for compatibility.
+  // New conversational flow uses submitChat() + renderConversation().
+  const out = document.getElementById('chatResults');
+  out.innerHTML = buildAnswerHtml(data);
+}
+
+function escapeHtml(s) {
+  if (s == null) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+document.getElementById('chatQuestion').addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); submitChat(); }
+});
+
+setupChatWindow();
+init();
+</script>
+</body>
+</html>

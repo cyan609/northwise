@@ -1,0 +1,358 @@
+#!/usr/bin/env python3
+"""Stage 1: build the batch validation report and the Stage 1 inventory.
+
+Reads every `stage1/data/*.pages.jsonl` plus the Stage 0 page-number analysis,
+and writes:
+
+  stage1/BATCH_VALIDATION.md   one row per chapter, totals, anomalies
+  stage1/STAGE1_INVENTORY.md   extraction status + what is machine vs manual
+
+The manual-inspection map below is deliberately hard-coded. Manual inspection is
+a human/agent activity that leaves no trace in the JSONL, so it cannot be derived
+from the data. Each entry points at the report where the inspection is documented.
+Nothing is ever marked manually verified on the strength of extraction alone.
+
+Usage: python3 stage1/build_batch_report.py
+"""
+import glob
+import json
+import os
+import re
+
+ROOT = "/Users/chloeyan/workbuddy-ai/NORTHWISE"
+DATA = os.path.join(ROOT, "stage1", "data")
+REGISTRY = os.path.join(ROOT, "stage0", "reports.json")
+PAGE_NUMBERING = os.path.join(ROOT, "stage0", "source-data", "page_numbering.json")
+
+# chapter stem -> (pages inspected, 0-based indices, where documented)
+MANUAL_INSPECTIONS = {
+    "eia_ch04_out": (1, [0], "VALIDATION_eia_ch04.md (control render)"),
+    "eia_ch08_out": (4, [0, 62, 103, 123], "VALIDATION_PILOT.md"),
+    "s9_eco": (3, [0, 56, 112], "VALIDATION_PILOT.md"),
+    "eia_ch10_out": (5, [0, 68, 122, 123, 136], "VALIDATION_PILOT.md"),
+    "eia_ch15_out": (11, list(range(11)), "VALIDATION_CH15_ABSENT.md (all pages)"),
+}
+
+
+def chapter_meta():
+    """(report_id, chapter_no, title, filename, sha) keyed by file stem."""
+    reg = json.load(open(REGISTRY))
+    out = {}
+    for report in reg["reports"]:
+        for ch in report["chapters"]:
+            fn = os.path.basename(ch["local_file"])
+            out[fn[:-4]] = {
+                "report_id": report["register_no"],
+                "number": ch.get("number"),
+                "title": ch.get("title") or "(none)",
+                "filename": fn,
+                "sha256": ch.get("sha256"),
+            }
+    return out
+
+
+def stage0_pages():
+    pn = json.load(open(PAGE_NUMBERING))
+    out = {}
+    for payload in pn["reports"].values():
+        for ch in payload["chapters"]:
+            if "error" not in ch:
+                out[ch["filename"]] = ch["pages"]
+    return out
+
+
+def analyse(stem):
+    recs = [json.loads(l) for l in open(os.path.join(DATA, f"{stem}.pages.jsonl"))]
+    counts = {"verified": 0, "absent": 0, "unverified": 0}
+    for r in recs:
+        counts[r["page_label_status"]] = counts.get(r["page_label_status"], 0) + 1
+    labels = [r["page_label"] for r in recs if r["page_label"]]
+    dupes = sorted({l for l in labels if labels.count(l) > 1})
+
+    offsets = set()
+    for r in recs:
+        if r["page_label"]:
+            last = re.split(r"-", r["page_label"])[-1]
+            if last.isdigit():
+                offsets.add((r["pdf_page_index"] + 1) - int(last))
+
+    nums = [int(re.split(r"-", l)[-1]) for l in labels
+            if re.split(r"-", l)[-1].isdigit()]
+    missing = (sorted(set(range(min(nums), max(nums) + 1)) - set(nums))
+               if nums else [])
+
+    absent_idx = [r["pdf_page_index"] for r in recs
+                  if r["page_label_status"] == "absent"]
+    unver_idx = [r["pdf_page_index"] for r in recs
+                 if r["page_label_status"] == "unverified"]
+
+    return {
+        "records": len(recs),
+        "counts": counts,
+        "dupes": dupes,
+        "offsets": sorted(offsets),
+        "missing": missing,
+        "absent_idx": absent_idx,
+        "unver_idx": unver_idx,
+        "sha": recs[0]["source_sha256"] if recs else None,
+    }
+
+
+def fmt_list(v, limit=6):
+    if not v:
+        return "none"
+    s = ", ".join(str(x) for x in v)
+    if len(v) > limit:
+        s = ", ".join(str(x) for x in v[:limit]) + f" … (+{len(v) - limit})"
+    return s
+
+
+def main():
+    meta = chapter_meta()
+    s0pages = stage0_pages()
+    stems = sorted(os.path.basename(p)[:-len(".pages.jsonl")]
+                   for p in glob.glob(os.path.join(DATA, "*.pages.jsonl")))
+
+    rows = []
+    for stem in stems:
+        a = analyse(stem)
+        m = meta.get(stem, {})
+        pdf_pages = s0pages.get(m.get("filename", ""))
+        manual = MANUAL_INSPECTIONS.get(stem)
+        rows.append({
+            "stem": stem, "meta": m, "pdf_pages": pdf_pages, **a,
+            "manual_pages": manual[0] if manual else 0,
+            "manual_idx": manual[1] if manual else [],
+            "manual_src": manual[2] if manual else None,
+        })
+
+    # Order by report, then chapter number; the unnumbered sign page goes last.
+    rows.sort(key=lambda r: (r["meta"].get("report_id") or "",
+                             r["meta"].get("number")
+                             if r["meta"].get("number") is not None else 999))
+
+    # ---------------- batch validation report ----------------
+    L = []
+    A = L.append
+    A("# Stage 1 batch validation — all chapter files")
+    A("")
+    A("Generated by `stage1/build_batch_report.py` from the JSONL files on disk.")
+    A("")
+    A("Every chapter PDF in `stage0/reports.json` has now been extracted. The")
+    A("extractor (`stage1/extract_pages.py`) was used unchanged: no matcher edit was")
+    A("needed for any chapter in this batch.")
+    A("")
+    A("`verified` = a folio was read from that page's own footer. `absent` = the")
+    A("month-year footer is present but no folio precedes it. `unverified` = no")
+    A("recognisable footer, or no extractable text.")
+    A("")
+    A("## Per-chapter results")
+    A("")
+    A("| Report | Ch | Title | File | PDF pp | Records | verified | absent | unverified | Duplicate labels | Offset | Errors |")
+    A("|---|---:|---|---|---:|---:|---:|---:|---:|---|---|---|")
+    for r in rows:
+        m = r["meta"]
+        num = "—" if m.get("number") is None else m["number"]
+        title = m.get("title") or ""
+        match = "**COUNT MISMATCH**" if r["pdf_pages"] != r["records"] else "none"
+        off = (f"{r['offsets'][0]}..{r['offsets'][-1]}" if r["offsets"]
+               else "n/a")
+        if len(r["offsets"]) > 1:
+            off += f" ({len(r['offsets'])} values)"
+        dupes = (", ".join(f"`{d}`" for d in r["dupes"]) if r["dupes"] else "none")
+        A(f"| {m.get('report_id','?')} | {num} | {title} | `{m.get('filename','?')}` | "
+          f"{r['pdf_pages']} | {r['records']} | {r['counts']['verified']} | "
+          f"{r['counts']['absent']} | {r['counts']['unverified']} | "
+          f"{dupes} | {off} | {match} |")
+    A("")
+
+    tot_pdf = sum(r["pdf_pages"] or 0 for r in rows)
+    tot_rec = sum(r["records"] for r in rows)
+    tot_v = sum(r["counts"]["verified"] for r in rows)
+    tot_a = sum(r["counts"]["absent"] for r in rows)
+    tot_u = sum(r["counts"]["unverified"] for r in rows)
+    mismatches = [r for r in rows if r["pdf_pages"] != r["records"]]
+
+    A("## Batch totals")
+    A("")
+    A("| Measure | Value |")
+    A("|---|---:|")
+    A(f"| Chapter files | {len(rows)} |")
+    A(f"| PDF pages | {tot_pdf} |")
+    A(f"| JSONL records | {tot_rec} |")
+    A(f"| Record/page mismatches | **{len(mismatches)}** |")
+    A(f"| `verified` | {tot_v} ({tot_v / tot_rec:.1%}) |")
+    A(f"| `absent` | {tot_a} ({tot_a / tot_rec:.1%}) |")
+    A(f"| `unverified` | {tot_u} ({tot_u / tot_rec:.1%}) |")
+    A(f"| Chapters with duplicate labels | "
+      f"{sum(1 for r in rows if r['dupes'])} |")
+    A(f"| Chapters with a varying offset | "
+      f"{sum(1 for r in rows if len(r['offsets']) > 1)} |")
+    A("")
+
+    A("## Anomalies, reported not normalised")
+    A("")
+    dup_rows = [r for r in rows if r["dupes"]]
+    if dup_rows:
+        A("**Duplicate printed folios** — both records are preserved; nothing was")
+        A("deduplicated or renumbered:")
+        A("")
+        for r in dup_rows:
+            A(f"- `{r['meta']['filename']}`: {fmt_list(r['dupes'])}")
+        A("")
+    else:
+        A("- No duplicate folios in this batch.")
+        A("")
+
+    var_rows = [r for r in rows if len(r["offsets"]) > 1]
+    if var_rows:
+        A("**Offset varies within a chapter** (viewer index − printed page):")
+        A("")
+        for r in var_rows:
+            A(f"- `{r['meta']['filename']}`: {r['offsets']}")
+        A("")
+    else:
+        A("- Every chapter has a single constant offset.")
+        A("")
+
+    miss_rows = [r for r in rows if r["missing"]]
+    A("**Folio numbers printed on no page** (a gap in the source sequence):")
+    A("")
+    if miss_rows:
+        for r in miss_rows:
+            A(f"- `{r['meta']['filename']}`: missing {fmt_list(r['missing'])}")
+    else:
+        A("- none")
+    A("")
+
+    A("**Pages with no verifiable folio** (`page_label` is JSON `null`):")
+    A("")
+    for r in rows:
+        bits = []
+        if r["counts"]["absent"]:
+            bits.append(f"{r['counts']['absent']} `absent` at indices "
+                        f"{fmt_list(r['absent_idx'])}")
+        if r["counts"]["unverified"]:
+            bits.append(f"{r['counts']['unverified']} `unverified` at indices "
+                        f"{fmt_list(r['unver_idx'])}")
+        if bits:
+            A(f"- `{r['meta']['filename']}`: " + "; ".join(bits))
+    A("")
+    A("### Pattern: unnumbered pages only ever end a chapter")
+    A("")
+    end_only = all(r["absent_idx"] and
+                   r["absent_idx"] == list(range(r["absent_idx"][0], r["records"] - 1 + 1))
+                   for r in rows if r["absent_idx"])
+    if end_only and any(r["absent_idx"] for r in rows):
+        A("In every chapter that has unnumbered pages, those pages form a **contiguous")
+        A("run ending at the chapter's last page**. No chapter has an unnumbered page")
+        A("in the middle followed by numbered pages.")
+        A("")
+        A("This matters for interpretation: it is consistent with the final page(s) of")
+        A("a chapter being unnumbered by design, rather than with a folio that the")
+        A("extractor intermittently fails to read. It also means the risk is")
+        A("concentrated at chapter ends, where a citation is least likely to land.")
+    else:
+        A("Not observed: at least one chapter has an unnumbered page that is not in a")
+        A("final run, which would point at an extraction problem rather than a")
+        A("publishing convention.")
+    A("")
+    A("## What was and was not checked")
+    A("")
+    A("- **Automated, every chapter:** record count vs PDF page count; folio")
+    A("  status distribution; duplicate labels; offset consistency; numeric gaps.")
+    A("- **Manual, a small subset:** see `STAGE1_INVENTORY.md`. The great majority")
+    A("  of records are machine-extracted only and are not claimed to be manually")
+    A("  verified.")
+    A("")
+    A("## Limitations")
+    A("")
+    A("1. `verified` means a folio was read from the footer, not that a human")
+    A("   compared the page. Only the pages listed in the inventory were inspected")
+    A("   visually.")
+    A("2. A folio is still not a unique page identifier where duplicates exist;")
+    A("   citations must carry `pdf_page_index`.")
+    A("3. Text order comes from PDFKit, so table cells can interleave with prose on")
+    A("   dense pages. This does not affect folio detection but will affect")
+    A("   retrieval quality and must be measured before Q&A.")
+    A("4. The chapter files are English-only as published; there is no Chinese")
+    A("   chapter text to extract.")
+    A("")
+    with open(os.path.join(ROOT, "stage1", "BATCH_VALIDATION.md"), "w",
+              encoding="utf-8") as fh:
+        fh.write("\n".join(L) + "\n")
+
+    # ---------------- Stage 1 inventory ----------------
+    I = []
+    B = I.append
+    B("# Stage 1 inventory — extraction status")
+    B("")
+    B("Generated by `stage1/build_batch_report.py`. Companion to")
+    B("`stage1/BATCH_VALIDATION.md` (per-chapter numbers) and")
+    B("`stage0/STAGE0_INVENTORY.md` (source provenance).")
+    B("")
+    B("## Status")
+    B("")
+    B(f"- **{len(rows)} of {len(rows)}** chapter files extracted. None outstanding.")
+    B(f"- **{tot_rec}** page records, one per PDF page.")
+    B("- Extractor: `stage1/extract_pages.py`, unchanged since the ch.4 deliverable.")
+    B("- Source SHA-256 is re-verified against `reports.json` before each extraction,")
+    B("  so no record was produced from a file that had drifted.")
+    B("")
+    B("## Machine-extracted vs manually inspected")
+    B("")
+    manual_rows = [r for r in rows if r["manual_pages"]]
+    manual_pages = sum(r["manual_pages"] for r in manual_rows)
+    B(f"**{manual_pages} of {tot_rec} pages ({manual_pages / tot_rec:.1%}) were "
+      "inspected visually against the rendered PDF.** The remaining "
+      f"{tot_rec - manual_pages} records are machine-extracted only.")
+    B("")
+    B("This distinction is not cosmetic: `page_label_status: verified` asserts that")
+    B("*the extractor found a folio on that page*, not that a person confirmed it.")
+    B("")
+    B("| File | Records | Manually inspected | Indices | Documented in |")
+    B("|---|---:|---:|---|---|")
+    for r in manual_rows:
+        B(f"| `{r['meta']['filename']}` | {r['records']} | {r['manual_pages']} | "
+          f"{fmt_list(r['manual_idx'], 12)} | {r['manual_src']} |")
+    B("")
+    B("Everything not listed above has **no manual page-level verification**.")
+    B("")
+    B("## Coverage by report")
+    B("")
+    for reg in ("AEIAR-276-2026", "AEIAR-271-2025"):
+        sub = [r for r in rows if r["meta"].get("report_id") == reg]
+        B(f"- **{reg}**: {len(sub)} files, "
+          f"{sum(r['records'] for r in sub)} records, "
+          f"{sum(r['counts']['verified'] for r in sub)} verified, "
+          f"{sum(r['counts']['absent'] for r in sub)} absent, "
+          f"{sum(r['counts']['unverified'] for r in sub)} unverified.")
+    B("")
+    B("## Known gaps after this batch")
+    B("")
+    B("1. **Figure/table text interleaving is unmeasured.** PDFKit returns text in")
+    B("   content-stream order, so table cells can interleave with prose. Harmless")
+    B("   for folios, material for retrieval. Must be sampled before Q&A.")
+    B("2. **Chunking has not been designed against this corpus.** Page-level chunks")
+    B("   are the approved starting point, but page sizes vary widely (the sign page")
+    B("   has no text at all; ch.10 pages run to ~3.4k characters).")
+    B("3. **`reports.json` remains `validation_status: incomplete`** — report-area")
+    B("   geometry is still deferred, unrelated to extraction.")
+    B("4. **No index, no retrieval, no Q&A exists yet.** This inventory covers")
+    B("   extraction only.")
+    B("")
+    with open(os.path.join(ROOT, "stage1", "STAGE1_INVENTORY.md"), "w",
+              encoding="utf-8") as fh:
+        fh.write("\n".join(I) + "\n")
+
+    print(f"chapters: {len(rows)} | pages {tot_pdf} | records {tot_rec} | "
+          f"mismatches {len(mismatches)}")
+    print(f"verified {tot_v} | absent {tot_a} | unverified {tot_u}")
+    print(f"duplicate chapters: {len(dup_rows)} | varying offset: {len(var_rows)}")
+    print(f"manual pages: {manual_pages}/{tot_rec}")
+    print("written: stage1/BATCH_VALIDATION.md")
+    print("written: stage1/STAGE1_INVENTORY.md")
+
+
+if __name__ == "__main__":
+    main()

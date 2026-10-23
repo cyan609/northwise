@@ -1,0 +1,1372 @@
+{
+  "method": "footer token before '<Month> <Year>' via PDFKit",
+  "reports": {
+    "AEIAR-276-2026": {
+      "page_numbering": "printed",
+      "note": "Printed folios are compound chapter-page labels (e.g. 2-1, 1-1-i) and are NOT the PDF viewer page index.",
+      "folio_forms": {
+        "compound": 562,
+        "roman": 37,
+        "plain": 105
+      },
+      "chapters": [
+        {
+          "filename": "eia_ch01_out.pdf",
+          "pages": 7,
+          "pages_with_folio": 4,
+          "coverage": 0.571,
+          "forms": {
+            "compound": 2,
+            "roman": 1,
+            "plain": 1
+          },
+          "offset_min": 2,
+          "offset_max": 2,
+          "page_labels_tree": false,
+          "samples": [
+            {
+              "viewer_index_1based": 1,
+              "folio": "1-1-i",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 2,
+              "folio": "1-1-ii",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 3,
+              "folio": "d",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 6,
+              "folio": null,
+              "form": null
+            },
+            {
+              "viewer_index_1based": 7,
+              "folio": null,
+              "form": null
+            }
+          ]
+        },
+        {
+          "filename": "eia_ch02_out.pdf",
+          "pages": 35,
+          "pages_with_folio": 35,
+          "coverage": 1.0,
+          "forms": {
+            "roman": 2,
+            "compound": 33
+          },
+          "offset_min": 2,
+          "offset_max": 2,
+          "page_labels_tree": false,
+          "samples": [
+            {
+              "viewer_index_1based": 1,
+              "folio": "i",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 2,
+              "folio": "ii",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 3,
+              "folio": "2-1",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 34,
+              "folio": "2-32",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 35,
+              "folio": "2-33",
+              "form": "compound"
+            }
+          ]
+        },
+        {
+          "filename": "eia_ch03_out.pdf",
+          "pages": 66,
+          "pages_with_folio": 66,
+          "coverage": 1.0,
+          "forms": {
+            "roman": 5,
+            "compound": 61
+          },
+          "offset_min": 5,
+          "offset_max": 5,
+          "page_labels_tree": false,
+          "samples": [
+            {
+              "viewer_index_1based": 1,
+              "folio": "i",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 2,
+              "folio": "ii",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 3,
+              "folio": "iii",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 65,
+              "folio": "3-60",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 66,
+              "folio": "3-61",
+              "form": "compound"
+            }
+          ]
+        },
+        {
+          "filename": "eia_ch04_out.pdf",
+          "pages": 62,
+          "pages_with_folio": 59,
+          "coverage": 0.952,
+          "forms": {
+            "roman": 3,
+            "compound": 56
+          },
+          "offset_min": 3,
+          "offset_max": 3,
+          "page_labels_tree": false,
+          "samples": [
+            {
+              "viewer_index_1based": 1,
+              "folio": "i",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 2,
+              "folio": "ii",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 3,
+              "folio": "iii",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 61,
+              "folio": "4-58",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 62,
+              "folio": "4-59",
+              "form": "compound"
+            }
+          ]
+        },
+        {
+          "filename": "eia_ch05_out.pdf",
+          "pages": 39,
+          "pages_with_folio": 38,
+          "coverage": 0.974,
+          "forms": {
+            "roman": 2,
+            "compound": 36
+          },
+          "offset_min": 2,
+          "offset_max": 2,
+          "page_labels_tree": false,
+          "samples": [
+            {
+              "viewer_index_1based": 1,
+              "folio": "i",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 2,
+              "folio": "ii",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 3,
+              "folio": "5-1",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 38,
+              "folio": "5-36",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 39,
+              "folio": null,
+              "form": null
+            }
+          ]
+        },
+        {
+          "filename": "eia_ch06_out.pdf",
+          "pages": 28,
+          "pages_with_folio": 28,
+          "coverage": 1.0,
+          "forms": {
+            "roman": 2,
+            "plain": 26
+          },
+          "offset_min": 2,
+          "offset_max": 2,
+          "page_labels_tree": false,
+          "samples": [
+            {
+              "viewer_index_1based": 1,
+              "folio": "i",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 2,
+              "folio": "ii",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 3,
+              "folio": "1",
+              "form": "plain"
+            },
+            {
+              "viewer_index_1based": 27,
+              "folio": "25",
+              "form": "plain"
+            },
+            {
+              "viewer_index_1based": 28,
+              "folio": "26",
+              "form": "plain"
+            }
+          ]
+        },
+        {
+          "filename": "eia_ch07_out.pdf",
+          "pages": 55,
+          "pages_with_folio": 55,
+          "coverage": 1.0,
+          "forms": {
+            "roman": 2,
+            "compound": 53
+          },
+          "offset_min": 2,
+          "offset_max": 2,
+          "page_labels_tree": false,
+          "samples": [
+            {
+              "viewer_index_1based": 1,
+              "folio": "i",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 2,
+              "folio": "ii",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 3,
+              "folio": "7-1",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 54,
+              "folio": "7-52",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 55,
+              "folio": "7-53",
+              "form": "compound"
+            }
+          ]
+        },
+        {
+          "filename": "eia_ch08_out.pdf",
+          "pages": 124,
+          "pages_with_folio": 124,
+          "coverage": 1.0,
+          "forms": {
+            "roman": 4,
+            "compound": 99,
+            "plain": 21
+          },
+          "offset_min": 4,
+          "offset_max": 4,
+          "page_labels_tree": false,
+          "samples": [
+            {
+              "viewer_index_1based": 1,
+              "folio": "i",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 2,
+              "folio": "ii",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 3,
+              "folio": "iii",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 123,
+              "folio": "119",
+              "form": "plain"
+            },
+            {
+              "viewer_index_1based": 124,
+              "folio": "120",
+              "form": "plain"
+            }
+          ]
+        },
+        {
+          "filename": "eia_ch09_out.pdf",
+          "pages": 21,
+          "pages_with_folio": 21,
+          "coverage": 1.0,
+          "forms": {
+            "roman": 2,
+            "compound": 19
+          },
+          "offset_min": 2,
+          "offset_max": 2,
+          "page_labels_tree": false,
+          "samples": [
+            {
+              "viewer_index_1based": 1,
+              "folio": "i",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 2,
+              "folio": "ii",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 3,
+              "folio": "9-1",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 20,
+              "folio": "9-18",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 21,
+              "folio": "9-19",
+              "form": "compound"
+            }
+          ]
+        },
+        {
+          "filename": "eia_ch10_out.pdf",
+          "pages": 137,
+          "pages_with_folio": 137,
+          "coverage": 1.0,
+          "forms": {
+            "roman": 4,
+            "compound": 99,
+            "plain": 34
+          },
+          "offset_min": 4,
+          "offset_max": 5,
+          "page_labels_tree": false,
+          "samples": [
+            {
+              "viewer_index_1based": 1,
+              "folio": "i",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 2,
+              "folio": "ii",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 3,
+              "folio": "iii",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 136,
+              "folio": "131",
+              "form": "plain"
+            },
+            {
+              "viewer_index_1based": 137,
+              "folio": "132",
+              "form": "plain"
+            }
+          ]
+        },
+        {
+          "filename": "eia_ch11_out.pdf",
+          "pages": 25,
+          "pages_with_folio": 25,
+          "coverage": 1.0,
+          "forms": {
+            "roman": 2,
+            "plain": 23
+          },
+          "offset_min": 2,
+          "offset_max": 2,
+          "page_labels_tree": false,
+          "samples": [
+            {
+              "viewer_index_1based": 1,
+              "folio": "i",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 2,
+              "folio": "ii",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 3,
+              "folio": "1",
+              "form": "plain"
+            },
+            {
+              "viewer_index_1based": 24,
+              "folio": "22",
+              "form": "plain"
+            },
+            {
+              "viewer_index_1based": 25,
+              "folio": "23",
+              "form": "plain"
+            }
+          ]
+        },
+        {
+          "filename": "eia_ch12_out.pdf",
+          "pages": 89,
+          "pages_with_folio": 89,
+          "coverage": 1.0,
+          "forms": {
+            "roman": 3,
+            "compound": 86
+          },
+          "offset_min": 3,
+          "offset_max": 3,
+          "page_labels_tree": false,
+          "samples": [
+            {
+              "viewer_index_1based": 1,
+              "folio": "i",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 2,
+              "folio": "ii",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 3,
+              "folio": "iii",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 88,
+              "folio": "12-85",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 89,
+              "folio": "12-86",
+              "form": "compound"
+            }
+          ]
+        },
+        {
+          "filename": "eia_ch13_out.pdf",
+          "pages": 7,
+          "pages_with_folio": 6,
+          "coverage": 0.857,
+          "forms": {
+            "roman": 1,
+            "compound": 5
+          },
+          "offset_min": 1,
+          "offset_max": 1,
+          "page_labels_tree": false,
+          "samples": [
+            {
+              "viewer_index_1based": 1,
+              "folio": "i",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 2,
+              "folio": "13-1",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 3,
+              "folio": "13-2",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 6,
+              "folio": "13-5",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 7,
+              "folio": null,
+              "form": null
+            }
+          ]
+        },
+        {
+          "filename": "eia_ch14_out.pdf",
+          "pages": 16,
+          "pages_with_folio": 15,
+          "coverage": 0.938,
+          "forms": {
+            "roman": 2,
+            "compound": 13
+          },
+          "offset_min": 2,
+          "offset_max": 2,
+          "page_labels_tree": false,
+          "samples": [
+            {
+              "viewer_index_1based": 1,
+              "folio": "i",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 2,
+              "folio": "ii",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 3,
+              "folio": "14-1",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 15,
+              "folio": "14-13",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 16,
+              "folio": null,
+              "form": null
+            }
+          ]
+        },
+        {
+          "filename": "eia_ch15_out.pdf",
+          "pages": 11,
+          "pages_with_folio": 2,
+          "coverage": 0.182,
+          "forms": {
+            "roman": 2
+          },
+          "offset_min": null,
+          "offset_max": null,
+          "page_labels_tree": false,
+          "samples": [
+            {
+              "viewer_index_1based": 1,
+              "folio": "i",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 2,
+              "folio": "ii",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 3,
+              "folio": null,
+              "form": null
+            },
+            {
+              "viewer_index_1based": 10,
+              "folio": null,
+              "form": null
+            },
+            {
+              "viewer_index_1based": 11,
+              "folio": null,
+              "form": null
+            }
+          ]
+        },
+        {
+          "filename": "eia_text_sign_page.pdf",
+          "pages": 1,
+          "pages_with_folio": 0,
+          "coverage": 0.0,
+          "forms": {},
+          "offset_min": null,
+          "offset_max": null,
+          "page_labels_tree": false,
+          "samples": [
+            {
+              "viewer_index_1based": 1,
+              "folio": null,
+              "form": null
+            },
+            {
+              "viewer_index_1based": 1,
+              "folio": null,
+              "form": null
+            }
+          ]
+        }
+      ]
+    },
+    "AEIAR-271-2025": {
+      "page_numbering": "printed",
+      "note": "Printed folios are compound chapter-page labels (e.g. 2-1, 1-1-i) and are NOT the PDF viewer page index.",
+      "folio_forms": {
+        "roman": 27,
+        "compound": 532,
+        "plain": 11
+      },
+      "chapters": [
+        {
+          "filename": "S15_EMF.pdf",
+          "pages": 5,
+          "pages_with_folio": 5,
+          "coverage": 1.0,
+          "forms": {
+            "roman": 1,
+            "compound": 4
+          },
+          "offset_min": 1,
+          "offset_max": 1,
+          "page_labels_tree": false,
+          "samples": [
+            {
+              "viewer_index_1based": 1,
+              "folio": "i",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 2,
+              "folio": "15-1",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 3,
+              "folio": "15-2",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 4,
+              "folio": "15-3",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 5,
+              "folio": "15-4",
+              "form": "compound"
+            }
+          ]
+        },
+        {
+          "filename": "s10_fisheries.pdf",
+          "pages": 19,
+          "pages_with_folio": 19,
+          "coverage": 1.0,
+          "forms": {
+            "roman": 1,
+            "compound": 18
+          },
+          "offset_min": 1,
+          "offset_max": 1,
+          "page_labels_tree": false,
+          "samples": [
+            {
+              "viewer_index_1based": 1,
+              "folio": "i",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 2,
+              "folio": "10-1",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 3,
+              "folio": "10-2",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 18,
+              "folio": "10-17",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 19,
+              "folio": "10-18",
+              "form": "compound"
+            }
+          ]
+        },
+        {
+          "filename": "s11_lvia.pdf",
+          "pages": 56,
+          "pages_with_folio": 56,
+          "coverage": 1.0,
+          "forms": {
+            "roman": 2,
+            "compound": 54
+          },
+          "offset_min": 2,
+          "offset_max": 2,
+          "page_labels_tree": false,
+          "samples": [
+            {
+              "viewer_index_1based": 1,
+              "folio": "i",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 2,
+              "folio": "ii",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 3,
+              "folio": "11-1",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 55,
+              "folio": "11-53",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 56,
+              "folio": "11-54",
+              "form": "compound"
+            }
+          ]
+        },
+        {
+          "filename": "s12_cultural_heritage.pdf",
+          "pages": 53,
+          "pages_with_folio": 53,
+          "coverage": 1.0,
+          "forms": {
+            "roman": 2,
+            "compound": 51
+          },
+          "offset_min": 1,
+          "offset_max": 2,
+          "page_labels_tree": false,
+          "samples": [
+            {
+              "viewer_index_1based": 1,
+              "folio": "i",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 2,
+              "folio": "ii",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 3,
+              "folio": "12-1",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 52,
+              "folio": "12-51",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 53,
+              "folio": "12-52",
+              "form": "compound"
+            }
+          ]
+        },
+        {
+          "filename": "s13_hazard_to_life.pdf",
+          "pages": 3,
+          "pages_with_folio": 3,
+          "coverage": 1.0,
+          "forms": {
+            "roman": 1,
+            "compound": 2
+          },
+          "offset_min": 1,
+          "offset_max": 1,
+          "page_labels_tree": false,
+          "samples": [
+            {
+              "viewer_index_1based": 1,
+              "folio": "i",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 2,
+              "folio": "13-1",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 3,
+              "folio": "13-2",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 2,
+              "folio": "13-1",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 3,
+              "folio": "13-2",
+              "form": "compound"
+            }
+          ]
+        },
+        {
+          "filename": "s14_landfill_gas.pdf",
+          "pages": 15,
+          "pages_with_folio": 15,
+          "coverage": 1.0,
+          "forms": {
+            "roman": 1,
+            "compound": 14
+          },
+          "offset_min": 1,
+          "offset_max": 1,
+          "page_labels_tree": false,
+          "samples": [
+            {
+              "viewer_index_1based": 1,
+              "folio": "i",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 2,
+              "folio": "14-1",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 3,
+              "folio": "14-2",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 14,
+              "folio": "14-13",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 15,
+              "folio": "14-14",
+              "form": "compound"
+            }
+          ]
+        },
+        {
+          "filename": "s16_ema.pdf",
+          "pages": 7,
+          "pages_with_folio": 7,
+          "coverage": 1.0,
+          "forms": {
+            "roman": 1,
+            "compound": 6
+          },
+          "offset_min": 1,
+          "offset_max": 1,
+          "page_labels_tree": false,
+          "samples": [
+            {
+              "viewer_index_1based": 1,
+              "folio": "i",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 2,
+              "folio": "16-1",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 3,
+              "folio": "16-2",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 6,
+              "folio": "16-5",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 7,
+              "folio": "16-6",
+              "form": "compound"
+            }
+          ]
+        },
+        {
+          "filename": "s17_summary_of_outcomes.pdf",
+          "pages": 14,
+          "pages_with_folio": 14,
+          "coverage": 1.0,
+          "forms": {
+            "roman": 1,
+            "compound": 13
+          },
+          "offset_min": 1,
+          "offset_max": 1,
+          "page_labels_tree": false,
+          "samples": [
+            {
+              "viewer_index_1based": 1,
+              "folio": "i",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 2,
+              "folio": "17-1",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 3,
+              "folio": "17-2",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 13,
+              "folio": "17-12",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 14,
+              "folio": "17-13",
+              "form": "compound"
+            }
+          ]
+        },
+        {
+          "filename": "s18_conclusion.pdf",
+          "pages": 10,
+          "pages_with_folio": 10,
+          "coverage": 1.0,
+          "forms": {
+            "roman": 1,
+            "compound": 9
+          },
+          "offset_min": 1,
+          "offset_max": 1,
+          "page_labels_tree": false,
+          "samples": [
+            {
+              "viewer_index_1based": 1,
+              "folio": "i",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 2,
+              "folio": "18-1",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 3,
+              "folio": "18-2",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 9,
+              "folio": "18-8",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 10,
+              "folio": "18-9",
+              "form": "compound"
+            }
+          ]
+        },
+        {
+          "filename": "s1_introduction.pdf",
+          "pages": 7,
+          "pages_with_folio": 7,
+          "coverage": 1.0,
+          "forms": {
+            "roman": 1,
+            "compound": 6
+          },
+          "offset_min": 1,
+          "offset_max": 1,
+          "page_labels_tree": false,
+          "samples": [
+            {
+              "viewer_index_1based": 1,
+              "folio": "i",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 2,
+              "folio": "1-1",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 3,
+              "folio": "1-2",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 6,
+              "folio": "1-5",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 7,
+              "folio": "1-6",
+              "form": "compound"
+            }
+          ]
+        },
+        {
+          "filename": "s2_project_description.pdf",
+          "pages": 35,
+          "pages_with_folio": 35,
+          "coverage": 1.0,
+          "forms": {
+            "roman": 1,
+            "compound": 34
+          },
+          "offset_min": 1,
+          "offset_max": 1,
+          "page_labels_tree": false,
+          "samples": [
+            {
+              "viewer_index_1based": 1,
+              "folio": "i",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 2,
+              "folio": "2-1",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 3,
+              "folio": "2-2",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 34,
+              "folio": "2-33",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 35,
+              "folio": "2-34",
+              "form": "compound"
+            }
+          ]
+        },
+        {
+          "filename": "s3_aq.pdf",
+          "pages": 55,
+          "pages_with_folio": 55,
+          "coverage": 1.0,
+          "forms": {
+            "roman": 3,
+            "compound": 52
+          },
+          "offset_min": 3,
+          "offset_max": 3,
+          "page_labels_tree": false,
+          "samples": [
+            {
+              "viewer_index_1based": 1,
+              "folio": "i",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 2,
+              "folio": "ii",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 3,
+              "folio": "iii",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 54,
+              "folio": "3-51",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 55,
+              "folio": "3-52",
+              "form": "compound"
+            }
+          ]
+        },
+        {
+          "filename": "s4_noise.pdf",
+          "pages": 68,
+          "pages_with_folio": 68,
+          "coverage": 1.0,
+          "forms": {
+            "roman": 3,
+            "compound": 65
+          },
+          "offset_min": 3,
+          "offset_max": 3,
+          "page_labels_tree": false,
+          "samples": [
+            {
+              "viewer_index_1based": 1,
+              "folio": "i",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 2,
+              "folio": "ii",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 3,
+              "folio": "iii",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 67,
+              "folio": "4-64",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 68,
+              "folio": "4-65",
+              "form": "compound"
+            }
+          ]
+        },
+        {
+          "filename": "s5_water_quality.pdf",
+          "pages": 33,
+          "pages_with_folio": 33,
+          "coverage": 1.0,
+          "forms": {
+            "roman": 1,
+            "compound": 32
+          },
+          "offset_min": 1,
+          "offset_max": 1,
+          "page_labels_tree": false,
+          "samples": [
+            {
+              "viewer_index_1based": 1,
+              "folio": "i",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 2,
+              "folio": "5-1",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 3,
+              "folio": "5-2",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 32,
+              "folio": "5-31",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 33,
+              "folio": "5-32",
+              "form": "compound"
+            }
+          ]
+        },
+        {
+          "filename": "s6_sewerage.pdf",
+          "pages": 9,
+          "pages_with_folio": 9,
+          "coverage": 1.0,
+          "forms": {
+            "roman": 1,
+            "compound": 8
+          },
+          "offset_min": 1,
+          "offset_max": 1,
+          "page_labels_tree": false,
+          "samples": [
+            {
+              "viewer_index_1based": 1,
+              "folio": "i",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 2,
+              "folio": "6-1",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 3,
+              "folio": "6-2",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 8,
+              "folio": "6-7",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 9,
+              "folio": "6-8",
+              "form": "compound"
+            }
+          ]
+        },
+        {
+          "filename": "s7_wast.pdf",
+          "pages": 32,
+          "pages_with_folio": 32,
+          "coverage": 1.0,
+          "forms": {
+            "roman": 1,
+            "compound": 31
+          },
+          "offset_min": 1,
+          "offset_max": 1,
+          "page_labels_tree": false,
+          "samples": [
+            {
+              "viewer_index_1based": 1,
+              "folio": "i",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 2,
+              "folio": "7-1",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 3,
+              "folio": "7-2",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 31,
+              "folio": "7-30",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 32,
+              "folio": "7-31",
+              "form": "compound"
+            }
+          ]
+        },
+        {
+          "filename": "s8_land_con.pdf",
+          "pages": 36,
+          "pages_with_folio": 36,
+          "coverage": 1.0,
+          "forms": {
+            "roman": 2,
+            "compound": 34
+          },
+          "offset_min": 2,
+          "offset_max": 2,
+          "page_labels_tree": false,
+          "samples": [
+            {
+              "viewer_index_1based": 1,
+              "folio": "i",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 2,
+              "folio": "ii",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 3,
+              "folio": "8-1",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 35,
+              "folio": "8-33",
+              "form": "compound"
+            },
+            {
+              "viewer_index_1based": 36,
+              "folio": "8-34",
+              "form": "compound"
+            }
+          ]
+        },
+        {
+          "filename": "s9_eco.pdf",
+          "pages": 113,
+          "pages_with_folio": 113,
+          "coverage": 1.0,
+          "forms": {
+            "roman": 3,
+            "compound": 99,
+            "plain": 11
+          },
+          "offset_min": 3,
+          "offset_max": 3,
+          "page_labels_tree": false,
+          "samples": [
+            {
+              "viewer_index_1based": 1,
+              "folio": "i",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 2,
+              "folio": "ii",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 3,
+              "folio": "iii",
+              "form": "roman"
+            },
+            {
+              "viewer_index_1based": 112,
+              "folio": "109",
+              "form": "plain"
+            },
+            {
+              "viewer_index_1based": 113,
+              "folio": "110",
+              "form": "plain"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

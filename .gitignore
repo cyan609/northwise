@@ -1,0 +1,13 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Editor / tooling state (local only)
+.workbuddy/
+.workbuddy-ai/
+*.genie

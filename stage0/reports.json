@@ -1,0 +1,1640 @@
+{
+  "schema_version": "stage0-draft-2",
+  "generated_at_utc": "2026-10-18T00:00:00Z",
+  "validation_status": "partial",
+  "incomplete_reasons": [
+    "6 new reports added with downloaded PDFs and extracted pages.",
+    "Page numbering not yet fully verified for new reports.",
+    "Project geometry still deferred for all reports.",
+    "AEIAR-274/2026 marked as needs_review (infrastructure borderline)."
+  ],
+  "reports": [
+    {
+      "report_id": "aeiar-276-2026",
+      "register_no": "AEIAR-276-2026",
+      "status": "approved",
+      "status_note": "conditionally approved (per EPD project page)",
+      "approval_date": "2026-08-12",
+      "title_en": "Northern Metropolis Highway – San Tin Section",
+      "title_zh": "北都公路 – 新田段",
+      "project_area_en": "San Tin",
+      "project_area_zh": "新田",
+      "districts": [
+        "hk-district:M"
+      ],
+      "districts_evidence": "Yuen Long District (code M in the HAD 18-district GeoJSON). Derived from the OZP plan numbers cited in the reports, not from point-in-polygon: no project coordinates exist yet.",
+      "report_areas": [],
+      "report_areas_status": "deferred_no_public_geometry",
+      "report_areas_decision": "2026-10-18: official public data only. No verified project geometry is publicly obtainable (CSDI/SPP3 requires a token), so project-area highlighting is deferred. The map will use the district context layer plus an accessible report list/card instead.",
+      "label_lat": 22.5,
+      "label_lng": 114.07,
+      "original_url": "https://www.epd.gov.hk/eia/tc/alpha/aspd.php?id=955",
+      "report_index_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_955/eia_6390/progress/action_180296/NMHST%20v3/cover_page_pdf.htm",
+      "exec_summary_en_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_955/eia_6390/progress/action_180296/NMHST%20v3/es/es_eng_out.pdf",
+      "exec_summary_zh_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_955/eia_6390/progress/action_180296/NMHST%20v3/es/es_chi_out.pdf",
+      "exec_summary_status": {
+        "en": "available",
+        "zh": "available",
+        "note": "PDFs verified to open; not linked from the project page, only from the report index page."
+      },
+      "page_numbering": "printed",
+      "page_numbering_note": "Printed folios are compound chapter-page labels (e.g. 2-1, 1-1-i) and are NOT the PDF viewer page index.",
+      "nm_scope_evidence": {
+        "zone": "Innovation and Technology Zone",
+        "area": "San Tin Technopole",
+        "url": "https://www.nm.gov.hk/en/four-zones/innovation-and-technology-zone",
+        "evidence_note": "Subzone list read from the nm.gov.hk zone API (provenance/nm_it_zone_api.json). Area-level match; the project-to-area link rests on the project name."
+      },
+      "chapters": [
+        {
+          "number": 1,
+          "title": "INTRODUCTION",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_955/eia_6390/progress/action_180296/NMHST%20v3/eia/eia_ch01_out.pdf",
+          "local_file": "source-data/AEIAR-276-2026/chapters/eia_ch01_out.pdf",
+          "sha256": "d83b2e09490fc235e5009d0607eb79031d57971a65b4c38cd3a1374ab8aac909",
+          "pages": 7,
+          "printed_folio_scheme": "mixed",
+          "pages_without_folio": 3
+        },
+        {
+          "number": 2,
+          "title": "PROJECT DESCRIPTION",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_955/eia_6390/progress/action_180296/NMHST%20v3/eia/eia_ch02_out.pdf",
+          "local_file": "source-data/AEIAR-276-2026/chapters/eia_ch02_out.pdf",
+          "sha256": "d707488b2bfea68171f67263a8ded287df3f16598cd1f571ec3d75885c053721",
+          "pages": 35,
+          "printed_folio_scheme": "mixed",
+          "pages_without_folio": 0
+        },
+        {
+          "number": 3,
+          "title": "AIR QUALITY",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_955/eia_6390/progress/action_180296/NMHST%20v3/eia/eia_ch03_out.pdf",
+          "local_file": "source-data/AEIAR-276-2026/chapters/eia_ch03_out.pdf",
+          "sha256": "2e384e16b1033118b745169e5c236d1fcc2020516d980e7f4c7bdc953c4a0929",
+          "pages": 66,
+          "printed_folio_scheme": "mixed",
+          "pages_without_folio": 0
+        },
+        {
+          "number": 4,
+          "title": "NOISE",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_955/eia_6390/progress/action_180296/NMHST%20v3/eia/eia_ch04_out.pdf",
+          "local_file": "source-data/AEIAR-276-2026/chapters/eia_ch04_out.pdf",
+          "sha256": "ce4158a00a73c615cddeff93f92330cbbedcc9c9978c2616f5a8e7c9ba1887d5",
+          "pages": 62,
+          "printed_folio_scheme": "mixed",
+          "pages_without_folio": 3
+        },
+        {
+          "number": 5,
+          "title": "WATER QUALITY",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_955/eia_6390/progress/action_180296/NMHST%20v3/eia/eia_ch05_out.pdf",
+          "local_file": "source-data/AEIAR-276-2026/chapters/eia_ch05_out.pdf",
+          "sha256": "5d0d4b39283d55ea989a46055bef6301c97f4781c31e3d8d5799f0c37dce8ac5",
+          "pages": 39,
+          "printed_folio_scheme": "mixed",
+          "pages_without_folio": 1
+        },
+        {
+          "number": 6,
+          "title": "WASTE MANAGEMENT IMPLICATIONS",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_955/eia_6390/progress/action_180296/NMHST%20v3/eia/eia_ch06_out.pdf",
+          "local_file": "source-data/AEIAR-276-2026/chapters/eia_ch06_out.pdf",
+          "sha256": "57e9147f72f29c9c7f1585842d381c554821c83a1d6edbd4ed8fc64840a7c94c",
+          "pages": 28,
+          "printed_folio_scheme": "mixed",
+          "pages_without_folio": 0
+        },
+        {
+          "number": 7,
+          "title": "LAND CONTAMINATION",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_955/eia_6390/progress/action_180296/NMHST%20v3/eia/eia_ch07_out.pdf",
+          "local_file": "source-data/AEIAR-276-2026/chapters/eia_ch07_out.pdf",
+          "sha256": "2e0eff44a3b80c7cd619ef07098bd27650a0d4f6f80ac6e902d66dc3df866bfe",
+          "pages": 55,
+          "printed_folio_scheme": "mixed",
+          "pages_without_folio": 0
+        },
+        {
+          "number": 8,
+          "title": "ECOLOGY",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_955/eia_6390/progress/action_180296/NMHST%20v3/eia/eia_ch08_out.pdf",
+          "local_file": "source-data/AEIAR-276-2026/chapters/eia_ch08_out.pdf",
+          "sha256": "29aba05f30777d6c49341152f4c1c81dca130be607ef87a24526397b31ff0564",
+          "pages": 124,
+          "printed_folio_scheme": "mixed",
+          "pages_without_folio": 0
+        },
+        {
+          "number": 9,
+          "title": "FISHERIES",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_955/eia_6390/progress/action_180296/NMHST%20v3/eia/eia_ch09_out.pdf",
+          "local_file": "source-data/AEIAR-276-2026/chapters/eia_ch09_out.pdf",
+          "sha256": "225eea57423fe1e1df1b4097c68c18d17188db898e8582b67492d69f62fb48fd",
+          "pages": 21,
+          "printed_folio_scheme": "mixed",
+          "pages_without_folio": 0
+        },
+        {
+          "number": 10,
+          "title": "LANDSCAPE AND VISUAL IMPACT",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_955/eia_6390/progress/action_180296/NMHST%20v3/eia/eia_ch10_out.pdf",
+          "local_file": "source-data/AEIAR-276-2026/chapters/eia_ch10_out.pdf",
+          "sha256": "5d9d42c072331d11fa767bbe1a47762eeaa435e05fdad3c726be791b24ec0059",
+          "pages": 137,
+          "printed_folio_scheme": "mixed",
+          "pages_without_folio": 0
+        },
+        {
+          "number": 11,
+          "title": "CULTURAL HERITAGE",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_955/eia_6390/progress/action_180296/NMHST%20v3/eia/eia_ch11_out.pdf",
+          "local_file": "source-data/AEIAR-276-2026/chapters/eia_ch11_out.pdf",
+          "sha256": "8e2e00f2760d146a25122463efabc235c0969d99890b4bcd694f64c78adff60f",
+          "pages": 25,
+          "printed_folio_scheme": "mixed",
+          "pages_without_folio": 0
+        },
+        {
+          "number": 12,
+          "title": "HAZARD TO LIFE",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_955/eia_6390/progress/action_180296/NMHST%20v3/eia/eia_ch12_out.pdf",
+          "local_file": "source-data/AEIAR-276-2026/chapters/eia_ch12_out.pdf",
+          "sha256": "035c5963caa4b0f5516018f48a8aed03f20e8cf87fe3a870a3225917c0c4641f",
+          "pages": 89,
+          "printed_folio_scheme": "mixed",
+          "pages_without_folio": 0
+        },
+        {
+          "number": 13,
+          "title": "ENVIRONMENTAL MONITORING AND AUDIT REQUIREMENTS",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_955/eia_6390/progress/action_180296/NMHST%20v3/eia/eia_ch13_out.pdf",
+          "local_file": "source-data/AEIAR-276-2026/chapters/eia_ch13_out.pdf",
+          "sha256": "e27e1717c08b5e959d672cdc37fd1957b6e1024c5dda256d960fd329e453b2f2",
+          "pages": 7,
+          "printed_folio_scheme": "mixed",
+          "pages_without_folio": 1
+        },
+        {
+          "number": 14,
+          "title": "SUMMARY OF ENVIRONMENTAL OUTCOMES",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_955/eia_6390/progress/action_180296/NMHST%20v3/eia/eia_ch14_out.pdf",
+          "local_file": "source-data/AEIAR-276-2026/chapters/eia_ch14_out.pdf",
+          "sha256": "86ad6549f283b1f7beb212d6215438adfa7aff230225e9845341baf9141030ab",
+          "pages": 16,
+          "printed_folio_scheme": "mixed",
+          "pages_without_folio": 1
+        },
+        {
+          "number": 15,
+          "title": "CONCLUSION",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_955/eia_6390/progress/action_180296/NMHST%20v3/eia/eia_ch15_out.pdf",
+          "local_file": "source-data/AEIAR-276-2026/chapters/eia_ch15_out.pdf",
+          "sha256": "b29b0648452a91d28debcc19060e6243250102148c2f29af58de76c1da41cb47",
+          "pages": 11,
+          "printed_folio_scheme": "roman",
+          "pages_without_folio": 9
+        },
+        {
+          "number": null,
+          "title": "Sign page",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_955/eia_6390/progress/action_180296/NMHST%20v3/eia/eia_text_sign_page.pdf",
+          "local_file": "source-data/AEIAR-276-2026/chapters/eia_text_sign_page.pdf",
+          "sha256": "3c7ca4b14bff155b7b4f2effdf5da26a45c02efeabf3078f8b4d916dd43e9492",
+          "pages": 1,
+          "printed_folio_scheme": "none",
+          "pages_without_folio": 1
+        }
+      ],
+      "version": "1.0",
+      "retrieved_at": "2026-10-17T16:08:36Z",
+      "checksum_manifest": "source-data/download_manifest.json",
+      "audit_decision": "verified_core_nm",
+      "audit_rationale": "Project title explicitly contains Northern Metropolis. Approved 2026 under NM programme. Located within San Tin Technopole.",
+      "historical_pre_nm": false
+    },
+    {
+      "report_id": "aeiar-271-2025",
+      "register_no": "AEIAR-271-2025",
+      "status": "approved",
+      "status_note": "conditionally approved (per EPD project page)",
+      "approval_date": "2025-12-18",
+      "title_en": "Development at Ngau Tam Mei Area",
+      "title_zh": "牛潭尾地區發展",
+      "project_area_en": "Ngau Tam Mei",
+      "project_area_zh": "牛潭尾",
+      "districts": [
+        "hk-district:M"
+      ],
+      "districts_evidence": "Yuen Long District (code M in the HAD 18-district GeoJSON). Derived from the OZP plan numbers cited in the reports, not from point-in-polygon: no project coordinates exist yet.",
+      "report_areas": [],
+      "report_areas_status": "deferred_no_public_geometry",
+      "report_areas_decision": "2026-10-18: official public data only. No verified project geometry is publicly obtainable (CSDI/SPP3 requires a token), so project-area highlighting is deferred. The map will use the district context layer plus an accessible report list/card instead.",
+      "label_lat": 22.47,
+      "label_lng": 114.05,
+      "original_url": "https://www.epd.gov.hk/eia/tc/alpha/aspd.php?id=363",
+      "report_index_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_363/eia_6226/progress/action_176330/Index.htm",
+      "exec_summary_en_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_363/eia_6226/progress/action_176330/es_e.pdf",
+      "exec_summary_zh_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_363/eia_6226/progress/action_176330/es_tc.pdf",
+      "exec_summary_status": {
+        "en": "available",
+        "zh": "available",
+        "note": "PDFs verified to open; not linked from the project page, only from the report index page."
+      },
+      "page_numbering": "printed",
+      "page_numbering_note": "Printed folios are compound chapter-page labels (e.g. 2-1, 1-1-i) and are NOT the PDF viewer page index.",
+      "nm_scope_evidence": {
+        "zone": "Innovation and Technology Zone",
+        "area": "Ngau Tam Mei New Development Area",
+        "url": "https://www.nm.gov.hk/en/four-zones/innovation-and-technology-zone",
+        "evidence_note": "Subzone list read from the nm.gov.hk zone API (provenance/nm_it_zone_api.json). Area-level match; the project-to-area link rests on the project name."
+      },
+      "chapters": [
+        {
+          "number": 1,
+          "title": "INTRODUCTION",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_363/eia_6226/progress/action_176330/s1_introduction.pdf",
+          "local_file": "source-data/AEIAR-271-2025/chapters/s1_introduction.pdf",
+          "sha256": "aec64bcb6512cc1d93d27e4d5aa25964b94312aa51c3f1ba899c10b3daa1baf3",
+          "pages": 7,
+          "printed_folio_scheme": "mixed",
+          "pages_without_folio": 0
+        },
+        {
+          "number": 2,
+          "title": "PROJECT DESCRIPTION",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_363/eia_6226/progress/action_176330/s2_project_description.pdf",
+          "local_file": "source-data/AEIAR-271-2025/chapters/s2_project_description.pdf",
+          "sha256": "f3d952fd7a1306bd96ee58ce942ad9ea22f19bfe048926e9cadd7e033f154b3a",
+          "pages": 35,
+          "printed_folio_scheme": "mixed",
+          "pages_without_folio": 0
+        },
+        {
+          "number": 3,
+          "title": "AIR QUALITY",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_363/eia_6226/progress/action_176330/s3_aq.pdf",
+          "local_file": "source-data/AEIAR-271-2025/chapters/s3_aq.pdf",
+          "sha256": "55dd4e8cadef09bab40f8e8fdd3e0079bb395955167b90d18cc754bd7df38050",
+          "pages": 55,
+          "printed_folio_scheme": "mixed",
+          "pages_without_folio": 0
+        },
+        {
+          "number": 4,
+          "title": "NOISE",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_363/eia_6226/progress/action_176330/s4_noise.pdf",
+          "local_file": "source-data/AEIAR-271-2025/chapters/s4_noise.pdf",
+          "sha256": "780c5efa07c742218c85a0ef74757400b306cc796c93684e9002fa1617f81ac3",
+          "pages": 68,
+          "printed_folio_scheme": "mixed",
+          "pages_without_folio": 0
+        },
+        {
+          "number": 5,
+          "title": "WATER QUALITY",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_363/eia_6226/progress/action_176330/s5_water_quality.pdf",
+          "local_file": "source-data/AEIAR-271-2025/chapters/s5_water_quality.pdf",
+          "sha256": "276a9584c06bea49ee8b018d0b3b0d9155e5d9f5414e5f7c7dfcd7738413f3ea",
+          "pages": 33,
+          "printed_folio_scheme": "mixed",
+          "pages_without_folio": 0
+        },
+        {
+          "number": 6,
+          "title": "SEWERAGE AND SEWAGE TREATMENT IMPLICATIONS",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_363/eia_6226/progress/action_176330/s6_sewerage.pdf",
+          "local_file": "source-data/AEIAR-271-2025/chapters/s6_sewerage.pdf",
+          "sha256": "851b012300986a68977ce8f9abd76fe264247750163ef0ba104437a61346bf64",
+          "pages": 9,
+          "printed_folio_scheme": "mixed",
+          "pages_without_folio": 0
+        },
+        {
+          "number": 7,
+          "title": "WASTE MANAGEMENT IMPLICATIONS",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_363/eia_6226/progress/action_176330/s7_wast.pdf",
+          "local_file": "source-data/AEIAR-271-2025/chapters/s7_wast.pdf",
+          "sha256": "4ae26388af5eaa0605870047d839cfd15594295f9495994d46099cc4aad39d90",
+          "pages": 32,
+          "printed_folio_scheme": "mixed",
+          "pages_without_folio": 0
+        },
+        {
+          "number": 8,
+          "title": "LAND CONTAMINATION",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_363/eia_6226/progress/action_176330/s8_land_con.pdf",
+          "local_file": "source-data/AEIAR-271-2025/chapters/s8_land_con.pdf",
+          "sha256": "ef275374a42366e4b79ca834759f51d26675984c098b0aa7bcb37d9c31582c55",
+          "pages": 36,
+          "printed_folio_scheme": "mixed",
+          "pages_without_folio": 0
+        },
+        {
+          "number": 9,
+          "title": "ECOLOGICAL IMPLICATION (TERRESTRIAL AND AQUATIC)",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_363/eia_6226/progress/action_176330/s9_eco.pdf",
+          "local_file": "source-data/AEIAR-271-2025/chapters/s9_eco.pdf",
+          "sha256": "515b8fe92fd48ab56a9b845dc37316d4bb915c795791180a42995841f9d253c5",
+          "pages": 113,
+          "printed_folio_scheme": "mixed",
+          "pages_without_folio": 0
+        },
+        {
+          "number": 10,
+          "title": "FISHERIES IMPACT",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_363/eia_6226/progress/action_176330/s10_fisheries.pdf",
+          "local_file": "source-data/AEIAR-271-2025/chapters/s10_fisheries.pdf",
+          "sha256": "f9bf4e21e938f80dcdf5739e85550af89821c2165f4197697c5e893f7a9d12a1",
+          "pages": 19,
+          "printed_folio_scheme": "mixed",
+          "pages_without_folio": 0
+        },
+        {
+          "number": 11,
+          "title": "LANDSCAPE AND VISUAL IMPACT",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_363/eia_6226/progress/action_176330/s11_lvia.pdf",
+          "local_file": "source-data/AEIAR-271-2025/chapters/s11_lvia.pdf",
+          "sha256": "57e3f7399b5abb68120e11a62534da63f495fd285bfd97b6e6ad3410541de37e",
+          "pages": 56,
+          "printed_folio_scheme": "mixed",
+          "pages_without_folio": 0
+        },
+        {
+          "number": 12,
+          "title": "IMPACT ON CULTURAL HERITAGE",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_363/eia_6226/progress/action_176330/s12_cultural_heritage.pdf",
+          "local_file": "source-data/AEIAR-271-2025/chapters/s12_cultural_heritage.pdf",
+          "sha256": "cef66994462134ebcbd9bbff6cc84f04d7113a94f22e91d958c7b7956235af0c",
+          "pages": 53,
+          "printed_folio_scheme": "mixed",
+          "pages_without_folio": 0
+        },
+        {
+          "number": 13,
+          "title": "HAZARD TO LIFE",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_363/eia_6226/progress/action_176330/s13_hazard_to_life.pdf",
+          "local_file": "source-data/AEIAR-271-2025/chapters/s13_hazard_to_life.pdf",
+          "sha256": "c022edda6687785930a8763e3d35f36cd05a14f68f976fc207d483c71adc3552",
+          "pages": 3,
+          "printed_folio_scheme": "mixed",
+          "pages_without_folio": 0
+        },
+        {
+          "number": 14,
+          "title": "LANDFILL GAS HAZARD",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_363/eia_6226/progress/action_176330/s14_landfill_gas.pdf",
+          "local_file": "source-data/AEIAR-271-2025/chapters/s14_landfill_gas.pdf",
+          "sha256": "16c63d9eb5838ee5638f536868553cada98f4afaea23354d88f9af5a7bcdd1e4",
+          "pages": 15,
+          "printed_folio_scheme": "mixed",
+          "pages_without_folio": 0
+        },
+        {
+          "number": 15,
+          "title": "IMPACT FROM ELECTRIC AND MAGNETIC FIELD",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_363/eia_6226/progress/action_176330/S15_EMF.pdf",
+          "local_file": "source-data/AEIAR-271-2025/chapters/S15_EMF.pdf",
+          "sha256": "d321b341677a2f00987f69a498873fd6f301db4541d074a4f8387905d98226fe",
+          "pages": 5,
+          "printed_folio_scheme": "mixed",
+          "pages_without_folio": 0
+        },
+        {
+          "number": 16,
+          "title": "ENVIRONMENTAL MONITORING AND AUDIT",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_363/eia_6226/progress/action_176330/s16_ema.pdf",
+          "local_file": "source-data/AEIAR-271-2025/chapters/s16_ema.pdf",
+          "sha256": "b3811b179a55cc7e7cef41f211685ae4012e93ef1c2a3de94ebff5cc70365f73",
+          "pages": 7,
+          "printed_folio_scheme": "mixed",
+          "pages_without_folio": 0
+        },
+        {
+          "number": 17,
+          "title": "SUMMARY OF OUTCOMES",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_363/eia_6226/progress/action_176330/s17_summary_of_outcomes.pdf",
+          "local_file": "source-data/AEIAR-271-2025/chapters/s17_summary_of_outcomes.pdf",
+          "sha256": "9d0cada069adaaf4917312f7dbeec159d50fc86e8b474954990014d860ed2e0c",
+          "pages": 14,
+          "printed_folio_scheme": "mixed",
+          "pages_without_folio": 0
+        },
+        {
+          "number": 18,
+          "title": "CONCLUSION",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_363/eia_6226/progress/action_176330/s18_conclusion.pdf",
+          "local_file": "source-data/AEIAR-271-2025/chapters/s18_conclusion.pdf",
+          "sha256": "e74ec305d011510865351ae0956ebf9a18a71c15352a7099a560745143f7c47b",
+          "pages": 10,
+          "printed_folio_scheme": "mixed",
+          "pages_without_folio": 0
+        }
+      ],
+      "version": "1.0",
+      "retrieved_at": "2026-10-17T16:10:28Z",
+      "checksum_manifest": "source-data/download_manifest.json",
+      "audit_decision": "verified_core_nm",
+      "audit_rationale": "Project title names Ngau Tam Mei Area. Approved 2025 under NM programme. Located within Ngau Tam Mei NDA.",
+      "historical_pre_nm": false
+    },
+    {
+      "report_id": "aeiar-274-2026",
+      "register_no": "AEIAR-274-2026",
+      "status": "approved",
+      "status_note": "conditionally approved (per EPD project page)",
+      "approval_date": "2026-05-21",
+      "title_en": "Development of the Loop – Eastern Connection Road",
+      "title_zh": "落馬洲河套地區發展 – 東面連接道路",
+      "project_area_en": "Lok Ma Chau Loop",
+      "project_area_zh": "落馬洲河套",
+      "districts": [
+        "hk-district:M"
+      ],
+      "districts_evidence": "Yuen Long District (code M) or North District (code N) per project area.",
+      "report_areas": [],
+      "report_areas_status": "deferred_no_public_geometry",
+      "report_areas_decision": "2026-10-18: official public data only. No verified project geometry is publicly obtainable.",
+      "label_lat": 22.51,
+      "label_lng": 114.08,
+      "original_url": "https://www.epd.gov.hk/eia/en/alpha/aspd.php?id=PP",
+      "report_index_url": "",
+      "exec_summary_en_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_958/eia_6350/progress/action_179206/02_html_updated/es/es_eng.pdf",
+      "exec_summary_zh_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_958/eia_6350/progress/action_179206/02_html_updated/es/es_chi.pdf",
+      "exec_summary_status": {
+        "en": "available",
+        "zh": "available",
+        "verified_at": "2026-10-18"
+      },
+      "page_numbering": "verified",
+      "page_numbering_note": "All 15 chapters verified. Standard EPD chapter-page Month Year format. 1 unverified sign page.",
+      "nm_scope_evidence": {
+        "zone": "Innovation and Technology Zone",
+        "area": "HSITP in the Loop",
+        "url": "https://www.nm.gov.hk/en/four-zones",
+        "evidence_note": "Area listed on nm.gov.hk Four Zones page."
+      },
+      "chapters": [
+        {
+          "number": 1,
+          "title": "Sign page",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_958/eia_6350/progress/action_179206/02_html_updated/eia/eia_text_sign_page.pdf",
+          "local_file": "stage0/source-data/AEIAR-274-2026/chapters/eia_text_sign_page.pdf",
+          "sha256": "0f32ee43539d401a6870750730e7b07ae7ac1bf86e70818b2008c80e9332594f",
+          "pages": 6
+        },
+        {
+          "number": 2,
+          "title": "INTRODUCTION",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_958/eia_6350/progress/action_179206/02_html_updated/eia/eia_ch01.pdf",
+          "local_file": "stage0/source-data/AEIAR-274-2026/chapters/eia_ch01.pdf",
+          "sha256": "bf1ea4703f0dbeffd23251f971b703404f8c23e02aa1f7fb29195298862933aa",
+          "pages": 19
+        },
+        {
+          "number": 3,
+          "title": "PROJECT DESCRIPTION",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_958/eia_6350/progress/action_179206/02_html_updated/eia/eia_ch02.pdf",
+          "local_file": "stage0/source-data/AEIAR-274-2026/chapters/eia_ch02.pdf",
+          "sha256": "8c3dc78fdb0cb696eeefe22ad8403f7ec511197076b9b9307412c9758bcb3487",
+          "pages": 28
+        },
+        {
+          "number": 4,
+          "title": "AIR QUALITY",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_958/eia_6350/progress/action_179206/02_html_updated/eia/eia_ch03.pdf",
+          "local_file": "stage0/source-data/AEIAR-274-2026/chapters/eia_ch03.pdf",
+          "sha256": "cb4b7478a31a8aafebda56572e75e82938c34d2135bcffc4b8d91c953ec3b23d",
+          "pages": 42
+        },
+        {
+          "number": 5,
+          "title": "NOISE",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_958/eia_6350/progress/action_179206/02_html_updated/eia/eia_ch04.pdf",
+          "local_file": "stage0/source-data/AEIAR-274-2026/chapters/eia_ch04.pdf",
+          "sha256": "76f9fc8d5647669cb5565d5ada729da5bbb93663bbaf466ae99f6e0023f5c191",
+          "pages": 29
+        },
+        {
+          "number": 6,
+          "title": "WATER QUALITY",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_958/eia_6350/progress/action_179206/02_html_updated/eia/eia_ch05.pdf",
+          "local_file": "stage0/source-data/AEIAR-274-2026/chapters/eia_ch05.pdf",
+          "sha256": "001bf4c39b4eefb82662c73dba14c82e8a02a0809868411f8631f0ae39090727",
+          "pages": 27
+        },
+        {
+          "number": 7,
+          "title": "WASTE MANAGEMENT IMPLICATIONS",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_958/eia_6350/progress/action_179206/02_html_updated/eia/eia_ch06.pdf",
+          "local_file": "stage0/source-data/AEIAR-274-2026/chapters/eia_ch06.pdf",
+          "sha256": "fcb1834246a0a0b1de8fa6bcc60c07e17a89c53f54efba20f75303cb8f701e9c",
+          "pages": 12
+        },
+        {
+          "number": 8,
+          "title": "LAND CONTAMINATION",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_958/eia_6350/progress/action_179206/02_html_updated/eia/eia_ch07.pdf",
+          "local_file": "stage0/source-data/AEIAR-274-2026/chapters/eia_ch07.pdf",
+          "sha256": "b9e07d7af42c019ee2cb60402b0b1c416479ac3b6a86f890ee8a09ef100f48cf",
+          "pages": 196
+        },
+        {
+          "number": 9,
+          "title": "ECOLOGY",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_958/eia_6350/progress/action_179206/02_html_updated/eia/eia_ch08.pdf",
+          "local_file": "stage0/source-data/AEIAR-274-2026/chapters/eia_ch08.pdf",
+          "sha256": "971072ff5136555f46a39e435f7ebf063b29c340683fd9a592eebebc4372c939",
+          "pages": 14
+        },
+        {
+          "number": 10,
+          "title": "FISHERIES",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_958/eia_6350/progress/action_179206/02_html_updated/eia/eia_ch09.pdf",
+          "local_file": "stage0/source-data/AEIAR-274-2026/chapters/eia_ch09.pdf",
+          "sha256": "130c9b0dd48a1d33f46374f2ec3381d936ba600538591372aa72bdbb82885d1b",
+          "pages": 61
+        },
+        {
+          "number": 11,
+          "title": "LANDSCAPE AND VISUAL IMPACT",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_958/eia_6350/progress/action_179206/02_html_updated/eia/eia_ch10.pdf",
+          "local_file": "stage0/source-data/AEIAR-274-2026/chapters/eia_ch10.pdf",
+          "sha256": "e7c8b9495dc8bd2e8407f68a62bc1b3a687b97d987e80458a339391dead38313",
+          "pages": 19
+        },
+        {
+          "number": 12,
+          "title": "CULTURAL HERITAGE",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_958/eia_6350/progress/action_179206/02_html_updated/eia/eia_ch11.pdf",
+          "local_file": "stage0/source-data/AEIAR-274-2026/chapters/eia_ch11.pdf",
+          "sha256": "5af7ad729b7dac1890d9842a4a8cd3c04a17beaf6347a8645c492041e637550e",
+          "pages": 5
+        },
+        {
+          "number": 13,
+          "title": "HAZARD TO LIFE",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_958/eia_6350/progress/action_179206/02_html_updated/eia/eia_ch12.pdf",
+          "local_file": "stage0/source-data/AEIAR-274-2026/chapters/eia_ch12.pdf",
+          "sha256": "eb858a348f161f7a76aeddb60ad45d8885bf152d688e3e100d39597735c50399",
+          "pages": 11
+        },
+        {
+          "number": 14,
+          "title": "ENVIRONMENTAL MONITORING AND AUDIT REQUIREMENTS",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_958/eia_6350/progress/action_179206/02_html_updated/eia/eia_ch13.pdf",
+          "local_file": "stage0/source-data/AEIAR-274-2026/chapters/eia_ch13.pdf",
+          "sha256": "3e4265f4a074f60ca08781310228cb69055d30af2dc5fbcdfa7441b13f554849",
+          "pages": 8
+        },
+        {
+          "number": 15,
+          "title": "SUMMARY OF ENVIRONMENTAL OUTCOMES AND CONCLUSION",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_958/eia_6350/progress/action_179206/02_html_updated/eia/eia_ch14.pdf",
+          "local_file": "stage0/source-data/AEIAR-274-2026/chapters/eia_ch14.pdf",
+          "sha256": "ffb37430a95d0b6986d43511bb544e819475fb7250b2c5f414786b5f4f5d8be1",
+          "pages": 1
+        }
+      ],
+      "audit_decision": "needs_review",
+      "audit_rationale": "Project is the 'Eastern Connection Road' for the Lok Ma Chau Loop. While located within the Loop area (which is on nm.gov.hk), the project itself is transport infrastructure (a road) rather than the core development. The core Loop development is AEIAR-176/2013. Under strict core_nm criteria, infrastructure projects that are not explicitly named as Northern Metropolis projects may be considered related_nm rather than core_nm. However, this road is explicitly part of the Loop development programme and approved in 2026 under NM. Requires human judgment.",
+      "historical_pre_nm": false,
+      "version": "1.0",
+      "retrieved_at": "2026-10-18T00:00:00Z",
+      "checksum_manifest": "source-data/download_manifest_batch2.json",
+      "page_numbering_anomalies": []
+    },
+    {
+      "report_id": "aeiar-261-2024",
+      "register_no": "AEIAR-261-2024",
+      "status": "approved",
+      "status_note": "conditionally approved (per EPD project page)",
+      "approval_date": "2024-05-17",
+      "title_en": "San Tin / Lok Ma Chau Development Node",
+      "title_zh": "新田／落馬洲發展樞紐",
+      "project_area_en": "San Tin / Lok Ma Chau",
+      "project_area_zh": "新田／落馬洲",
+      "districts": [
+        "hk-district:M"
+      ],
+      "districts_evidence": "Yuen Long District (code M) or North District (code N) per project area.",
+      "report_areas": [],
+      "report_areas_status": "deferred_no_public_geometry",
+      "report_areas_decision": "2026-10-18: official public data only. No verified project geometry is publicly obtainable.",
+      "label_lat": 22.5,
+      "label_lng": 114.07,
+      "original_url": "https://www.epd.gov.hk/eia/en/alpha/aspd.php?id=PP",
+      "report_index_url": "",
+      "exec_summary_en_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_340/eia_1994/progress/action_157674/eia_3022023/ES/ES_eng.pdf",
+      "exec_summary_zh_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_340/eia_1994/progress/action_157674/eia_3022023/ES/ES_chi.pdf",
+      "exec_summary_status": {
+        "en": "available",
+        "zh": "available",
+        "verified_at": "2026-10-18"
+      },
+      "page_numbering": "verified",
+      "page_numbering_note": "All 18 chapters verified. Standard EPD chapter-page Month Year format.",
+      "nm_scope_evidence": {
+        "zone": "Innovation and Technology Zone",
+        "area": "San Tin Technopole",
+        "url": "https://www.nm.gov.hk/en/four-zones",
+        "evidence_note": "Area listed on nm.gov.hk Four Zones page."
+      },
+      "chapters": [
+        {
+          "number": 1,
+          "title": "INTRODUCTION",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_340/eia_1994/progress/action_157674/eia_3022023/EIA/CE20_EIA_S1.pdf",
+          "local_file": "stage0/source-data/AEIAR-261-2024/chapters/CE20_EIA_S1.pdf",
+          "sha256": "1c52506d9bff0833f0fb24e7cefc1ab04e5fb3293955ad224ebbf998aab1a676",
+          "pages": 9
+        },
+        {
+          "number": 2,
+          "title": "PROJECT DESCRIPTION",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_340/eia_1994/progress/action_157674/eia_3022023/EIA/CE20_EIA_S2.pdf",
+          "local_file": "stage0/source-data/AEIAR-261-2024/chapters/CE20_EIA_S2.pdf",
+          "sha256": "db309425f052c3481c193b9a0a7ce2b839443ece46425bfc9cbbea0ea356a0a4",
+          "pages": 40
+        },
+        {
+          "number": 3,
+          "title": "AIR QUALITY",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_340/eia_1994/progress/action_157674/eia_3022023/EIA/CE20_EIA_S3.pdf",
+          "local_file": "stage0/source-data/AEIAR-261-2024/chapters/CE20_EIA_S3.pdf",
+          "sha256": "a616c2b99784322f8ed0aa5fd7fc7304fb327e85f0e00f1b2fe8a1ebe46a8b2c",
+          "pages": 82
+        },
+        {
+          "number": 4,
+          "title": "NOISE",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_340/eia_1994/progress/action_157674/eia_3022023/EIA/CE20_EIA_S4.pdf",
+          "local_file": "stage0/source-data/AEIAR-261-2024/chapters/CE20_EIA_S4.pdf",
+          "sha256": "a07782c2a1bb75599ab93d73b970ec1b2665a4df0671f869ce63f85aa17fccdd",
+          "pages": 51
+        },
+        {
+          "number": 5,
+          "title": "WATER QUALITY",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_340/eia_1994/progress/action_157674/eia_3022023/EIA/CE20_EIA_S5.pdf",
+          "local_file": "stage0/source-data/AEIAR-261-2024/chapters/CE20_EIA_S5.pdf",
+          "sha256": "2b073528a400a50d89c38dce7f710c653b94071a08dacb065ce31598af9c6346",
+          "pages": 55
+        },
+        {
+          "number": 6,
+          "title": "SEWERAGE AND SEWAGE TREATMENT IMPLICATIONS",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_340/eia_1994/progress/action_157674/eia_3022023/EIA/CE20_EIA_S6.pdf",
+          "local_file": "stage0/source-data/AEIAR-261-2024/chapters/CE20_EIA_S6.pdf",
+          "sha256": "e94a06f46c0c1ac5548d1ab762e7330a610fe270fd929432f170758b18376ff6",
+          "pages": 14
+        },
+        {
+          "number": 7,
+          "title": "WASTE MANAGEMENT IMPLICATIONS",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_340/eia_1994/progress/action_157674/eia_3022023/EIA/CE20_EIA_S7.pdf",
+          "local_file": "stage0/source-data/AEIAR-261-2024/chapters/CE20_EIA_S7.pdf",
+          "sha256": "d5e2d6438fc0b0192d5e4fc224c9bcb329bd810e462c843d895208e9fbda20e1",
+          "pages": 27
+        },
+        {
+          "number": 8,
+          "title": "LAND CONTAMINATION",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_340/eia_1994/progress/action_157674/eia_3022023/EIA/CE20_EIA_S8.pdf",
+          "local_file": "stage0/source-data/AEIAR-261-2024/chapters/CE20_EIA_S8.pdf",
+          "sha256": "0d0c2321a069c14f8897ff637354c8d9a9cc51a4aff7eac2c75835e18cfaadb5",
+          "pages": 19
+        },
+        {
+          "number": 9,
+          "title": "ECOLOGY",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_340/eia_1994/progress/action_157674/eia_3022023/EIA/CE20_EIA_S9.pdf",
+          "local_file": "stage0/source-data/AEIAR-261-2024/chapters/CE20_EIA_S9.pdf",
+          "sha256": "e1392ab4b0fc8b7b61a487c913c5091a512df2217ca4b2c50e26383e2dc219e7",
+          "pages": 16
+        },
+        {
+          "number": 10,
+          "title": "FISHERIES",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_340/eia_1994/progress/action_157674/eia_3022023/EIA/CE20_EIA_S10.pdf",
+          "local_file": "stage0/source-data/AEIAR-261-2024/chapters/CE20_EIA_S10.pdf",
+          "sha256": "23859ee577b0c30502129a77bcfe83f5049b9abc729c84fc519a5d0641e4833b",
+          "pages": 167
+        },
+        {
+          "number": 11,
+          "title": "LANDSCAPE AND VISUAL IMPACT",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_340/eia_1994/progress/action_157674/eia_3022023/EIA/CE20_EIA_S11.pdf",
+          "local_file": "stage0/source-data/AEIAR-261-2024/chapters/CE20_EIA_S11.pdf",
+          "sha256": "99831ab4443b1b4f3d00965041579936a6126837faa0d9f390aab87f5b90ae3f",
+          "pages": 23
+        },
+        {
+          "number": 12,
+          "title": "CULTURAL HERITAGE",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_340/eia_1994/progress/action_157674/eia_3022023/EIA/CE20_EIA_S12.pdf",
+          "local_file": "stage0/source-data/AEIAR-261-2024/chapters/CE20_EIA_S12.pdf",
+          "sha256": "635059153c7505f6df81c49f9fe41cf0a3ae3a1be3ada1340c7b8c5106eb0aae",
+          "pages": 73
+        },
+        {
+          "number": 13,
+          "title": "HAZARD TO LIFE",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_340/eia_1994/progress/action_157674/eia_3022023/EIA/CE20_EIA_S13.pdf",
+          "local_file": "stage0/source-data/AEIAR-261-2024/chapters/CE20_EIA_S13.pdf",
+          "sha256": "12a0f2d50ec7b9421841eb1577c9e0796253a16d796d4c8725b29ec5ea8fa102",
+          "pages": 10
+        },
+        {
+          "number": 14,
+          "title": "LANDFILL GAS HAZARD",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_340/eia_1994/progress/action_157674/eia_3022023/EIA/CE20_EIA_S14.pdf",
+          "local_file": "stage0/source-data/AEIAR-261-2024/chapters/CE20_EIA_S14.pdf",
+          "sha256": "2b3cc7877f6d8de69541ce847b0000db170f89ffff5cd0d44ce871dd69263211",
+          "pages": 98
+        },
+        {
+          "number": 15,
+          "title": "IMPACT ON AGRICULTURE",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_340/eia_1994/progress/action_157674/eia_3022023/EIA/CE20_EIA_S15.pdf",
+          "local_file": "stage0/source-data/AEIAR-261-2024/chapters/CE20_EIA_S15.pdf",
+          "sha256": "fa0b7dced24415eb56f679f235f0d6a738cc37217e8eae2bf5659f0ac2ba6eec",
+          "pages": 6
+        },
+        {
+          "number": 16,
+          "title": "ENVIRONMENTAL MONITORING AND AUDIT REQUIREMENTS",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_340/eia_1994/progress/action_157674/eia_3022023/EIA/CE20_EIA_S16.pdf",
+          "local_file": "stage0/source-data/AEIAR-261-2024/chapters/CE20_EIA_S16.pdf",
+          "sha256": "241510a2c777613cd79f17b564027bcd097d30391a74742ba772f0db0bfc6297",
+          "pages": 16
+        },
+        {
+          "number": 17,
+          "title": "SUMMARY OF ENVIRONMENTAL OUTCOMES",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_340/eia_1994/progress/action_157674/eia_3022023/EIA/CE20_EIA_S17.pdf",
+          "local_file": "stage0/source-data/AEIAR-261-2024/chapters/CE20_EIA_S17.pdf",
+          "sha256": "37541da3bdecf66dd8771490cea4e83dbfde2533938694da31bda83c385e601e",
+          "pages": 90
+        },
+        {
+          "number": 18,
+          "title": "CONCLUSION",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_340/eia_1994/progress/action_157674/eia_3022023/EIA/CE20_EIA_S18.pdf",
+          "local_file": "stage0/source-data/AEIAR-261-2024/chapters/CE20_EIA_S18.pdf",
+          "sha256": "cbb968847f35c79515424c0967ab61346f81b37b5c05b16bdb12e2acf1c886ae",
+          "pages": 15
+        }
+      ],
+      "audit_decision": "verified_core_nm",
+      "audit_rationale": "Project title names 'San Tin / Lok Ma Chau Development Node'. San Tin Technopole is explicitly listed on nm.gov.hk as part of the Innovation and Technology Zone. Approved 2024. Unambiguously core NM.",
+      "historical_pre_nm": false,
+      "version": "1.0",
+      "retrieved_at": "2026-10-18T00:00:00Z",
+      "checksum_manifest": "source-data/download_manifest_batch2.json",
+      "page_numbering_anomalies": []
+    },
+    {
+      "report_id": "aeiar-175-2013",
+      "register_no": "AEIAR-175-2013",
+      "status": "approved",
+      "status_note": "conditionally approved (per EPD project page)",
+      "approval_date": "2013-10-18",
+      "title_en": "North East New Territories New Development Areas",
+      "title_zh": "東北新界新發展區",
+      "project_area_en": "Kwu Tung North / Fanling North",
+      "project_area_zh": "古洞北／粉嶺北",
+      "districts": [
+        "hk-district:M"
+      ],
+      "districts_evidence": "Yuen Long District (code M) or North District (code N) per project area.",
+      "report_areas": [],
+      "report_areas_status": "deferred_no_public_geometry",
+      "report_areas_decision": "2026-10-18: official public data only. No verified project geometry is publicly obtainable.",
+      "label_lat": 22.5,
+      "label_lng": 114.13,
+      "original_url": "https://www.epd.gov.hk/eia/en/alpha/aspd.php?id=PP",
+      "report_index_url": "",
+      "exec_summary_en_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_176/eia_1816/progress/action_2233/es/pdf/es-e.pdf",
+      "exec_summary_zh_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_176/eia_1816/progress/action_2233/es/pdf/es-c.pdf",
+      "exec_summary_status": {
+        "en": "available",
+        "zh": "available",
+        "verified_at": "2026-10-18"
+      },
+      "page_numbering": "partial",
+      "page_numbering_note": "1,565 of 1,658 pages verified (94.4%). Uses Page X-Y format in file-path footer. 39 absent + 54 unverified pages are mostly figure/table pages where footer was not extracted.",
+      "nm_scope_evidence": {
+        "zone": "Boundary Commerce and Industry Zone",
+        "area": "Kwu Tung North / Fanling North New Development Area",
+        "url": "https://www.nm.gov.hk/en/four-zones",
+        "evidence_note": "Area listed on nm.gov.hk Four Zones page."
+      },
+      "chapters": [
+        {
+          "number": 1,
+          "title": "INTRODUCTION",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_176/eia_1816/progress/action_2233/eia/pdf/ch_1_text.pdf",
+          "local_file": "stage0/source-data/AEIAR-175-2013/chapters/ch_1_text.pdf",
+          "sha256": "8679a7a0882fb3ea18fbb4bb2987b174904d69431d06fc496e03ae2faba5db38",
+          "pages": 8
+        },
+        {
+          "number": 2,
+          "title": "PROJECT DESCRIPTION",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_176/eia_1816/progress/action_2233/eia/pdf/ch_2_text.pdf",
+          "local_file": "stage0/source-data/AEIAR-175-2013/chapters/ch_2_text.pdf",
+          "sha256": "4ba123b75ff2cbfadc00ecf6798f026a81f50dbfc89768f8093d5f55f519aa2e",
+          "pages": 82
+        },
+        {
+          "number": 3,
+          "title": "AIR QUALITY",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_176/eia_1816/progress/action_2233/eia/pdf/ch_3_text.pdf",
+          "local_file": "stage0/source-data/AEIAR-175-2013/chapters/ch_3_text.pdf",
+          "sha256": "6255248abdd09f91d32ee7eb94019c565fd957ab15c353d37722fc6416fb5204",
+          "pages": 124
+        },
+        {
+          "number": 4,
+          "title": "NOISE",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_176/eia_1816/progress/action_2233/eia/pdf/ch_4_text.pdf",
+          "local_file": "stage0/source-data/AEIAR-175-2013/chapters/ch_4_text.pdf",
+          "sha256": null,
+          "pages": 102
+        },
+        {
+          "number": 5,
+          "title": "WATER QUALITY",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_176/eia_1816/progress/action_2233/eia/pdf/ch_5_text.pdf",
+          "local_file": "stage0/source-data/AEIAR-175-2013/chapters/ch_5_text.pdf",
+          "sha256": "73c37258342916484f6d64c50dd919617eb0dfbf1823917b07b0383cc6c204b6",
+          "pages": 29
+        },
+        {
+          "number": 6,
+          "title": "SEWERAGE AND SEWAGE TREATMENT IMPLICATIONS",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_176/eia_1816/progress/action_2233/eia/pdf/ch_6_text.pdf",
+          "local_file": "stage0/source-data/AEIAR-175-2013/chapters/ch_6_text.pdf",
+          "sha256": "e1678599448882fb7dd959d2d933b42ba05f28d8f8c5917c7b2901321f4a6a54",
+          "pages": 26
+        },
+        {
+          "number": 7,
+          "title": "WASTE MANAGEMENT IMPLICATIONS",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_176/eia_1816/progress/action_2233/eia/pdf/ch_7_text.pdf",
+          "local_file": "stage0/source-data/AEIAR-175-2013/chapters/ch_7_text.pdf",
+          "sha256": "c4d7e6d64223bc027eb204995690f3d7324a1fd84c86c1525c4131841dc90bc0",
+          "pages": 31
+        },
+        {
+          "number": 8,
+          "title": "LAND CONTAMINATION",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_176/eia_1816/progress/action_2233/eia/pdf/ch_8_text.pdf",
+          "local_file": "stage0/source-data/AEIAR-175-2013/chapters/ch_8_text.pdf",
+          "sha256": "3bc5e64abdedab4f90ed7cb8f2fd47726f6cef43aa772bd91ede4583ce0c5eb0",
+          "pages": 22
+        },
+        {
+          "number": 9,
+          "title": "ECOLOGY",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_176/eia_1816/progress/action_2233/eia/pdf/ch_9_text.pdf",
+          "local_file": "stage0/source-data/AEIAR-175-2013/chapters/ch_9_text.pdf",
+          "sha256": "25bfb0dedca7a23960878c881e36a7e53b4ec4d0179d37e60d7451770f0a9a51",
+          "pages": 24
+        },
+        {
+          "number": 10,
+          "title": "FISHERIES",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_176/eia_1816/progress/action_2233/eia/pdf/ch_10_text.pdf",
+          "local_file": "stage0/source-data/AEIAR-175-2013/chapters/ch_10_text.pdf",
+          "sha256": "3164826c09427b2563f198c2323066587687a52a5106dd8e63b03b13e236cf7d",
+          "pages": 26
+        },
+        {
+          "number": 11,
+          "title": "LANDSCAPE AND VISUAL IMPACT",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_176/eia_1816/progress/action_2233/eia/pdf/ch_11_text.pdf",
+          "local_file": "stage0/source-data/AEIAR-175-2013/chapters/ch_11_text.pdf",
+          "sha256": "8aa43fbc337b31f9dd4bc39360713522aecc2d7c0f2a51477c15b8bb066a403f",
+          "pages": 126
+        },
+        {
+          "number": 12,
+          "title": "CULTURAL HERITAGE",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_176/eia_1816/progress/action_2233/eia/pdf/ch_12_text.pdf",
+          "local_file": "stage0/source-data/AEIAR-175-2013/chapters/ch_12_text.pdf",
+          "sha256": "82e6802b8502785aba58a311aaf4598dbbfe62ec09fdf628d4d900e36316d2a8",
+          "pages": 647
+        },
+        {
+          "number": 13,
+          "title": "HAZARD TO LIFE",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_176/eia_1816/progress/action_2233/eia/pdf/ch_13_text.pdf",
+          "local_file": "stage0/source-data/AEIAR-175-2013/chapters/ch_13_text.pdf",
+          "sha256": "9d93364a3b53b2e681672af07846442302df28c72ec24c73c6cbeeaa8a2d86f7",
+          "pages": 349
+        },
+        {
+          "number": 14,
+          "title": "LANDFILL GAS HAZARD",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_176/eia_1816/progress/action_2233/eia/pdf/ch_14_text.pdf",
+          "local_file": "stage0/source-data/AEIAR-175-2013/chapters/ch_14_text.pdf",
+          "sha256": "b340de0db049d38a445bbf6da6cc635093bc8a81d48efefababec8b93058e3c4",
+          "pages": 17
+        },
+        {
+          "number": 15,
+          "title": "AGRICULTURE",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_176/eia_1816/progress/action_2233/eia/pdf/ch_15_text.pdf",
+          "local_file": "stage0/source-data/AEIAR-175-2013/chapters/ch_15_text.pdf",
+          "sha256": "247beb9596b74a755aad82e8b7542fc4343a1b7ac714f75f36f944c54a13c299",
+          "pages": 6
+        },
+        {
+          "number": 16,
+          "title": "ENVIRONMENTAL MONITORING AND AUDIT REQUIREMENTS",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_176/eia_1816/progress/action_2233/eia/pdf/ch_16_text.pdf",
+          "local_file": "stage0/source-data/AEIAR-175-2013/chapters/ch_16_text.pdf",
+          "sha256": "1a261993b0662eb8cf46f7eb80c77ffb2ac47d2a94c71ac62604bb84f682208c",
+          "pages": 23
+        },
+        {
+          "number": 17,
+          "title": "SUMMARY OF ENVIRONMENTAL OUTCOMES AND CONCLUSION",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_176/eia_1816/progress/action_2233/eia/pdf/ch_17_text.pdf",
+          "local_file": "stage0/source-data/AEIAR-175-2013/chapters/ch_17_text.pdf",
+          "sha256": "3a302235d0e5708121b5cfcfa5dc332fa39b7cbfe3766d2f742f72aec047dd92",
+          "pages": 16
+        }
+      ],
+      "audit_decision": "verified_core_nm",
+      "audit_rationale": "Project covers Kwu Tung North and Fanling North New Development Areas. Both are explicitly listed on nm.gov.hk as part of the Boundary Commerce and Industry Zone. Although approved in 2013 (pre-dating the Northern Metropolis concept announced in 2021), these NDAs are now formally incorporated into the NM plan. The 2026 Policy Address explicitly references 'all nine New Development Areas' as part of NM fruition. Spatially and politically, this is core NM.",
+      "historical_pre_nm": true,
+      "version": "1.0",
+      "retrieved_at": "2026-10-18T00:00:00Z",
+      "checksum_manifest": "source-data/download_manifest_batch2.json",
+      "page_numbering_anomalies": [
+        "Figure/table pages often lack printed folios"
+      ]
+    },
+    {
+      "report_id": "aeiar-176-2013",
+      "register_no": "AEIAR-176-2013",
+      "status": "approved",
+      "status_note": "conditionally approved (per EPD project page)",
+      "approval_date": "2013-10-25",
+      "title_en": "Development of Lok Ma Chau Loop",
+      "title_zh": "落馬洲河套地區發展",
+      "project_area_en": "Lok Ma Chau Loop",
+      "project_area_zh": "落馬洲河套",
+      "districts": [
+        "hk-district:M"
+      ],
+      "districts_evidence": "Yuen Long District (code M) or North District (code N) per project area.",
+      "report_areas": [],
+      "report_areas_status": "deferred_no_public_geometry",
+      "report_areas_decision": "2026-10-18: official public data only. No verified project geometry is publicly obtainable.",
+      "label_lat": 22.51,
+      "label_lng": 114.08,
+      "original_url": "https://www.epd.gov.hk/eia/en/alpha/aspd.php?id=PP",
+      "report_index_url": "",
+      "exec_summary_en_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_238/eia_1814/progress/action_2244/PDF/ES/ES%2020130617_combined_clear%20v2.pdf",
+      "exec_summary_zh_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_238/eia_1814/progress/action_2244/pdf_1/ES%2020131025_Final%20(Chinese)_combined.pdf",
+      "exec_summary_status": {
+        "en": "available",
+        "zh": "available",
+        "verified_at": "2026-10-18"
+      },
+      "page_numbering": "verified",
+      "page_numbering_note": "872 of 886 pages verified (98.4%). Uses Page X-Y format in file-path footer. 14 unverified pages are figure/table pages.",
+      "nm_scope_evidence": {
+        "zone": "Innovation and Technology Zone",
+        "area": "HSITP in the Loop",
+        "url": "https://www.nm.gov.hk/en/four-zones",
+        "evidence_note": "Area listed on nm.gov.hk Four Zones page."
+      },
+      "chapters": [
+        {
+          "number": 1,
+          "title": "INTRODUCTION",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_238/eia_1814/progress/action_2244/PDF/EIA/S1%20-%20Intro_v30.pdf",
+          "local_file": "stage0/source-data/AEIAR-176-2013/chapters/S1%20-%20Intro_v30.pdf",
+          "sha256": "efb06b85179ca08059298866c37e02221260f07c7add4f9214afd204c73a9b7c",
+          "pages": 12
+        },
+        {
+          "number": 2,
+          "title": "PROJECT DESCRIPTION",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_238/eia_1814/progress/action_2244/PDF/EIA/S2%20-%20Project%20Description_clear.pdf",
+          "local_file": "stage0/source-data/AEIAR-176-2013/chapters/S2%20-%20Project%20Description_clear.pdf",
+          "sha256": "d2422e5ff79e65ba1cce952315573c594965d857da20c1b656b7055d6609afd5",
+          "pages": 48
+        },
+        {
+          "number": 3,
+          "title": "AIR QUALITY",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_238/eia_1814/progress/action_2244/PDF/EIA/S3%20-%20Air%20Quality%20v42_EPD_clear.pdf",
+          "local_file": "stage0/source-data/AEIAR-176-2013/chapters/S3%20-%20Air%20Quality%20v42_EPD_clear.pdf",
+          "sha256": "2d2ae688bf5e0db8e8d3f096e1547ef2469743b32a0497fb9e42cb0c6f3f03b7",
+          "pages": 84
+        },
+        {
+          "number": 4,
+          "title": "NOISE",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_238/eia_1814/progress/action_2244/PDF/EIA/S4%20-%20Noise%20v14%20-%2020130604_clear.pdf",
+          "local_file": "stage0/source-data/AEIAR-176-2013/chapters/S4%20-%20Noise%20v14%20-%2020130604_clear.pdf",
+          "sha256": "3632919b5a5a7f00ebacf4b3478039e804ae87f198e51a4219301cc0778ef938",
+          "pages": 57
+        },
+        {
+          "number": 5,
+          "title": "WATER QUALITY",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_238/eia_1814/progress/action_2244/PDF/EIA/S5%20-%20WQ%20v19_20130606.pdf",
+          "local_file": "stage0/source-data/AEIAR-176-2013/chapters/S5%20-%20WQ%20v19_20130606.pdf",
+          "sha256": "6b263221955c58a18a100e0445a368eea27b17ec5e4c9333caabc0bc6bb910ff",
+          "pages": 35
+        },
+        {
+          "number": 6,
+          "title": "SEWERAGE AND SEWAGE TREATMENT IMPLICATIONS",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_238/eia_1814/progress/action_2244/PDF/EIA/S6%20-%20Sewerage%20v13.pdf",
+          "local_file": "stage0/source-data/AEIAR-176-2013/chapters/S6%20-%20Sewerage%20v13.pdf",
+          "sha256": "5a58d52fb0c64dc068124086151e7685b416442e1598e8884a88604a049e2429",
+          "pages": 12
+        },
+        {
+          "number": 7,
+          "title": "WASTE MANAGEMENT IMPLICATIONS",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_238/eia_1814/progress/action_2244/PDF/EIA/S7%20-%20Waste%20v25%20clean.pdf",
+          "local_file": "stage0/source-data/AEIAR-176-2013/chapters/S7%20-%20Waste%20v25%20clean.pdf",
+          "sha256": "300ff68d1801e55a04438804ca35eb55269ed8766ac55a75f8f393968001407c",
+          "pages": 46
+        },
+        {
+          "number": 8,
+          "title": "LAND CONTAMINATION",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_238/eia_1814/progress/action_2244/PDF/EIA/S8%20-%20Land-con%20v15_20130606.pdf",
+          "local_file": "stage0/source-data/AEIAR-176-2013/chapters/S8%20-%20Land-con%20v15_20130606.pdf",
+          "sha256": "b232d3d8451c8ffbc54ef58634dfdfbcc8b8a53bed60f27e661944c6401ab8f2",
+          "pages": 19
+        },
+        {
+          "number": 9,
+          "title": "HAZARD TO LIFE",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_238/eia_1814/progress/action_2244/PDF/EIA/S9%20-%20Hazard%20v5.pdf",
+          "local_file": "stage0/source-data/AEIAR-176-2013/chapters/S9%20-%20Hazard%20v5.pdf",
+          "sha256": "907ccb1c2ffb90d8dd6797740d173e75f722c710b944426226f91a5b394b1441",
+          "pages": 2
+        },
+        {
+          "number": 10,
+          "title": "CULTURAL HERITAGE",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_238/eia_1814/progress/action_2244/PDF/EIA/S10%20-%20CH%20v16.pdf",
+          "local_file": "stage0/source-data/AEIAR-176-2013/chapters/S10%20-%20CH%20v16.pdf",
+          "sha256": "41cf91a44074e02a8ec224cf3cc0fdaabaae2c0e7e2d9e5183f921a433c25e94",
+          "pages": 22
+        },
+        {
+          "number": 11,
+          "title": "LANDSCAPE AND VISUAL IMPACT",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_238/eia_1814/progress/action_2244/PDF/EIA/S11%20-%20LVIA_20130620.pdf",
+          "local_file": "stage0/source-data/AEIAR-176-2013/chapters/S11%20-%20LVIA_20130620.pdf",
+          "sha256": "9d88765a44100b952aeb2390f4d6631427278390255344bf47480c77ce20e0a2",
+          "pages": 276
+        },
+        {
+          "number": 12,
+          "title": "ECOLOGY",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_238/eia_1814/progress/action_2244/PDF/EIA/S12%20-%20Eco%20v17_clear.pdf",
+          "local_file": "stage0/source-data/AEIAR-176-2013/chapters/S12%20-%20Eco%20v17_clear.pdf",
+          "sha256": "03327d01763863c46ec4f862dfddb70e585f9a2cbc1aaec8ba0a4023cc39d8b1",
+          "pages": 227
+        },
+        {
+          "number": 13,
+          "title": "FISHERIES",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_238/eia_1814/progress/action_2244/PDF/EIA/S13%20-%20Fisheries%20v16%20rtc%2020130507%20following%20AFCD%20additional%20comments.pdf",
+          "local_file": "stage0/source-data/AEIAR-176-2013/chapters/S13%20-%20Fisheries%20v16%20rtc%2020130507%20following%20AFCD%20additional%20comments.pdf",
+          "sha256": "c9097bacc590a45e9d829e7a13d20536220d3b9f2cb7d4c77a12a71ae59cdbf6",
+          "pages": 13
+        },
+        {
+          "number": 14,
+          "title": "LANDFILL GAS HAZARD",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_238/eia_1814/progress/action_2244/PDF/EIA/S14%20-%20Landfill%20Gas_v3.pdf",
+          "local_file": "stage0/source-data/AEIAR-176-2013/chapters/S14%20-%20Landfill%20Gas_v3.pdf",
+          "sha256": "1fc408098df2fdc60116205690cf34dd49b051fbd324859251b8eb697dedf664",
+          "pages": 1
+        },
+        {
+          "number": 15,
+          "title": "FOOD SAFETY",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_238/eia_1814/progress/action_2244/PDF/EIA/S15%20-%20Food%20Safety%20v6.pdf",
+          "local_file": "stage0/source-data/AEIAR-176-2013/chapters/S15%20-%20Food%20Safety%20v6.pdf",
+          "sha256": "043c793a98c4042d20379c5e82064eecd71201459e5cf79cb038b5a04102e9b2",
+          "pages": 9
+        },
+        {
+          "number": 16,
+          "title": "SUMMARY OF ENVIRONMENTAL OUTCOMES",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_238/eia_1814/progress/action_2244/PDF/EIA/S16%20-%20Summary_clear%20v2.pdf",
+          "local_file": "stage0/source-data/AEIAR-176-2013/chapters/S16%20-%20Summary_clear%20v2.pdf",
+          "sha256": "578e3b0eb2e245d57f2898ac21ec6112efaa001fa6228748cedfdd9db2f75e20",
+          "pages": 11
+        },
+        {
+          "number": 17,
+          "title": "ENVIRONMENTAL MONITORING AND AUDIT REQUIREMENTS",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_238/eia_1814/progress/action_2244/PDF/EIA/S17%20-%20EM&amp;A_v8_clear.pdf",
+          "local_file": "stage0/source-data/AEIAR-176-2013/chapters/S17%20-%20EM&amp;A_v8_clear.pdf",
+          "sha256": null,
+          "pages": 3
+        },
+        {
+          "number": 18,
+          "title": "CONCLUSION",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_238/eia_1814/progress/action_2244/PDF/EIA/S18%20-%20Conclusion_v8_clear.pdf",
+          "local_file": "stage0/source-data/AEIAR-176-2013/chapters/S18%20-%20Conclusion_v8_clear.pdf",
+          "sha256": "488c8c1db869281751f4df5e00947264f0dee3a7ea85993c2e8d0ef5825c8174",
+          "pages": 9
+        }
+      ],
+      "audit_decision": "verified_core_nm",
+      "audit_rationale": "Project is the 'Development of Lok Ma Chau Loop'. HSITP in the Loop is explicitly listed on nm.gov.hk as part of the Innovation and Technology Zone. Approved 2013 (pre-dating NM concept), but the Loop is now formally incorporated into NM. The project website (lmc.wellab.hk) and ongoing EM&A reports confirm active status. Core NM.",
+      "historical_pre_nm": true,
+      "version": "1.0",
+      "retrieved_at": "2026-10-18T00:00:00Z",
+      "checksum_manifest": "source-data/download_manifest_batch2.json",
+      "page_numbering_anomalies": []
+    },
+    {
+      "report_id": "aeiar-203-2016",
+      "register_no": "AEIAR-203-2016",
+      "status": "approved",
+      "status_note": "conditionally approved (per EPD project page)",
+      "approval_date": "2016-10-28",
+      "title_en": "Hung Shui Kiu New Development Area",
+      "title_zh": "洪水橋新發展區",
+      "project_area_en": "Hung Shui Kiu",
+      "project_area_zh": "洪水橋",
+      "districts": [
+        "hk-district:M"
+      ],
+      "districts_evidence": "Yuen Long District (code M) or North District (code N) per project area.",
+      "report_areas": [],
+      "report_areas_status": "deferred_no_public_geometry",
+      "report_areas_decision": "2026-10-18: official public data only. No verified project geometry is publicly obtainable.",
+      "label_lat": 22.43,
+      "label_lng": 113.99,
+      "original_url": "https://www.epd.gov.hk/eia/en/alpha/aspd.php?id=PP",
+      "report_index_url": "",
+      "exec_summary_en_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_291/eia_1886/progress/action_1883/ES/Eng/ES%20(Eng).pdf",
+      "exec_summary_zh_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_291/eia_1886/progress/action_1883/ES/Chi/ES%20(Chi).pdf",
+      "exec_summary_status": {
+        "en": "available",
+        "zh": "available",
+        "verified_at": "2026-10-18"
+      },
+      "page_numbering": "verified",
+      "page_numbering_note": "All 14 chapters verified. Standard EPD chapter-page Month Year format.",
+      "nm_scope_evidence": {
+        "zone": "High-end Professional Services and Logistics Hub",
+        "area": "Hung Shui Kiu/Ha Tsuen New Development Area",
+        "url": "https://www.nm.gov.hk/en/four-zones",
+        "evidence_note": "Area listed on nm.gov.hk Four Zones page."
+      },
+      "chapters": [
+        {
+          "number": 1,
+          "title": "INTRODUCTION",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_291/eia_1886/progress/action_1883/EIA/Text/PDF/01%20Introduction.pdf",
+          "local_file": "stage0/source-data/AEIAR-203-2016/chapters/01%20Introduction.pdf",
+          "sha256": "f88845cd4ba2b2dae22d67d2a1eb1c7019e08739f49cd7ed7d229c645ccdb965",
+          "pages": 10
+        },
+        {
+          "number": 2,
+          "title": "PROJECT DESCRIPTION AND CONSIDERATION OF ALTERNATIVES",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_291/eia_1886/progress/action_1883/EIA/Text/PDF/02%20Project%20Description%20and%20Consideration%20of%20Alternatives.pdf",
+          "local_file": "stage0/source-data/AEIAR-203-2016/chapters/02%20Project%20Description%20and%20Consideration%20of%20Alternatives.pdf",
+          "sha256": "0cd069c46051dfc4da55277df5347959a4f7d241bfb06c33529be25a7eb3396e",
+          "pages": 70
+        },
+        {
+          "number": 3,
+          "title": "AIR QUALITY",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_291/eia_1886/progress/action_1883/EIA/Text/PDF/03%20Air%20Quality%20Impact.pdf",
+          "local_file": "stage0/source-data/AEIAR-203-2016/chapters/03%20Air%20Quality%20Impact.pdf",
+          "sha256": "a893405afaa006c107f53b22478cf6b823ec58cb66fbd6cca368f09acbe07fff",
+          "pages": 92
+        },
+        {
+          "number": 4,
+          "title": "NOISE",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_291/eia_1886/progress/action_1883/EIA/Text/PDF/04%20Noise.pdf",
+          "local_file": "stage0/source-data/AEIAR-203-2016/chapters/04%20Noise.pdf",
+          "sha256": "e8362660fb0923344abdd1035fc2bf93d72f9b0870042c598fe153568dfea6d0",
+          "pages": 82
+        },
+        {
+          "number": 5,
+          "title": "WATER QUALITY",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_291/eia_1886/progress/action_1883/EIA/Text/PDF/05%20Water.pdf",
+          "local_file": "stage0/source-data/AEIAR-203-2016/chapters/05%20Water.pdf",
+          "sha256": "a7e2033bb973cb32a0c91a4b69f5ec13cb295ea96d816ef461599cfa01be6b28",
+          "pages": 72
+        },
+        {
+          "number": 6,
+          "title": "SEWERAGE",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_291/eia_1886/progress/action_1883/EIA/Text/PDF/06%20Sewerage.pdf",
+          "local_file": "stage0/source-data/AEIAR-203-2016/chapters/06%20Sewerage.pdf",
+          "sha256": "0f032d4b160b4b0fdbc93820075b6df417838d9a18e1515504014499fcb25018",
+          "pages": 14
+        },
+        {
+          "number": 7,
+          "title": "WASTE MANAGEMENT IMPLICATIONS",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_291/eia_1886/progress/action_1883/EIA/Text/PDF/07%20Waste.pdf",
+          "local_file": "stage0/source-data/AEIAR-203-2016/chapters/07%20Waste.pdf",
+          "sha256": "38375a44447c2fbc4762629e6acd9e08ad018c1eb29fa6174d1018901d59554b",
+          "pages": 28
+        },
+        {
+          "number": 8,
+          "title": "LAND CONTAMINATION",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_291/eia_1886/progress/action_1883/EIA/Text/PDF/08%20Land%20Contamination.pdf",
+          "local_file": "stage0/source-data/AEIAR-203-2016/chapters/08%20Land%20Contamination.pdf",
+          "sha256": "35fc0a4253a9839e48b8386d4775f27e54cf2c5696e4bb0e6ec10479e0878fd0",
+          "pages": 16
+        },
+        {
+          "number": 9,
+          "title": "ECOLOGY",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_291/eia_1886/progress/action_1883/EIA/Text/PDF/09%20Ecology.pdf",
+          "local_file": "stage0/source-data/AEIAR-203-2016/chapters/09%20Ecology.pdf",
+          "sha256": "cf702bc9154252041f847b6ac4afaff6a026a86b6f45f8c5f02d7f910b0bf000",
+          "pages": 118
+        },
+        {
+          "number": 10,
+          "title": "FISHERIES",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_291/eia_1886/progress/action_1883/EIA/Text/PDF/10%20Fisheries.pdf",
+          "local_file": "stage0/source-data/AEIAR-203-2016/chapters/10%20Fisheries.pdf",
+          "sha256": "e29edd0322f8acbb85b8dbe0c2cdd77acb62ca5d48b511aa96fdfcece090b6da",
+          "pages": 14
+        },
+        {
+          "number": 11,
+          "title": "SCHEDULE 3 OVERALL",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_291/eia_1886/progress/action_1883/EIA/Text/PDF/11%20Schedule_3_Overall.pdf",
+          "local_file": "stage0/source-data/AEIAR-203-2016/chapters/11%20Schedule_3_Overall.pdf",
+          "sha256": "c1259c774000a86de6db00092a4d1cb312d20f2afcfc9009dd7025342724db1b",
+          "pages": 248
+        },
+        {
+          "number": 12,
+          "title": "SCHEDULE 2 PACKAGE A",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_291/eia_1886/progress/action_1883/EIA/Text/PDF/11%20Schedule_2_Package_A.pdf",
+          "local_file": "stage0/source-data/AEIAR-203-2016/chapters/11%20Schedule_2_Package_A.pdf",
+          "sha256": "a2ef6c4711ec61807a823a228e6c07d1e8d11b8564899b32b968ab238b272865",
+          "pages": 152
+        },
+        {
+          "number": 13,
+          "title": "SCHEDULE 2 PACKAGE B",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_291/eia_1886/progress/action_1883/EIA/Text/PDF/11%20Schedule_2_Package_B.pdf",
+          "local_file": "stage0/source-data/AEIAR-203-2016/chapters/11%20Schedule_2_Package_B.pdf",
+          "sha256": "63f04bceda3d1c11d6f414bff4b44b4053e77ccd7c57f29a0db4e28e4d53c816",
+          "pages": 96
+        },
+        {
+          "number": 14,
+          "title": "CULTURAL HERITAGE",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_291/eia_1886/progress/action_1883/EIA/Text/PDF/12%20Impact%20on%20Cultural%20Heritage%20final.pdf",
+          "local_file": "stage0/source-data/AEIAR-203-2016/chapters/12%20Impact%20on%20Cultural%20Heritage%20final.pdf",
+          "sha256": "ae90ff9799ab70c8093fa6b2f184794af05d48f29792f53c5a8f70e0e80018ab",
+          "pages": 42
+        }
+      ],
+      "audit_decision": "verified_core_nm",
+      "audit_rationale": "Project is the 'Hung Shui Kiu New Development Area'. Hung Shui Kiu/Ha Tsuen New Development Area is explicitly listed on nm.gov.hk as part of the High-end Professional Services and Logistics Hub. Approved 2016 (pre-dating NM concept), but now formally incorporated into NM. Core NM.",
+      "historical_pre_nm": true,
+      "version": "1.0",
+      "retrieved_at": "2026-10-18T00:00:00Z",
+      "checksum_manifest": "source-data/download_manifest_batch2.json",
+      "page_numbering_anomalies": []
+    },
+    {
+      "report_id": "aeiar-215-2017",
+      "register_no": "AEIAR-215-2017",
+      "status": "approved",
+      "status_note": "conditionally approved (per EPD project page)",
+      "approval_date": "2017-11-24",
+      "title_en": "Housing Sites in Yuen Long South",
+      "title_zh": "元朗南房屋用地",
+      "project_area_en": "Yuen Long South",
+      "project_area_zh": "元朗南",
+      "districts": [
+        "hk-district:M"
+      ],
+      "districts_evidence": "Yuen Long District (code M) or North District (code N) per project area.",
+      "report_areas": [],
+      "report_areas_status": "deferred_no_public_geometry",
+      "report_areas_decision": "2026-10-18: official public data only. No verified project geometry is publicly obtainable.",
+      "label_lat": 22.42,
+      "label_lng": 114.03,
+      "original_url": "https://www.epd.gov.hk/eia/en/alpha/aspd.php?id=PP",
+      "report_index_url": "",
+      "exec_summary_en_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_246/eia_1898/progress/action_1821/html/Executive%20Summary%20-%20Eng/REP-00_EIA_Executive%20Summary_clean_revised.pdf",
+      "exec_summary_zh_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_246/eia_1898/progress/action_1821/html/Executive%20Summary%20-%20Chi/REP-228228-00_EIA_%E8%A1%8C%E6%94%BF%E6%91%98%E8%A6%81_clean_revised.pdf",
+      "exec_summary_status": {
+        "en": "available",
+        "zh": "available",
+        "verified_at": "2026-10-18"
+      },
+      "page_numbering": "verified",
+      "page_numbering_note": "All 16 chapters verified. Uses Page X-Y format. Known anomalies: ch.1 skips from 1-27 to 1-29 (page 1-28 omitted); ch.11 resets numbering mid-chapter (11-0 appears after 11-6, then counts up again).",
+      "nm_scope_evidence": {
+        "zone": "High-end Professional Services and Logistics Hub",
+        "area": "Yuen Long South New Development Area",
+        "url": "https://www.nm.gov.hk/en/four-zones",
+        "evidence_note": "Area listed on nm.gov.hk Four Zones page."
+      },
+      "chapters": [
+        {
+          "number": 1,
+          "title": "INTRODUCTION",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_246/eia_1898/progress/action_1821/html/EIA%20Report/Text/1.%20Introduction/Ch1_Introduction_20170726_clean.pdf",
+          "local_file": "stage0/source-data/AEIAR-215-2017/chapters/Ch1_Introduction_20170726_clean.pdf",
+          "sha256": "ddd27b8e717998d11b8183372780d20d01b0487ceb4e41850382b90a479df43c",
+          "pages": 32
+        },
+        {
+          "number": 2,
+          "title": "CONSIDERATION OF ALTERNATIVE DEVELOPMENT OPTIONS",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_246/eia_1898/progress/action_1821/html/EIA%20Report/Text/2.%20Consideration%20of%20Alternative%20Development%20Options/Ch2_%20Consideration%20of%20Alternative%20Development%20Options_clean.pdf",
+          "local_file": "stage0/source-data/AEIAR-215-2017/chapters/Ch2_%20Consideration%20of%20Alternative%20Development%20Options_clean.pdf",
+          "sha256": "a81e5ea8c5fd2c9faa043aac90df24813b352e127da7ce117754f798a0798396",
+          "pages": 44
+        },
+        {
+          "number": 3,
+          "title": "PROJECT DESCRIPTION AND CONSTRUCTION METHODOLOGIES",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_246/eia_1898/progress/action_1821/html/EIA%20Report/Text/3.%20Project%20Description%20and%20Construction%20Methodologies/Ch3_Project%20Description%20and%20Construction%20Methodologyc_clean.pdf",
+          "local_file": "stage0/source-data/AEIAR-215-2017/chapters/Ch3_Project%20Description%20and%20Construction%20Methodologyc_clean.pdf",
+          "sha256": "7f94875266f487ffd75390dd7050e0930ee8698120e821c95839e92b53c4b8c7",
+          "pages": 21
+        },
+        {
+          "number": 4,
+          "title": "AIR QUALITY",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_246/eia_1898/progress/action_1821/html/EIA%20Report/Text/4.%20Air%20Quality/Ch4_Air%20Quality_clean.pdf",
+          "local_file": "stage0/source-data/AEIAR-215-2017/chapters/Ch4_Air%20Quality_clean.pdf",
+          "sha256": null,
+          "pages": 117
+        },
+        {
+          "number": 5,
+          "title": "NOISE",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_246/eia_1898/progress/action_1821/html/EIA%20Report/Text/5.%20Noise/Ch%205%20-%20Noise_20170710_FIX7_clean.pdf",
+          "local_file": "stage0/source-data/AEIAR-215-2017/chapters/Ch%205%20-%20Noise_20170710_FIX7_clean.pdf",
+          "sha256": "21c7419d50227d21060696b5b0bcce47743a97ca86668d9eecadd8d67aefe3a9",
+          "pages": 104
+        },
+        {
+          "number": 6,
+          "title": "WATER QUALITY",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_246/eia_1898/progress/action_1821/html/EIA%20Report/Text/6.%20Water%20Quality/Ch6_Water%20Quality_20170725_clean.pdf",
+          "local_file": "stage0/source-data/AEIAR-215-2017/chapters/Ch6_Water%20Quality_20170725_clean.pdf",
+          "sha256": "ecb2713cf23fbacaae6ba498bc12f3e005790884179f6eb47b2432e8aef3a0d9",
+          "pages": 46
+        },
+        {
+          "number": 7,
+          "title": "SEWERAGE",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_246/eia_1898/progress/action_1821/html/EIA%20Report/Text/7.%20Sewerage/Ch7_Sewerage_20170724_clean.pdf",
+          "local_file": "stage0/source-data/AEIAR-215-2017/chapters/Ch7_Sewerage_20170724_clean.pdf",
+          "sha256": "c1dedfe4c9fd41023b0851c439dfe146da6e97fbe4489e26ea1f1cbf9222640b",
+          "pages": 18
+        },
+        {
+          "number": 8,
+          "title": "ECOLOGY",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_246/eia_1898/progress/action_1821/html/EIA%20Report/Text/8.%20Ecology/Ch8_Ecology_Stage3_clean.pdf",
+          "local_file": "stage0/source-data/AEIAR-215-2017/chapters/Ch8_Ecology_Stage3_clean.pdf",
+          "sha256": "4707d8c1fd93119d29dd27706d86cb9dcc471660e8f45288ed7f53aca24f3b0f",
+          "pages": 101
+        },
+        {
+          "number": 9,
+          "title": "FISHERIES",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_246/eia_1898/progress/action_1821/html/EIA%20Report/Text/9.%20Fisheries/Ch9_Fisheries_clean.pdf",
+          "local_file": "stage0/source-data/AEIAR-215-2017/chapters/Ch9_Fisheries_clean.pdf",
+          "sha256": "5e8027339ae00c1adfc94988e50014137094639d8b7554cb4d13139a2f225b11",
+          "pages": 10
+        },
+        {
+          "number": 10,
+          "title": "LANDSCAPE AND VISUAL IMPACT",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_246/eia_1898/progress/action_1821/html/EIA%20Report/Text/10.%20LVIA/Ch10%20LVIA_clean.pdf",
+          "local_file": "stage0/source-data/AEIAR-215-2017/chapters/Ch10%20LVIA_clean.pdf",
+          "sha256": "c94d52278f4e8aa839ea7fa12d22ef8b6da3e34c9c88d5c719cd7627a94f5d1a",
+          "pages": 124
+        },
+        {
+          "number": 11,
+          "title": "WASTE MANAGEMENT IMPLICATIONS",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_246/eia_1898/progress/action_1821/html/EIA%20Report/Text/11.%20Waste/Ch11_Waste_clean.pdf",
+          "local_file": "stage0/source-data/AEIAR-215-2017/chapters/Ch11_Waste_clean.pdf",
+          "sha256": "4361259b3ee9013add882d74a9edb9814406ebb7580c2f72d8a2e61dfc265627",
+          "pages": 27
+        },
+        {
+          "number": 12,
+          "title": "LAND CONTAMINATION",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_246/eia_1898/progress/action_1821/html/EIA%20Report/Text/12.%20Land%20Contamination/Ch12_Land%20Contamination_clean.pdf",
+          "local_file": "stage0/source-data/AEIAR-215-2017/chapters/Ch12_Land%20Contamination_clean.pdf",
+          "sha256": "d79b185738ff3cfc88d255005abf092c7058824281098d7c388f0784d06806aa",
+          "pages": 20
+        },
+        {
+          "number": 13,
+          "title": "CULTURAL HERITAGE",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_246/eia_1898/progress/action_1821/html/EIA%20Report/Text/13.%20Cultural%20Heritage/Ch13_Cultural%20Heritage_clean.pdf",
+          "local_file": "stage0/source-data/AEIAR-215-2017/chapters/Ch13_Cultural%20Heritage_clean.pdf",
+          "sha256": "fa1e6b55ba0c836309e6df1d58019dc772398096de091cc6640def0abf309758",
+          "pages": 29
+        },
+        {
+          "number": 14,
+          "title": "ENVIRONMENTAL MONITORING AND AUDIT REQUIREMENTS",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_246/eia_1898/progress/action_1821/html/EIA%20Report/Text/14.%20EM&A%20Requirements/Ch14_EM&A%20Requirements_clean.pdf",
+          "local_file": "stage0/source-data/AEIAR-215-2017/chapters/Ch14_EM&A%20Requirements_clean.pdf",
+          "sha256": "83ca507f266025e09dab19b595b60c816e7852545c3c3a071f798d8fefeda942",
+          "pages": 3
+        },
+        {
+          "number": 15,
+          "title": "SUMMARY OF ENVIRONMENTAL OUTCOME",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_246/eia_1898/progress/action_1821/html/EIA%20Report/Text/15.%20Summary%20of%20Environmental%20Outcome/Ch15_YLS_Summary%20of%20Environmental%20Outcome_clean.pdf",
+          "local_file": "stage0/source-data/AEIAR-215-2017/chapters/Ch15_YLS_Summary%20of%20Environmental%20Outcome_clean.pdf",
+          "sha256": "7755122ffb7a1f977f69ef90e587ff045c6b8071fdccea43d4dbfef75273ca74",
+          "pages": 14
+        },
+        {
+          "number": 16,
+          "title": "CONCLUSION",
+          "format": "pdf",
+          "file_url": "https://www.epd.gov.hk/eia/files/applications/en/pp_246/eia_1898/progress/action_1821/html/EIA%20Report/Text/16.%20Conclusion/Ch16_YLS_Conclusion_clean.pdf",
+          "local_file": "stage0/source-data/AEIAR-215-2017/chapters/Ch16_YLS_Conclusion_clean.pdf",
+          "sha256": "43bc278654136e48aa0b922da02e90f6f9e3d69a755fd8da765c42b3fd99e1b3",
+          "pages": 9
+        }
+      ],
+      "audit_decision": "verified_core_nm",
+      "audit_rationale": "Project is 'Housing Sites in Yuen Long South'. Yuen Long South New Development Area is explicitly listed on nm.gov.hk as part of the High-end Professional Services and Logistics Hub. Approved 2017 (pre-dating NM concept), but now formally incorporated into NM. Core NM.",
+      "historical_pre_nm": true,
+      "version": "1.0",
+      "retrieved_at": "2026-10-18T00:00:00Z",
+      "checksum_manifest": "source-data/download_manifest_batch2.json",
+      "page_numbering_anomalies": [
+        "ch.1: printed folio 1-28 is skipped (goes 1-27 to 1-29)",
+        "ch.11: page numbering resets to 11-0 mid-chapter"
+      ]
+    }
+  ]
+}
