@@ -63,9 +63,10 @@ summary rather than failing.
 2. **Check answerability** — `stage1/answerability.py` maps the question's intent to the kind of
    datum it needs and checks whether the retrieved evidence actually carries that datum. If not,
    abstain before any generation happens.
-3. **Synthesise** (optional) — a local model writes the summary from widened excerpts, under rules
+3. **Synthesise** (optional) — a model writes the summary from widened excerpts, under rules
    that forbid inventing mitigation measures, transliterating proper nouns, and citing a page that
-   was not retrieved.
+   was not retrieved. Two providers sit behind one interface: a local Ollama model, and OpenRouter
+   when `OPENROUTER_API_KEY` is set.
 4. **Verify** — every displayed citation is checked against the retrieved evidence set, and the
    answer is repaired or replaced if a citation does not resolve.
 
@@ -108,6 +109,7 @@ identifier** — one chapter prints `10-119` on two different pages, and another
 
 ```bash
 python3 app.py --test                    # application suite
+python3 test_openrouter.py               # provider path, offline, mocked
 python3 stage1/test_passages.py
 python3 stage1/test_rare_term_gate.py
 python3 stage1/test_citation_reliability.py
@@ -115,6 +117,33 @@ python3 stage1/test_citation_reliability.py
 
 The citation suite verifies that every citation rendered to a user resolves to a real page in the
 corpus — it is the check that matters most, because a wrong page number is worse than no answer.
+
+## Deploying to Render
+
+`render.yaml` is the blueprint. The equivalent dashboard settings:
+
+| Setting | Value |
+| --- | --- |
+| Build Command | `pip install -r requirements.txt` |
+| Start Command | `python3 app.py` |
+| Health Check Path | `/health` |
+
+`requirements.txt` is intentionally empty: an AST scan of `app.py` and all of `stage1/` found no
+import outside the standard library, so there is nothing to install. The file exists only because
+Render's default build command fails when it is missing.
+
+Environment variables:
+
+| Variable | Required | Purpose |
+| --- | --- | --- |
+| `OPENROUTER_API_KEY` | yes, for AI summaries | Read from the server environment only. Never committed, never returned by an API, never shown in the UI. |
+| `OPENROUTER_MODEL` | no | Defaults to `google/gemma-4-26b-a4b-it:free`. |
+| `LLM_PROVIDER` | no | `openrouter` or `ollama`; `auto` (default) picks OpenRouter when a key exists. |
+| `PORT` | set by Render | The server binds `0.0.0.0` on this port. |
+
+Without a key the app still runs: retrieval, citations and refusal behave identically, and answers
+come from the extractive summary instead of the model. `GET /health` reports which provider is live
+and whether it is ready, without exposing the key.
 
 ## Known limitations
 

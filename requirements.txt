@@ -1,0 +1,12 @@
+# NORTHWISE has no third-party runtime dependencies.
+#
+# Every import in app.py and stage1/ resolves to the Python standard library.
+# This was verified mechanically with an AST scan over all 13 modules, not by
+# reading the import blocks by eye — the only non-stdlib import name found was
+# `stage1`, which is this project's own package.
+#
+# This file exists because Render's default build command is
+#   pip install -r requirements.txt
+# which fails outright when the file is absent.
+#
+# Keep it empty. Adding a package here is a deliberate decision, not a formality.

@@ -24,6 +24,7 @@ import re
 import socket
 import socketserver
 import sys
+import time
 import unittest
 import urllib.error
 import urllib.request
@@ -728,9 +729,64 @@ def _overview_passages_zh(report_id: str | None) -> list[dict]:
 
 # ------------------------------------------------------------------ LLM synthesis
 
+# Two providers behind one interface. The local model stays the default so the
+# project runs with no account and no key; OpenRouter is used when a key is
+# present, which is what the hosted deployment does.
 OLLAMA_URL = "http://localhost:11434/api/chat"
 OLLAMA_MODEL = "granite4.1:3b"
 OLLAMA_TIMEOUT = 100  # seconds. A 700-token Chinese answer measures ~75 s here.
+
+OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
+# Configurable default; override with OPENROUTER_MODEL.
+OPENROUTER_DEFAULT_MODEL = "google/gemma-4-26b-a4b-it:free"
+OPENROUTER_TIMEOUT = 90  # seconds. Hosted latency varies far more than localhost.
+
+# When a provider fails in a way that retrying cannot fix (bad key, rate limit),
+# stop calling it for a while. Without this the caller's one retry — and the next
+# reader's question — would hammer an endpoint that is already refusing us.
+_PROVIDER_COOLDOWN_UNTIL = 0.0
+_COOLDOWN_AUTH = 300.0
+_COOLDOWN_RATE_LIMIT = 30.0
+
+
+def _openrouter_key() -> str:
+    """The API key, read from the server environment on every call.
+
+    Never stored in a module constant, so it cannot be captured at import time
+    and cannot end up in a pickled object, a response body or a test fixture.
+    """
+    return (os.environ.get("OPENROUTER_API_KEY") or "").strip()
+
+
+def _openrouter_model() -> str:
+    return (os.environ.get("OPENROUTER_MODEL") or "").strip() or OPENROUTER_DEFAULT_MODEL
+
+
+def _llm_provider() -> str:
+    """Which provider to use: "openrouter" or "ollama".
+
+    LLM_PROVIDER forces a choice ("ollama" is useful for tests and for a laptop
+    that happens to have a key exported). "auto" prefers OpenRouter when a key
+    is configured and otherwise uses the local model.
+    """
+    forced = (os.environ.get("LLM_PROVIDER") or "auto").strip().lower()
+    if forced in ("openrouter", "ollama"):
+        return forced
+    return "openrouter" if _openrouter_key() else "ollama"
+
+
+def _in_cooldown() -> bool:
+    return time.monotonic() < _PROVIDER_COOLDOWN_UNTIL
+
+
+def _start_cooldown(seconds: float) -> None:
+    global _PROVIDER_COOLDOWN_UNTIL
+    _PROVIDER_COOLDOWN_UNTIL = time.monotonic() + seconds
+
+
+def _clear_cooldown() -> None:
+    global _PROVIDER_COOLDOWN_UNTIL
+    _PROVIDER_COOLDOWN_UNTIL = 0.0
 
 
 def _build_synthesis_prompt(question: str, lang: str, evidence: list[dict],
@@ -1051,8 +1107,8 @@ def _trim_incomplete_tail(answer: str) -> str:
     return stripped[:cut + 1]
 
 
-def _call_model(messages: list[dict], num_predict: int) -> tuple[str, dict]:
-    """One Ollama call. Returns (answer_text, raw_response)."""
+def _call_ollama(messages: list[dict], num_predict: int) -> tuple[str, dict]:
+    """One local Ollama call. Returns (answer_text, raw_response)."""
     payload = json.dumps({
         "model": OLLAMA_MODEL,
         "messages": messages,
@@ -1079,6 +1135,91 @@ def _call_model(messages: list[dict], num_predict: int) -> tuple[str, dict]:
         raise SynthesisUnavailable("Ollama response incomplete")
 
     return ((data.get("message", {}).get("content") or "").strip(), data)
+
+
+def _call_openrouter(messages: list[dict], num_predict: int) -> tuple[str, dict]:
+    """One OpenRouter chat-completions call. Returns (answer_text, raw_response).
+
+    The key is read from the environment, used only in the Authorization header,
+    and never returned, logged or placed in an exception message. Failures are
+    classified by HTTP status alone — the response body is provider prose and
+    the request headers carry the key, so neither is echoed anywhere.
+    """
+    key = _openrouter_key()
+    if not key:
+        raise SynthesisUnavailable("OPENROUTER_API_KEY is not set")
+    if _in_cooldown():
+        raise SynthesisUnavailable("provider cooling down after an error")
+
+    payload = json.dumps({
+        "model": _openrouter_model(),
+        "messages": messages,
+        "stream": False,
+        "temperature": 0.1,
+        "max_tokens": num_predict,
+    }).encode("utf-8")
+
+    req = urllib.request.Request(
+        OPENROUTER_URL,
+        data=payload,
+        headers={
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + key,
+            "X-Title": "NORTHWISE",
+        },
+    )
+
+    try:
+        resp = urllib.request.urlopen(req, timeout=OPENROUTER_TIMEOUT)
+        raw = resp.read()
+    except urllib.error.HTTPError as exc:
+        if exc.code in (401, 403):
+            # A bad key will not fix itself inside a request; stop asking.
+            _start_cooldown(_COOLDOWN_AUTH)
+            raise SynthesisUnavailable("openrouter rejected the credentials") from None
+        if exc.code == 429:
+            # Retrying immediately is the opposite of graceful under a rate
+            # limit. Answer from the evidence instead, and stand down briefly.
+            _start_cooldown(_COOLDOWN_RATE_LIMIT)
+            raise SynthesisUnavailable("openrouter rate limited") from None
+        raise SynthesisUnavailable(f"openrouter http {exc.code}") from None
+    except (urllib.error.URLError, socket.timeout, OSError):
+        raise SynthesisUnavailable("openrouter request failed") from None
+
+    try:
+        data = json.loads(raw.decode("utf-8"))
+    except (json.JSONDecodeError, UnicodeDecodeError):
+        raise SynthesisUnavailable("openrouter returned invalid JSON") from None
+
+    choices = data.get("choices") or []
+    content = ""
+    if choices and isinstance(choices[0], dict):
+        content = ((choices[0].get("message") or {}).get("content") or "").strip()
+    if not content:
+        raise SynthesisUnavailable("openrouter returned no content")
+
+    usage = data.get("usage") or {}
+    data["_tokens"] = usage.get("completion_tokens")
+    return content, data
+
+
+def _call_model(messages: list[dict], num_predict: int) -> tuple[str, dict]:
+    """Dispatch to the configured provider and normalise its metadata.
+
+    Every caller gets the same (text, data) shape whichever provider ran, so the
+    synthesis and validation code below is untouched. ``data`` carries
+    ``_provider``, ``_model`` and ``_tokens`` for reporting back to the reader.
+    """
+    provider = _llm_provider()
+    if provider == "openrouter":
+        text, data = _call_openrouter(messages, num_predict)
+        data["_model"] = data.get("model") or _openrouter_model()
+    else:
+        text, data = _call_ollama(messages, num_predict)
+        data["_model"] = OLLAMA_MODEL
+        data["_tokens"] = data.get("eval_count")
+    data["_provider"] = provider
+    return text, data
 
 
 # Sentences that describe the document instead of its content. The system prompt
@@ -1431,7 +1572,7 @@ def _synthesize(question: str, lang: str, evidence: list[dict],
         return None
 
     # If the token cap was reached, the last sentence is probably incomplete.
-    if lang == "zh-Hant" and (data.get("eval_count") or 0) >= num_predict:
+    if lang == "zh-Hant" and (data.get("_tokens") or 0) >= num_predict:
         answer = _trim_incomplete_tail(answer)
 
     # Validate citations (format check). A missing citation is repaired once
@@ -1451,7 +1592,7 @@ def _synthesize(question: str, lang: str, evidence: list[dict],
             repaired, data_r = _call_model(repair, num_predict)
         except SynthesisUnavailable:
             return None
-        if lang == "zh-Hant" and (data_r.get("eval_count") or 0) >= num_predict:
+        if lang == "zh-Hant" and (data_r.get("_tokens") or 0) >= num_predict:
             repaired = _trim_incomplete_tail(repaired)
         if not repaired or not _validate_synthesis(repaired, evidence):
             return None
@@ -1498,7 +1639,7 @@ def _synthesize(question: str, lang: str, evidence: list[dict],
         except SynthesisUnavailable:
             second = ""
         if second:
-            if lang == "zh-Hant" and (data2.get("eval_count") or 0) >= num_predict:
+            if lang == "zh-Hant" and (data2.get("_tokens") or 0) >= num_predict:
                 second = _trim_incomplete_tail(second)
             second = _limit_points(_normalise_bullets(
                 _move_leading_citations(_strip_section_numbers(second))))
@@ -1523,8 +1664,8 @@ def _synthesize(question: str, lang: str, evidence: list[dict],
             # about verification level is handled by the frontend.
             return {
                 "answer": answer,
-                "model": OLLAMA_MODEL,
-                "tokens_used": data.get("eval_count"),
+                "model": data.get("_model") or OLLAMA_MODEL,
+                "tokens_used": data.get("_tokens"),
                 "evaluation": {
                     "status": "rejected",
                     "total_claims": eval_result["metrics"]["total_claims"],
@@ -1534,8 +1675,8 @@ def _synthesize(question: str, lang: str, evidence: list[dict],
             # Attach warning but keep the answer
             return {
                 "answer": answer,
-                "model": OLLAMA_MODEL,
-                "tokens_used": data.get("eval_count"),
+                "model": data.get("_model") or OLLAMA_MODEL,
+                "tokens_used": data.get("_tokens"),
                 "evaluation": {
                     "status": "flagged",
                     "flagged_claims": eval_result["metrics"]["human_review"],
@@ -1545,8 +1686,8 @@ def _synthesize(question: str, lang: str, evidence: list[dict],
 
     return {
         "answer": answer,
-        "model": OLLAMA_MODEL,
-        "tokens_used": data.get("eval_count"),
+        "model": data.get("_model") or OLLAMA_MODEL,
+        "tokens_used": data.get("_tokens"),
     }
 
 
@@ -2096,6 +2237,30 @@ def ask(question: str, lang: str = "en", report_id: str | None = None) -> dict:
 
 # ------------------------------------------------------------------ HTTP server
 
+def _health_payload() -> dict:
+    """Cheap readiness check: no model call, no corpus rebuild.
+
+    Reports only booleans and counts, so the response is safe to serve publicly.
+    The API key never appears here — not even a prefix of it.
+    """
+    provider = _llm_provider()
+    data_dir = os.path.join(ROOT, "stage1", "data")
+    try:
+        page_files = sum(1 for n in os.listdir(data_dir) if n.endswith(".pages.jsonl"))
+    except OSError:
+        page_files = 0
+    return {
+        "status": "ok" if (page_files and REPORTS_BY_ID) else "degraded",
+        "provider": provider,
+        "model": _openrouter_model() if provider == "openrouter" else OLLAMA_MODEL,
+        "provider_ready": bool(_openrouter_key()) if provider == "openrouter" else True,
+        "reports": len(REPORTS_BY_ID),
+        "page_files": page_files,
+        "static": os.path.isfile(os.path.join(ROOT, "static", "index.html")),
+        "registry": os.path.isfile(os.path.join(ROOT, "stage0", "reports.json")),
+    }
+
+
 class AskHandler(http.server.BaseHTTPRequestHandler):
     """Minimal JSON API handler using stdlib only."""
 
@@ -2137,6 +2302,10 @@ class AskHandler(http.server.BaseHTTPRequestHandler):
             )
         elif path == "/reports":
             self._send_json(200, _REPORTS_DATA)
+        elif path == "/health":
+            # Always 200 so a platform health check does not restart a service
+            # that is up but has missing data; "status" carries the detail.
+            self._send_json(200, _health_payload())
         else:
             # Serve any file under ROOT (e.g. stage0/source-data/.../boundary.json).
             # The path is normalised and confined to ROOT; anything outside returns 404.
@@ -2655,7 +2824,10 @@ class SummaryPromptTest(unittest.TestCase):
             "message": {"content": mock_answer},
             "eval_count": 45,
         }).encode()
-        with patch("urllib.request.urlopen", return_value=mock_resp):
+        # Force the local provider so an exported OPENROUTER_API_KEY in the
+        # developer's shell cannot change which code path this test exercises.
+        with patch.dict(os.environ, {"LLM_PROVIDER": "ollama"}), \
+                patch("urllib.request.urlopen", return_value=mock_resp):
             r = ask("noise barrier", "en")
         self.assertFalse(r["refused"])
         self.assertIsNotNone(r["synthesis"])

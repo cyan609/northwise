@@ -1,0 +1,29 @@
+# Render blueprint for NORTHWISE.
+#
+# The app is a standard-library HTTP server: it reads PORT from the environment
+# and binds 0.0.0.0, so Render's requirements are already satisfied by app.py.
+#
+# Python version is pinned in .python-version (3.13), not here: PYTHON_VERSION
+# must be fully qualified (e.g. 3.13.5), and pinning a patch version we cannot
+# verify against Render's image list is a build failure waiting to happen.
+services:
+  - type: web
+    name: northwise
+    runtime: python
+    plan: free
+    branch: main
+    buildCommand: pip install -r requirements.txt
+    startCommand: python3 app.py
+    healthCheckPath: /health
+    envVars:
+      # Force the hosted provider. With no key the app degrades to the
+      # extractive summary instead of probing localhost, which is clearer in
+      # /health and avoids a pointless connection attempt per request.
+      - key: LLM_PROVIDER
+        value: openrouter
+      - key: OPENROUTER_MODEL
+        value: google/gemma-4-26b-a4b-it:free
+      # sync:false means "prompt for this in the dashboard and never store it
+      # in this file". The key must never appear in the repository.
+      - key: OPENROUTER_API_KEY
+        sync: false
